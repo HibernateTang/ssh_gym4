@@ -55,6 +55,7 @@
                     console.log(data);
                         if(data.success == true && data.message == "登录成功"){
                             alert("登录成功1!");
+                            window.location.href="index.html";
 //                            window.location.href = "../jsp/infojsp/info.jsp?userName="+data.value.username+
 //                                    "&userId="+data.value.id;
                         }else if(data.success == false && data.message == "密码错误"){
