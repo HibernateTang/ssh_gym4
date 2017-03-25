@@ -37,7 +37,7 @@ public class LoginCtrl {
             if(object != null){
                 User user = (User) object;
                 HttpSession session = request.getSession();
-                session.setAttribute("userId", user.getId());
+                session.setAttribute("user", user);
             }
             returnMap.put("value", object);
             returnMap.put("message", map.get("message"));
@@ -54,8 +54,6 @@ public class LoginCtrl {
     @ResponseBody
     public Map<String,Object> register(HttpServletRequest request,String username,String password){
         Map<String,Object> returnMap = new HashMap<String,Object>();
-        System.out.println(username);
-        System.out.println(password);
         try {
             Map<String,Object> map = loginService.register(username, password);
             //获取user实体
@@ -63,7 +61,7 @@ public class LoginCtrl {
             if(object != null){
                 User user = (User) object;
                 HttpSession session = request.getSession();
-                session.setAttribute("userId", user.getId());
+                session.setAttribute("user", user);
             }
             returnMap.put("value", object);
             returnMap.put("message", map.get("message"));

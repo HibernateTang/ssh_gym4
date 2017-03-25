@@ -1,7 +1,15 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: 汁
+  Date: 2017/3/25
+  Time: 19:00
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="viewport"
@@ -15,7 +23,7 @@
 <body>
 <div class="weui-flex">
     <div class="weui-flex_item">
-        费云路
+        什么东西
     </div>
     <div class="weui-flex_item">
         查询另一位宝宝>>
@@ -29,7 +37,7 @@
         <p class="user-age">年龄：18个月</p>
         <p class="user-class">剩余课时数：45节课</p>
         <p class="user-inform">活动通知:<span class="user-inform-detail"></span></p>
-        <img src="images" class="user-right-row">
+        <img src="../../images" class="user-right-row">
     </div>
 </div>
 

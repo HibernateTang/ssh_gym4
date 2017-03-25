@@ -18,6 +18,6 @@ public interface IUserService {
     //删除用户
     public Map<String,Object> deleteOneUser(Integer id) throws Exception;
 
-
+    public User getUserById(Integer id) throws Exception;
 
 }

@@ -62,4 +62,12 @@ public class UserServiceImpl implements IUserService {
             return returnMap;
         }
     }
+
+    @Override
+    public User getUserById(Integer id) throws Exception {
+        User user = userDao.getOne(id);
+        return user;
+    }
+
+
 }
