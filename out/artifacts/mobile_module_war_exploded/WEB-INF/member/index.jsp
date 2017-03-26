@@ -9,158 +9,190 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>会员主页</title>
-    <link rel="stylesheet" type="text/css" href="/css/weui.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/sm.min.css">
     <link rel="stylesheet" type="text/css" href="/css/swiper-3.4.2.min.css">
+
     <script src="/js/jquery-1.11.3.min.js"></script>
     <script src="/js/swiper-3.4.2.jquery.min.js"></script>
+
+    <style>
+        .card-exercise-time {
+            font-size: 1rem;
+            font-weight: bold;
+            text-align: center;
+            line-height: 17px;
+        }
+
+        .card-exercise-rank {
+            font-size: 0.825rem;
+            text-align: center;
+            color: #398bfb;
+        }
+
+        .card-exercise-beyond {
+            font-size: 0.825rem;
+            text-align: center;
+            color: #398bfb;
+        }
+
+        .exercise-total {
+            text-align: center;
+            font-size: 0.825rem;
+        }
+
+        .facebook-card .facebook-title {
+            margin-left: 2.2rem;
+            font-size: 0.825rem;
+            font-weight: bold;
+        }
+
+        .facebook-card .facebook-text {
+            margin-left: 2.2rem;
+            font-size: 0.6rem;
+        }
+
+        .facebook-card .facebook-text .inform {
+            color: #398bfb;
+        }
+
+        .no-padding {
+            padding: 0;
+        }
+
+        .card-header>.list-block {
+            width: 100%;
+        }
+
+        @font-face {
+            font-family: 'iconfont';
+            /* project id 260152 */
+            src: url('//at.alicdn.com/t/font_hszk64a2aed8to6r.eot');
+            src: url('//at.alicdn.com/t/font_hszk64a2aed8to6r.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_hszk64a2aed8to6r.woff') format('woff'), url('//at.alicdn.com/t/font_hszk64a2aed8to6r.ttf') format('truetype'), url('//at.alicdn.com/t/font_hszk64a2aed8to6r.svg#iconfont') format('svg');
+        }
+
+        .icon-doublerow {
+            content: "&#xe603;";
+        }
+    </style>
+
 </head>
+
 <body>
-<div class="weui-flex">
-    <div class="weui-flex_item">
-        什么东西
-    </div>
-    <div class="weui-flex_item">
-        查询另一位宝宝>>
-    </div>
-</div>
+<div class="card">
+    <div class="card-content">
+        <div class="card-content-inner">
+            费云路 <a href="/index/details">查询另一位宝宝>></a>
 
-<div class="weui-flex">
-    <div class="weui-flex_item">
-        <img src="images/head_src.png">
-        <p class="user-name">费云路</p>
-        <p class="user-age">年龄：18个月</p>
-        <p class="user-class">剩余课时数：45节课</p>
-        <p class="user-inform">活动通知:<span class="user-inform-detail"></span></p>
-        <img src="../../images" class="user-right-row">
-    </div>
-</div>
-
-<div class="weui-flex">
-    <div class="weui-flex_item">
-        我的运动时间
-    </div>
-    <div class="weui-flex_item">
-        <img src="exercise-right-row">
-    </div>
-</div>
-<div class="weui-flex">
-    <div class="weui-flex_item">
-        <div class="exercise-time">225分钟</div>
-        <div class="weui-flex">
-            <div class="weui-flex__item">
-                完成5次
-            </div>
-            <div class="weui-flex__item">
-                累计5天
-            </div>
+            <i class="icon-doublerow "></i>
         </div>
-        <div class="exercise-beyond">过去三个月超过全国60%的会员</div>
-        <div class="exercise-rank">在全国所有会员中排名439名<img src="exercise-rank-row"></div>
     </div>
+</div>
+<div class="card facebook-card">
+    <div class="card-header">
+        <div class="facebook-avatar">
+            <img src="/images/member/head.gif" width="100" height="90">
+        </div>
+        <div class="facebook-title">费云路</div>
+        <div class="facebook-text">年龄：18个月</div>
+        <div class="facebook-text">剩余课时数：45节课</div>
+        <div class="facebook-text">活动通知：<span class="inform">这周奇怪的活动什么|啊啊实打实的|烦阿斯打扫打扫打扫</span></div>
 
+    </div>
 </div>
 
-<section class="swiper-container-dlist swiper-container-vertical swiper-container-free-mode">
-    <div class="swiper-wrapper" style="transform: translate3d(0px, -87px, 0px);">
-        <div class="swiper-slide swiper-slide-active" style="height: auto;">
-            <ul class="details_list">
+<div class="card">
+    <div class="card-header no-padding">
+        <div class="list-block">
+            <ul>
                 <li>
-                    <span class="date">2017.1.18</span>
-                    <span class="time">10:00</span>
-                    <span class="class">小鸟班</span>
-                    <span class="state">已出勤</span>
-                    <a href="http://jy.qq125.com//1703/h5mobile_member/details.html"><span class="details">查看本周课程亮点</span></a>
-                </li>
-                <li>
-                    <span class="date">2017.1.25</span>
-                    <span class="time">10:00</span>
-                    <span class="class">小鸟班</span>
-                    <span class="state">已出勤</span>
-                    <a href="http://jy.qq125.com//1703/h5mobile_member/details.html"><span class="details">查看本周课程亮点</span></a>
-                </li>
-                <li>
-                    <span class="date">2017.2.1</span>
-                    <span class="time">10:00</span>
-                    <span class="class">小鸟班</span>
-                    <span class="state">已出勤</span>
-                    <a href="http://jy.qq125.com//1703/h5mobile_member/details.html"><span class="details">查看本周课程亮点</span></a>
-                </li>
-                <li>
-                    <span class="date">2017.2.1</span>
-                    <span class="time">10:00</span>
-                    <span class="class">小鸟班</span>
-                    <span class="state">已出勤</span>
-                    <a href="http://jy.qq125.com//1703/h5mobile_member/details.html"><span class="details">查看本周课程亮点</span></a>
-                </li>
-                <li>
-                    <span class="date">2017.2.18</span>
-                    <span class="time">10:00</span>
-                    <span class="class">小鸟班</span>
-                    <span class="state">已出勤</span>
-                    <a href="http://jy.qq125.com//1703/h5mobile_member/details.html"><span class="details">查看本周课程亮点</span></a>
-                </li>
-                <li>
-                    <span class="date">2017.2.25</span>
-                    <span class="time">10:00</span>
-                    <span class="class">小鸟班</span>
-                    <span class="state">已出勤</span>
-                    <a href="http://jy.qq125.com//1703/h5mobile_member/details.html"><span class="details">查看本周课程亮点</span></a>
-                </li>
-                <li>
-                    <span class="date">2017.3.1</span>
-                    <span class="time">10:00</span>
-                    <span class="class">小鸟班</span>
-                    <span class="state" data-noclass="1">未开课</span>
-                    <a href="http://jy.qq125.com//1703/h5mobile_member/details.html"><span class="details">查看本周课程亮点</span></a>
-                </li>
-                <li>
-                    <span class="date">2017.3.1</span>
-                    <span class="time">10:00</span>
-                    <span class="class">小鸟班</span>
-                    <span class="state" data-noclass="1">未开课</span>
-                    <a href="http://jy.qq125.com//1703/h5mobile_member/details.html"><span class="details">查看本周课程亮点</span></a>
-                </li>
-                <li>
-                    <span class="date">2017.3.18</span>
-                    <span class="time">10:00</span>
-                    <span class="class">小鸟班</span>
-                    <span class="state" data-noclass="1">未开课</span>
-                    <a href="http://jy.qq125.com//1703/h5mobile_member/details.html"><span class="details">查看本周课程亮点</span></a>
-                </li>
-                <li>
-                    <span class="date">2017.3.25</span>
-                    <span class="time">10:00</span>
-                    <span class="class">小鸟班</span>
-                    <span class="state" data-noclass="1">未开课</span>
-                    <a href="http://jy.qq125.com//1703/h5mobile_member/details.html"><span class="details">查看本周课程亮点</span></a>
-                </li>
-                <li>
-                    <span class="date">2017.4.1</span>
-                    <span class="time">10:00</span>
-                    <span class="class">小鸟班</span>
-                    <span class="state" data-noclass="1">未开课</span>
-                    <a href="http://jy.qq125.com//1703/h5mobile_member/details.html"><span class="details">查看本周课程亮点</span></a>
-                </li>
-                <li>
-                    <span class="date">2017.4.1</span>
-                    <span class="time">10:00</span>
-                    <span class="class">小鸟班</span>
-                    <span class="state" data-noclass="1">未开课</span>
-                    <a href="http://jy.qq125.com//1703/h5mobile_member/details.html"><span class="details">查看本周课程亮点</span></a>
+                    <a href="#" class="item-link item-content">
+                        <div class="item-inner">
+                            <div class="item-title">我的运动时间</div>
+                        </div>
+                    </a>
                 </li>
             </ul>
         </div>
     </div>
-</section>
-
+    <div class="card-content">
+        <p class="card-exercise-time">225分钟</p>
+        <div class="row">
+            <div class="col-50 exercise-total">完成5次</div>
+            <div class="col-50 exercise-total">累计5天</div>
+        </div>
+    </div>
+    <p class="card-exercise-beyond">过去<strong>三个月</strong>超过全国<strong>60%</strong>的会员</p>
+    <p class="card-exercise-rank">在全国所有会员中排名<strong>439</strong>名</p>
+</div>
 </div>
 
+<div class="card">
+    <div class="card-content">
+        <div class="swiper-container swiper-attend">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide swiper-slide-active">
+                    <ul class="details_list">
+                        <li>
+                            <span class="date">2017.1.18</span>
+                            <span class="time">10:00</span>
+                            <span class="class">小鸟班</span>
+                            <span class="state">已出勤</span>
+                            <a href="http://jy.qq125.com//1703/h5mobile_member/details.html"><span class="details">查看本周课程亮点</span></a>
+                        </li>
+                        <li>
+                            <span class="date">2017.1.25</span>
+                            <span class="time">10:00</span>
+                            <span class="class">小鸟班</span>
+                            <span class="state">已出勤</span>
+                            <a href="http://jy.qq125.com//1703/h5mobile_member/details.html"><span class="details">查看本周课程亮点</span></a>
+                        </li>
+                        <li>
+                            <span class="date">2017.2.1</span>
+                            <span class="time">10:00</span>
+                            <span class="class">小鸟班</span>
+                            <span class="state">已出勤</span>
+                            <a href="http://jy.qq125.com//1703/h5mobile_member/details.html"><span class="details">查看本周课程亮点</span></a>
+                        </li>
+                        <li>
+                            <span class="date">2017.1.25</span>
+                            <span class="time">10:00</span>
+                            <span class="class">小鸟班</span>
+                            <span class="state">已出勤</span>
+                            <a href="http://jy.qq125.com//1703/h5mobile_member/details.html"><span class="details">查看本周课程亮点</span></a>
+                        </li>
+                        <li>
+                            <span class="date">2017.2.1</span>
+                            <span class="time">10:00</span>
+                            <span class="class">小鸟班</span>
+                            <span class="state">已出勤</span>
+                            <a href="http://jy.qq125.com//1703/h5mobile_member/details.html"><span class="details">查看本周课程亮点</span></a>
+                        </li>
+                        <li>
+                            <span class="date">2017.1.25</span>
+                            <span class="time">10:00</span>
+                            <span class="class">小鸟班</span>
+                            <span class="state">已出勤</span>
+                            <a href="http://jy.qq125.com//1703/h5mobile_member/details.html"><span class="details">查看本周课程亮点</span></a>
+                        </li>
+                        <li>
+                            <span class="date">2017.2.1</span>
+                            <span class="time">10:00</span>
+                            <span class="class">小鸟班</span>
+                            <span class="state">已出勤</span>
+                            <a href="http://jy.qq125.com//1703/h5mobile_member/details.html"><span class="details">查看本周课程亮点</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
+
 </html>
