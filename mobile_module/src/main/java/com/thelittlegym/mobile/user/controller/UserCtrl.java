@@ -29,13 +29,13 @@ public class UserCtrl {
         }
     }
 
-    @RequestMapping(value="/details",method = RequestMethod.GET)
+    @RequestMapping(value="/topic",method = RequestMethod.GET)
     public String details(HttpServletRequest request) throws Exception {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
 
         if (user != null) {
-            return "/member/details";
+            return "/member/topic";
         }else{
             return "redirect:/login.html";
         }

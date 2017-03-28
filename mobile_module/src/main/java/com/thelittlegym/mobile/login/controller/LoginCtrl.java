@@ -25,6 +25,7 @@ public class LoginCtrl {
     @Autowired
     private IUserService userService;
 
+
     @RequestMapping(value="/tologin",method=RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> login(HttpServletRequest request,String username,String password){
