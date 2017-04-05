@@ -40,4 +40,17 @@ public class UserCtrl {
             return "redirect:/login.html";
         }
     }
+
+
+    @RequestMapping(value="/myinfo",method = RequestMethod.GET)
+    public String myinfo(HttpServletRequest request) throws Exception {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+
+        if (user != null) {
+            return "/member/myinfo";
+        }else{
+            return "redirect:/login.html";
+        }
+    }
 }

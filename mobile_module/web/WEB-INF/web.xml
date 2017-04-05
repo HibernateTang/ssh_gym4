@@ -5,8 +5,8 @@
          id="WebApp_ID" version="3.0">
     <display-name>minissh</display-name>
     <welcome-file-list>
-        <!--<welcome-file>login.html</welcome-file>-->
-        <welcome-file>./WEB-INF/member/index.jsp</welcome-file>-->
+        <welcome-file>login.html</welcome-file>
+        <!--<welcome-file>./WEB-INF/member/index.jsp</welcome-file>&ndash;&gt;-->
     </welcome-file-list>
 
     <!-- 把 Spring 容器集成到 Web 应用里面 -->

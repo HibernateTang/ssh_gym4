@@ -3,7 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/tx
@@ -11,7 +11,7 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/aop
-        http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+        http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
     <context:annotation-config/>
     <!--扫描注解包-->
@@ -19,7 +19,12 @@
 
     <!--配置文件加载 init.properties-->
     <bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations" value="classpath:jdbc.properties" />
+        <property name="locations" >
+                <list>
+                   <value>classpath:jdbc.properties</value>
+                    <value>classpath:httpclient.properties</value>
+                </list>
+        </property>
     </bean>
     <!-- 使用Tomcat JDBC连接(池) -->
     <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
@@ -45,5 +50,40 @@
                 <prop key="hibernate.current_session_context_class">thread</prop><!-- 使用getCurrentSession()方法，必须配置此属性 -->
             </props>
         </property>
+    </bean>
+
+    <bean id="connectionManager" class="org.apache.http.impl.conn.PoolingHttpClientConnectionManager"
+          destroy-method="close">
+        <!-- 最大连接数 -->
+        <property name="maxTotal" value="${http.maxTotal}"/>
+        <!--设置每个主机最大的并发数-->
+        <property name="defaultMaxPerRoute" value="${http.defaultMaxPerRoute}"/>
+    </bean>
+
+    <!--定义HttpClient构建器-->
+    <bean id="httpClientBuilder" class="org.apache.http.impl.client.HttpClientBuilder" factory-method="create">
+        <property name="connectionManager" ref="connectionManager"/>
+    </bean>
+
+    <!--定义httpClient对象，该bean一定是多例的-->
+    <bean id="httpClient" class="org.apache.http.impl.client.CloseableHttpClient" factory-bean="httpClientBuilder"
+          factory-method="build" scope="prototype"></bean>
+    <!--定义requestConfig构建器-->
+    <bean id="requestConfigBuilder" class="org.apache.http.client.config.RequestConfig.Builder">
+        <!--设置创建连接的最长时间-->
+        <property name="connectTimeout" value="${http.connectTimeout}"/>
+        <!--从连接池中获取到连接的最长时间-->
+        <property name="connectionRequestTimeout" value="${http.connectionRequestTimeout}"/>
+        <!--数据传输的最长时间-->
+        <property name="socketTimeout" value="${http.socketTimeout}"/>
+    </bean>
+    <!--请求参数对象-->
+    <bean class="org.apache.http.client.config.RequestConfig" factory-bean="requestConfigBuilder"
+          factory-method="build"></bean>
+    <!--定期清理无效连接-->
+    <bean class="org.apache.http.impl.client.IdleConnectionEvictor" destroy-method="shutdown">
+        <constructor-arg index="0" ref="connectionManager"/>
+        <constructor-arg index="1" value="${http.maxIdleTime}"/>
+        <constructor-arg index="2" value="MINUTES"/>
     </bean>
 </beans>
