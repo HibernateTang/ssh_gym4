@@ -5,6 +5,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.thelittlegym.mobile.common.HttpResult;
 import com.thelittlegym.mobile.common.HttpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,19 +26,13 @@ public class LoginCtrl {
     private ILoginService loginService;
     @Autowired
     private IUserService userService;
-    @Autowired
-    private  HttpService httpService;
 
     @RequestMapping(value="/tologin",method=RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> login(HttpServletRequest request,String username,String password){
         Map<String,Object> returnMap = new HashMap<String,Object>();
-        Map<String,String> sqlMap = new HashMap<String ,String>();
-        sqlMap.put("sql1","select top 50 crm_name childName,crmzdy_80653840_id idFamily,crmzdy_81802109 age,crmzdy_80653844 gender from crm_zdytable_238592_23893_238592_view where crmzdy_81802109 ='18661950393'");
 
         try {
-            String returnJson = httpService.doGet("https://bbk.800app.com/uploadfile/staticresource/238592/279832/mobileApi.aspx",sqlMap);
-            System.out.println(returnJson);
             Map<String,Object> map = loginService.login(username, password);
             //获取user实体
             Object object = map.get("value");

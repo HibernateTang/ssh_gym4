@@ -165,10 +165,12 @@
         <div class="content">
             <div class="card">
                 <div class="card-header no-border gym-card-title">
-                    赵本山
-                    <a href="#child2" class="pull-right">
-                        <small>查询另一位宝宝</small>
-                        <i class="fa fa-angle-double-right"></i></a>
+                    ${indexObj['name']}
+                        <c:if test="${indexObj['showAnother']=='1'}">
+                            <a href="#child2" class="pull-right">
+                                <small>查询另一位宝宝</small>
+                            <i class="fa fa-angle-double-right"></i></a>
+                        </c:if>
                 </div>
             </div>
 
@@ -179,9 +181,9 @@
                     </div>
 
                     <div>
-                        <div class="facebook-title">赵本山</div>
-                        <div class="facebook-text">年龄：18个月</div>
-                        <div class="facebook-text">剩余课时数：45节课</div>
+                        <div class="facebook-title">${indexObj['name']}</div>
+                        <div class="facebook-text">年龄：${indexObj['age']}</div>
+                        <div class="facebook-text">合同剩余课时数：${indexObj['rest']}节课</div>
                         <div class="facebook-text">活动通知：<span class="inform"></span></div>
                     </div>
                 </div>
