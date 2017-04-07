@@ -5,7 +5,9 @@
   Time: 19:00
   To change this template use File | Settings | File Templates.
 --%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -166,7 +168,7 @@
             <div class="card">
                 <div class="card-header no-border gym-card-title">
                     ${indexObj['name']}
-                        <c:if test="${indexObj['showAnother']=='1'}">
+                        <c:if test="${indexObj['showAnother']==true}">
                             <a href="#child2" class="pull-right">
                                 <small>查询另一位宝宝</small>
                             <i class="fa fa-angle-double-right"></i></a>
@@ -195,13 +197,13 @@
                 </div>
                 <div class="card-content">
                     <div class="card-content-inner">
-                        <div class="card-exercise-time">225分钟</div>
+                        <div class="card-exercise-time">${rankObj['mins']}分钟</div>
                         <div class="row">
-                            <div class="col-50 exercise-total">完成5次</div>
-                            <div class="col-50 exercise-total">累计5天</div>
+                            <div class="col-50 exercise-total">完成${rankObj['times']}次</div>
+
                         </div>
-                        <div class="card-exercise-beyond">过去<strong>三个月</strong>超过全国<strong>60%</strong>的会员</div>
-                        <div class="card-exercise-rank">在全国所有会员中排名<strong>439</strong>名<i
+                        <div class="card-exercise-beyond">过去<strong>三个月</strong>超过全国<strong>${rankObj['outpass']}%</strong>的会员</div>
+                        <div class="card-exercise-rank">在全国所有会员中排名<strong>${rankObj['ranking']}</strong>名<i
                                 class="fa fa-angle-double-right"></i></div>
                     </div>
                 </div>

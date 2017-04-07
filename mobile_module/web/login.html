@@ -13,12 +13,6 @@
 <script src="js/supersized-init.js"></script>
 <script src="js/fastclick.js"></script>
 <script>
-    // //打开字滑入效果
-    // window.onload = function(){
-    // 	$("#loginConnect p").eq(0).animate({"left":"0%"}, 600);
-    // 	$("#loginConnect p").eq(1).animate({"left":"0%"}, 400);
-
-    // };
 
     $(document).ready(function () {
         $(function () {
@@ -196,16 +190,17 @@
 
                 <div class="loginForm" id="registerForm">
                     <div>
-                        <input type="text" name="phone_number" class="phone_number" id="reg_tel" placeholder="输入手机号码"
-                               autocomplete="off" id="number"/>
+                        <input type="text" class="reg_tel" id="reg_tel" placeholder="输入手机号码"
+                               autocomplete="off" />
                     </div>
+
                     <div>
-                        <input type="password" name="password" class="password" id="reg_pass" placeholder="输入密码"
+                        <input type="password"  class="reg_pass" id="reg_pass" placeholder="输入密码"
                                oncontextmenu="return false" onpaste="return false"
                         />
                     </div>
                     <div>
-                        <input type="password" name="confirm_password" id="reg_repass" class="confirm_password"
+                        <input type="password" id="reg_repass" class="reg_repass"
                                placeholder="再次输入密码" oncontextmenu="return false"
                                onpaste="return false"/>
                     </div>
