@@ -29,7 +29,7 @@ import java.util.Map;
 public class UserCtrl {
     //    @Autowired
 //    private IUserService userService;
-    private static AppConfig config = ConfigLoader.load(ConfigLoader.ConfigType.Message);
+
     @Autowired
     private HttpService httpService;
 
@@ -48,6 +48,7 @@ public class UserCtrl {
         HttpResult httpResult = httpService.doPost(url, sqlMap);
 
 //        sendVal();
+        System.out.println("短信已发送");
         JSONObject jsonObject = JSONObject.parseObject(httpResult.getData());
 
 //        if (jsonObject.getString("resultCode") == "100" ){
@@ -55,7 +56,7 @@ public class UserCtrl {
         JSONObject indexObj = jsonObject.getJSONArray("list").getJSONObject(0);
         indexObj.put("showAnother", jsonObject.getInteger("totalRecord") > 1 ? true : false);
 
-        System.out.println(jsonObject.getInteger("totalRecord"));
+
         String ranking = indexObj.getString("ranking");
         JSONObject rankObj = rankUtil(ranking, "last3");
 
@@ -110,13 +111,5 @@ public class UserCtrl {
         return returnObj;
     }
 
-    public Boolean sendVal(){
-        MESSAGEXsend submail = new MESSAGEXsend(config);
-        submail.addTo("18516693801");
-        submail.setProject("IkkGR1");
-        submail.addVar("time","30分钟");
-        submail.addVar("code", "测试短信12211");
-        boolean flag = submail.xsend();
-        return flag;
-    }
+
 }

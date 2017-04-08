@@ -1,12 +1,17 @@
 package com.thelittlegym.mobile.login.controller;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.thelittlegym.mobile.common.HttpResult;
 import com.thelittlegym.mobile.common.HttpService;
+import com.thelittlegym.mobile.utils.msg.config.AppConfig;
+import com.thelittlegym.mobile.utils.msg.lib.MESSAGEXsend;
+import com.thelittlegym.mobile.utils.msg.utils.ConfigLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +26,7 @@ import com.thelittlegym.mobile.user.service.IUserService;
 @Controller
 @RequestMapping("/login")
 public class LoginCtrl {
+    private static AppConfig config = ConfigLoader.load(ConfigLoader.ConfigType.Message);
 
     @Autowired
     private ILoginService loginService;
@@ -130,6 +136,33 @@ public class LoginCtrl {
         return returnMap;
     }
 
+    @RequestMapping(value="/validateNum",method=RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> validateNum(HttpServletRequest request,String tel,String timestamp){
+        Map<String,Object> returnMap = new HashMap<String,Object>();
+        MESSAGEXsend submail = new MESSAGEXsend(config);
+        submail.addTo(tel);
+        submail.setProject("IkkGR1");
+        submail.addVar("time","30分钟");
+        submail.addVar("code", getRandomStr(1000,9999));
+//        submail.xsend();
+        System.out.println("短信已发送:"+new Date().toString());
+        try {
+            returnMap.put("message", getRandomStr(1000,9999));
+            returnMap.put("success", true);
+        } catch (Exception e) {
+            returnMap.put("message", "异常：发送失败!");
+            returnMap.put("success", false);
+            e.printStackTrace();
+        }
+        return returnMap;
+    }
 
-
+    /*
+    生成随机数
+     */
+    public String getRandomStr(int min, int max){
+            int randNum = min + (int)(Math.random() * ((max - min) + 1));
+            return  randNum+"";
+    }
 } 

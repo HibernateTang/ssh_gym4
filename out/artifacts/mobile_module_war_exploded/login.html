@@ -12,147 +12,7 @@
 <script src="js/supersized.3.2.7.min.js"></script>
 <script src="js/supersized-init.js"></script>
 <script src="js/fastclick.js"></script>
-<script>
-    // //打开字滑入效果
-    // window.onload = function(){
-    // 	$("#loginConnect p").eq(0).animate({"left":"0%"}, 600);
-    // 	$("#loginConnect p").eq(1).animate({"left":"0%"}, 400);
-
-    // };
-
-    $(document).ready(function () {
-        $(function () {
-            FastClick.attach(document.body);
-        });
-
-        var mySwiper = new Swiper('.swiper-container', {})
-
-        mySwiper.lockSwipes();
-        $("#goSignIn").click(function () {
-            mySwiper.unlockSwipes();
-            mySwiper.slideNext(fadeInClass());
-            mySwiper.lockSwipes();
-        })
-
-        $("#goSignUp").click(function () {
-            mySwiper.unlockSwipes();
-            mySwiper.slidePrev(fadeInClass());
-            mySwiper.lockSwipes();
-        })
-
-        function fadeInClass() {
-            if ($("#loginConnect p").hasClass("animated bounceInLeft")) {
-                $("#loginConnect p").removeClass("animated bounceInLeft");
-                $("#regConnect p").addClass("animated bounceInLeft")
-            } else {
-                $("#regConnect p").removeClass("animated bounceInLeft")
-                $("#loginConnect p").addClass("animated bounceInLeft");
-            }
-            emptyInputs();
-        }
-
-        // 清空所有input
-        function emptyInputs() {
-            $("input").val("");
-        }
-
-        $("#signIn").click(function () {
-            if (checkLogin()) {
-                var tel = $("#login_tel").val();
-                var pass = $("#login_pass").val();
-                login_ajax(tel,pass);
-            }
-        })
-
-        $("#signUp").click(function(){
-            if (checkLogin()) {
-                var tel = $("#reg_tel").val();
-                var pass = $("#reg_pass").val();
-                login_ajax(tel,pass);
-            }
-        })
-
-        function checkLogin() {
-            //手机
-            var telChecked = checkInput(/^1[34578]\d{9}$/, $("#login_tel"), "手机", "手机号格式不正确");
-            var passChecked = checkInput(/^(\w){6,20}$/, $("#login_pass"), "密码", "6-20个字母、数字、下划线");
-            return telChecked && passChecked;
-        }
-
-        function checkReg(){
-            //手机
-            var telChecked = checkInput(/^1[34578]\d{9}$/, $("#reg_tel"), "手机", "手机号格式不正确");
-            var passChecked = checkInput(/^(\w){6,20}$/, $("#reg_pass"), "密码", "6-20个字母、数字、下划线");
-            var mailChecked = checkInput(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/, $("#reg_mail"), "输入邮箱地址", "邮箱格式不正确");
-            return telChecked &&  passChecked && mailChecked;
-        }
-        function checkInput(regx, ele, ph, phErr) {
-            if (!regx.test($.trim(ele.val()))) {
-                ele.val("");
-                ele.addClass("input-error");
-                ele.attr("placeholder", phErr);
-                return false;
-            } else {
-                ele.removeClass("input-error");
-                ele.attr("placeholder", ph);
-                return true;
-            }
-        }
-
-        function login_ajax(telephone, password) {
-            this.username = telephone;
-//            this.password = hex_md5(password);
-            this.password = password;
-            $.ajax({
-                type: "POST",
-                url: "/login/tologin",
-                data: {"username": this.username, "password": this.password},
-                contentType: "application/x-www-form-urlencoded",
-                dataType: "json",
-                success: function (data) {
-                    console.log(data);
-                    if (data.success == true && data.message == "登录成功") {
-                        alert("登录成功!");
-
-                        window.location.href = "/index";
-//                            window.location.href = "../jsp/infojsp/info.jsp?userName="+data.value.username+
-//                                    "&userId="+data.value.id;
-                    } else if (data.success == false && data.message == "密码错误") {
-                        alert("密码错误!");
-                    } else if (data.success == false && data.message == "该用户不存在!") {
-                        alert("该用户不存在!");
-                    }
-                }
-            });
-        }
-
-        function regsister_ajax(username, password,email) {
-            this.username = username;
-            this.password = password;
-            this.email = email;
-            $.ajax({
-                type: "POST",
-                url: "/login/register",
-                data: {"username": this.username, "password": this.password,"email":this.email},
-                contentType: "application/x-www-form-urlencoded",
-                dataType: "json",
-                success: function (data) {
-                    console.log(data);
-                    if (data.success == true && data.message == "注册成功") {
-                        alert("注册成功!");
-                        mySwiper.unlockSwipes();
-                        mySwiper.slidePrev(fadeInClass());
-                        mySwiper.lockSwipes();
-                    } else if (data.success == false && data.message == "该用户名已存在...") {
-                        alert("该用户名已被注册...");
-                    }
-                }
-            });
-        }
-
-    });
-
-</script>
+<script src="js/login.js"></script>
 
 <body>
 <div class="swiper-container">
@@ -196,35 +56,41 @@
 
                 <div class="loginForm" id="registerForm">
                     <div>
-                        <input type="text" name="phone_number" class="phone_number" id="reg_tel" placeholder="输入手机号码"
-                               autocomplete="off" id="number"/>
+                        <input type="text" class="reg-tel" id="reg_tel" placeholder="输入手机号码"
+                               autocomplete="off"/>
+
+                    </div>
+                    <div class="reg-group">
+                        <input type="text" class="reg-valnum" id="reg_valnum" placeholder="输入验证码"
+                               autocomplete="off"/>
+                        <button class="btn-valnum" id="btn-valnum" type="button">发送验证码</button>
                     </div>
                     <div>
-                        <input type="password" name="password" class="password" id="reg_pass" placeholder="输入密码"
+                        <input type="password" class="reg-pass" id="reg_pass" placeholder="输入密码"
                                oncontextmenu="return false" onpaste="return false"
                         />
                     </div>
                     <div>
-                        <input type="password" name="confirm_password" id="reg_repass" class="confirm_password"
+                        <input type="password" id="reg_repass" class="reg-repass"
                                placeholder="再次输入密码" oncontextmenu="return false"
                                onpaste="return false"/>
                     </div>
                     <div>
-                        <input type="email" name="email" class="email" id="reg_email" placeholder="输入邮箱地址"
+                        <input type="email" class="email" id="reg_email" placeholder="输入邮箱地址"
                                oncontextmenu="return false" onpaste="return false"/>
                     </div>
-
-                    <button id="signUp">注 册</button>
+                    <div>
+                        <button id="signUp">注 册</button>
+                    </div>
+                    <a href="javascrit:void(0)" id="goSignUp">
+                        <button type="button" class="register-tis">已经有账号？</button>
+                    </a>
+<input type="hidden" id="code">
                 </div>
-                <a href="javascrit:void(0)" id="goSignUp">
-                    <button type="button" class="register-tis">已经有账号？</button>
-                </a>
-
             </div>
         </div>
     </div>
 </div>
-
 
 </body>
 </html>
