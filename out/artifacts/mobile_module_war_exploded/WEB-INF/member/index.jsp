@@ -8,6 +8,7 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -240,55 +241,19 @@
                         <section class="swiper-container-dlist swiper-container-vertical swiper-container-free-mode">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide swiper-slide-active">
+
                                     <ul class="details_list">
-                                        <li class="row no-gutter">
-
-                                            <span class="col-20  date">2017.1.18</span>
-                                            <span class="col-20  time">10:00</span>
-                                            <span class="col-20  class">小鸟班</span>
-                                            <span class="col-20  state">已出勤</span>
-                                            <a href="/index/topic"><span class="col-20 details">课程亮点</span></a>
-                                        </li>
-                                        <li class="row no-gutter">
-
-                                            <span class="col-20  date">2017.1.18</span>
-                                            <span class="col-20  time">10:00</span>
-                                            <span class="col-20  class">小鸟班</span>
-                                            <span class="col-20  state">已出勤</span>
-                                            <a href="/index/topic"><span class="col-20 details">课程亮点</span></a>
-                                        </li>
-                                        <li class="row no-gutter">
-
-                                            <span class="col-20  date">2017.1.18</span>
-                                            <span class="col-20  time">10:00</span>
-                                            <span class="col-20  class">小鸟班</span>
-                                            <span class="col-20  state">已出勤</span>
-                                            <a href="/index/topic"><span class="col-20 details">课程亮点</span></a>
-                                        </li>
-                                        <li class="row no-gutter">
-
-                                            <span class="col-20  date">2017.1.18</span>
-                                            <span class="col-20  time">10:00</span>
-                                            <span class="col-20  class">小鸟班</span>
-                                            <span class="col-20  state">已出勤</span>
-                                            <a href="/index/topic"><span class="col-20 details">课程亮点</span></a>
-                                        </li>
-                                        <li class="row no-gutter">
-
-                                            <span class="col-20  date">2017.1.18</span>
-                                            <span class="col-20  time">10:00</span>
-                                            <span class="col-20  class">小鸟班</span>
-                                            <span class="col-20  state">已出勤</span>
-                                            <a href="/index/topic"><span class="col-20 details">课程亮点</span></a>
-                                        </li>
-                                        <li class="row no-gutter">
-
-                                            <span class="col-20  date">2017.1.18</span>
-                                            <span class="col-20  time">10:00</span>
-                                            <span class="col-20  class">小鸟班</span>
-                                            <span class="col-20  state">已出勤</span>
-                                            <a href="/index/topic"><span class="col-20 details">课程亮点</span></a>
-                                        </li>
+                                        <c:if test="${not empty listGymClass}">
+                                            <c:forEach items="${listGymClass}" var="gymClass">
+                                                <li class="row no-gutter">
+                                                    <span class="col-20  date"><fmt:formatDate value="${gymClass['date']}" pattern="yyyy.MM.dd"/></span>
+                                                    <span class="col-20  time">${gymClass['time']}</span>
+                                                    <span class="col-20  class">${gymClass['course']}</span>
+                                                    <span class="col-20  state">${gymClass['kq']}</span>
+                                                    <a href="/index/topic"><span class="col-20 details">课程亮点</span></a>
+                                                </li>
+                                            </c:forEach>
+                                        </c:if>
                                         <li class="row no-gutter">
 
                                             <span class="col-20  date">2017.1.18</span>

@@ -30,6 +30,7 @@ $(document).ready(function () {
         $("input").val("");
     }
 
+    //登陆
     $("#signIn").click(function () {
         if (checkLogin()) {
             var tel = $("#login_tel").val();
@@ -37,29 +38,27 @@ $(document).ready(function () {
             login_ajax(tel, pass);
         }
     })
+    //注册
 
     $("#signUp").click(function () {
-        if ($("#reg_valnum").val() == $("#code").val()){
-            alert("验证成功！");
-        }else {
-            alert("验证失败");
+        if (checkReg()){
+            var reg_tel =  $("#reg_tel").val();
+            var reg_valnum = $("#reg_valnum").val();
+            var reg_pass = $("#reg_pass").val();
+            var reg_email = $("#reg_email").val();
+            regsister_ajax(reg_tel,reg_valnum,reg_pass,reg_email);
         }
+        
+    })
+    
+    $("#test").click(function(){
+        var reg_tel =  $("#reg_tel").val("18566666666");
+        var reg_valnum = $("#reg_valnum").val(1234);
+        var reg_pass = $("#reg_pass").val("zed123");
+        var reg_email = $("#reg_email").val("tangzi_123@163.com");
     })
 
 
-
-    function checkInput(regx, ele, ph, phErr) {
-        if (!regx.test($.trim(ele.val()))) {
-            ele.val("");
-            ele.addClass("input-error");
-            ele.attr("placeholder", phErr);
-            return false;
-        } else {
-            ele.removeClass("input-error");
-            ele.attr("placeholder", ph);
-            return true;
-        }
-    }
 
     
 
@@ -111,7 +110,7 @@ $(document).ready(function () {
     function login_ajax(telephone, password) {
         this.username = telephone;
 //            this.password = hex_md5(password);
-        this.password = password;
+        this.password = $.md5(password);
         $.ajax({
             type: "POST",
             url: "/login/tologin",
@@ -135,14 +134,15 @@ $(document).ready(function () {
         });
     }
     
-    function regsister_ajax(username, password, email) {
+    function regsister_ajax(username, valnum,password, email) {
+        this.valnum = valnum;
         this.username = username;
-        this.password = password;
+        this.password = $.md5(password);
         this.email = email;
         $.ajax({
             type: "POST",
             url: "/login/register",
-            data: {"username": this.username, "password": this.password, "email": this.email},
+            data: {"username": this.username,"valnum":this.valnum, "password": this.password, "email": this.email},
             contentType: "application/x-www-form-urlencoded",
             dataType: "json",
             success: function (data) {
@@ -152,9 +152,11 @@ $(document).ready(function () {
                     mySwiper.unlockSwipes();
                     mySwiper.slidePrev(fadeInClass());
                     mySwiper.lockSwipes();
-                } else if (data.success == false && data.message == "该用户名已存在...") {
-                    alert("该用户名已被注册...");
+                    $("#login_tel").val(this.username);
+                } else if (data.success == false) {
+                    alert(data.message);
                 }
+                
             }
         });
     }
@@ -168,10 +170,25 @@ $(document).ready(function () {
 
     function checkReg() {
         //手机
-        var telChecked = checkInput(/^1[34578]\d{9}$/, $("#reg_tel"), "手机", "手机号格式不正确");
-        var passChecked = checkInput(/^(\w){6,20}$/, $("#reg_pass"), "密码", "6-20个字母、数字、下划线");
-        var mailChecked = checkInput(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/, $("#reg_mail"), "输入邮箱地址", "邮箱格式不正确");
-        return telChecked && passChecked && mailChecked;
+        var telChecked = checkInput(/^1[34578]\d{9}$/, $("#reg_tel"), "输入手机号码", "手机号格式不正确");
+        var passChecked = checkInput(/^(\w){6,20}$/, $("#reg_pass"), "输入密码", "6-20个字母、数字、下划线");
+        var valnamChecked = checkInput(/^\d{4}$/, $("#reg_valnum"), "输入验证码", "4位数字");
+        var mailChecked = checkInput(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/, $("#reg_email"), "输入邮箱地址", "邮箱格式不正确");
+        return telChecked && valnamChecked && passChecked && mailChecked;
     }
 
+
+
+    function checkInput(regx, ele, ph, phErr) {
+        if (!regx.test($.trim(ele.val()))) {
+            ele.val("");
+            ele.addClass("input-error");
+            ele.attr("placeholder", phErr);
+            return false;
+        } else {
+            ele.removeClass("input-error");
+            ele.attr("placeholder", ph);
+            return true;
+        }
+    }
 });

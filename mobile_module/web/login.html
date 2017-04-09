@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="css/swiper-3.4.2.min.css">
 <link rel="stylesheet" href="css/animate.css">
 <script src="js/jquery-1.11.3.min.js"></script>
+<script src="js/md5.js"></script>
 <script src="js/swiper-3.4.2.jquery.min.js"></script>
 <!--背景图片自动更换-->
 <script src="js/supersized.3.2.7.min.js"></script>
@@ -57,7 +58,7 @@
                 <div class="loginForm" id="registerForm">
                     <div>
                         <input type="text" class="reg-tel" id="reg_tel" placeholder="输入手机号码"
-                               autocomplete="off"/>
+                             text="18566666666"  autocomplete="off"/>
 
                     </div>
                     <div class="reg-group">
@@ -67,25 +68,27 @@
                     </div>
                     <div>
                         <input type="password" class="reg-pass" id="reg_pass" placeholder="输入密码"
-                               oncontextmenu="return false" onpaste="return false"
+                            value="zed123"   oncontextmenu="return false" onpaste="return false"
                         />
                     </div>
                     <div>
                         <input type="password" id="reg_repass" class="reg-repass"
                                placeholder="再次输入密码" oncontextmenu="return false"
-                               onpaste="return false"/>
+                               value="zed123"   onpaste="return false"/>
                     </div>
                     <div>
-                        <input type="email" class="email" id="reg_email" placeholder="输入邮箱地址"
-                               oncontextmenu="return false" onpaste="return false"/>
+                        <input type="email" class="reg_email" id="reg_email" placeholder="输入邮箱地址"
+                               value="tangzi_123@163.com"  oncontextmenu="return false" onpaste="return false"/>
                     </div>
                     <div>
                         <button id="signUp">注 册</button>
                     </div>
+                    <div>
+                        <button id="test">测试</button>
+                    </div>
                     <a href="javascrit:void(0)" id="goSignUp">
                         <button type="button" class="register-tis">已经有账号？</button>
                     </a>
-<input type="hidden" id="code">
                 </div>
             </div>
         </div>
