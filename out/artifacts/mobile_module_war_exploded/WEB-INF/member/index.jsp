@@ -160,6 +160,8 @@
             color: #eee;
         }
     </style>
+
+
 </head>
 
 <body>
@@ -177,7 +179,7 @@
                 </div>
             </div>
 
-            <div onClick="location.href='/index/myinfo'" class="card facebook-card" ontouchstart="return false;">
+            <div onClick="location.href='/index/myinfo'" id="toMyInfo" class="card facebook-card" ontouchstart="return false;">
                 <div class="card-header row-right">
                     <div class="facebook-avatar">
                         <img src="/images/member/head.jpg">
@@ -291,8 +293,13 @@
 
 <script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
 <script type='text/javascript' src='/js/sm.min.js' charset='utf-8'></script>
+<script src="/js/layer/layer.js"></script>
 <script src="/js/swiper-3.4.2.jquery.min.js"></script>
 <script>
+
+    $("#toMyInfo").click(function () {
+        layer.load();
+    })
     if ($('.swiper-container-dlist').size()) {
         $('.swiper-container-dlist').find('.swiper-slide').height('auto');
         var swiper_dList = new Swiper('.swiper-container-dlist', {

@@ -1,4 +1,20 @@
+
 $(document).ready(function () {
+    var loadingIndex;
+    $.ajaxSetup({
+        beforeSend: function () {
+            loadingIndex = layer.load(2, {
+                shade: [0.4,'#fff'] //0.1透明度的白色背景
+            });
+        },
+        complete: function () {
+            layer.close(loadingIndex);
+        },
+        error: function () {
+            layer.close(loadingIndex);
+        }
+    });
+
     var mySwiper = new Swiper('.swiper-container', {})
     $(function () {
         FastClick.attach(document.body);
@@ -114,15 +130,15 @@ $(document).ready(function () {
             success: function (data) {
                 console.log(data);
                 if (data.success == true && data.message == "登录成功") {
-                    alert("登录成功!");
 
+                    layer.msg('登录成功');
                     window.location.href = "/index";
 //                            window.location.href = "../jsp/infojsp/info.jsp?userName="+data.value.username+
 //                                    "&userId="+data.value.id;
                 } else if (data.success == false && data.message == "密码错误") {
-                    alert("密码错误!");
+                    layer.msg('密码错误');
                 } else if (data.success == false && data.message == "该用户不存在!") {
-                    alert("该用户不存在!");
+                    layer.msg('该用户不存在');
                 }
             }
         });

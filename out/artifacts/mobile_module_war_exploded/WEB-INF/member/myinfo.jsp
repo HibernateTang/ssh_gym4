@@ -15,7 +15,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>我的信息</title>
     <link rel="stylesheet" href="/css/sm.min.css">
     <link rel="stylesheet" href="/css/swiper-3.4.2.min.css">
@@ -79,31 +80,33 @@
             font-size: 0.6rem;
         }
     </style>
+
 </head>
 
 <body>
-        <div class="content">
-            <div class="card">
-                <div class="card-content gym-myinfo">
-                    <a href="/index"><i class="fa fa-angle-double-left fa-3x"></i></a>
-                    <div class="gym-myinfo-title">我的信息</div>
-                </div>
+<div class="content">
+    <div class="card">
+        <div class="card-content gym-myinfo">
+            <a href="/index"><i class="fa fa-angle-double-left fa-3x"></i></a>
+            <div class="gym-myinfo-title">我的信息</div>
+        </div>
+    </div>
+
+    <div class="card facebook-card">
+        <div class="card-header">
+            <div class="facebook-avatar">
+                <img src="/images/member/head.jpg">
+            </div>
+            <div>
+                <div class="facebook-title">费云路</div>
+                <div class="facebook-text">年龄：18个月</div>
             </div>
 
-            <div class="card facebook-card">
-                <div class="card-header">
-                    <div class="facebook-avatar">
-                        <img src="/images/member/head.jpg" >
-                    </div>
-                    <div>
-                        <div class="facebook-title">费云路</div>
-                        <div class="facebook-text">年龄：18个月</div>
-                    </div>
+        </div>
 
-                </div>
-
-                <div class="card-content">
-                    <div class="card-conntent-inner">
+        <div class="card-content">
+            <div class="card-conntent-inner">
+                <c:choose>
                     <c:when test="${not empty infoObj}">
                         <div class="list-block gym-list">
                             <ul>
@@ -144,25 +147,28 @@
                                         <div class="item-title">积分：${infoObj['积分']}</div>
                                     </div>
                                     <div class="item-inner">
-                                        <div class="item-title">所有合同<i class="fa fa-angle-double-right" aria-hidden="true"></i></div>
+                                        <div class="item-title">所有合同<i class="fa fa-angle-double-right"
+                                                                       aria-hidden="true"></i></div>
                                     </div>
                                 </li>
                             </ul>
                         </div>
+
                     </c:when>
                     <c:otherwise>
                         没有合同信息！
                     </c:otherwise>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header no-border gym-card-title"><i></i>上海环球中心本月通知<i></i></div>
-                <div class="card-content">
-                    <img src="/images/member/inform.jpg" width="100%"></div>
+                </c:choose>
             </div>
         </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header no-border gym-card-title"><i></i>上海环球中心本月通知<i></i></div>
+        <div class="card-content">
+            <img src="/images/member/inform.jpg" width="100%"></div>
+    </div>
+</div>
 
 <script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
 <script type='text/javascript' src='/js/sm.min.js' charset='utf-8'></script>
