@@ -7,7 +7,7 @@
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -58,7 +58,7 @@
 
         /*点击header*/
 
-        .facebook-card .card-header:active,.card-header:visited {
+        .facebook-card .card-header:active, .card-header:visited {
             background-color: #d9d9d9;
         }
 
@@ -169,15 +169,15 @@
             <div class="card">
                 <div class="card-header no-border gym-card-title">
                     ${indexObj['name']}
-                        <c:if test="${indexObj['showAnother']==true}">
-                            <a href="#child2" class="pull-right">
-                                <small>查询另一位宝宝</small>
+                    <c:if test="${indexObj['showAnother']==true}">
+                        <a href="#child2" class="pull-right">
+                            <small>查询另一位宝宝</small>
                             <i class="fa fa-angle-double-right"></i></a>
-                        </c:if>
+                    </c:if>
                 </div>
             </div>
 
-            <div onClick="location.href='/index/myinfo'" class="card facebook-card" ontouchstart = "return false;">
+            <div onClick="location.href='/index/myinfo'" class="card facebook-card" ontouchstart="return false;">
                 <div class="card-header row-right">
                     <div class="facebook-avatar">
                         <img src="/images/member/head.jpg">
@@ -197,16 +197,29 @@
                     <div class="item-title">我的旅行</div>
                 </div>
                 <div class="card-content">
-                    <div class="card-content-inner">
-                        <div class="card-exercise-time">${rankObj['mins']}分钟</div>
-                        <div class="row">
-                            <div class="col-50 exercise-total">完成${rankObj['times']}次</div>
+                    <c:choose>
+                        <c:when test="${not empty rankObj}">
 
-                        </div>
-                        <div class="card-exercise-beyond">过去<strong>三个月</strong>超过全国<strong>${rankObj['outpass']}%</strong>的会员</div>
-                        <div class="card-exercise-rank">在全国所有会员中排名<strong>${rankObj['ranking']}</strong>名<i
-                                class="fa fa-angle-double-right"></i></div>
-                    </div>
+                            <div class="card-content-inner">
+                                <div class="card-exercise-time">${rankObj['mins']}分钟</div>
+                                <div class="row">
+                                    <div class="col-50 exercise-total">完成${rankObj['times']}次</div>
+
+                                </div>
+                                <div class="card-exercise-beyond">
+                                    过去<strong>三个月</strong>超过全国<strong>${rankObj['outpass']}%</strong>的会员
+                                </div>
+                                <div class="card-exercise-rank">在全国所有会员中排名<strong>${rankObj['ranking']}</strong>名<i
+                                        class="fa fa-angle-double-right"></i></div>
+                            </div>
+
+                        </c:when>
+                        <c:otherwise>
+                            <div class="card-content-inner">
+                                你暂时还没有排名！
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
 
@@ -246,7 +259,8 @@
                                         <c:if test="${not empty listGymClass}">
                                             <c:forEach items="${listGymClass}" var="gymClass">
                                                 <li class="row no-gutter">
-                                                    <span class="col-20  date"><fmt:formatDate value="${gymClass['date']}" pattern="yyyy.MM.dd"/></span>
+                                                <span class="col-20  date"><fmt:formatDate value="${gymClass['date']}"
+                                                                                           pattern="yyyy.MM.dd"/></span>
                                                     <span class="col-20  time">${gymClass['time']}</span>
                                                     <span class="col-20  class">${gymClass['course']}</span>
                                                     <span class="col-20  state">${gymClass['kq']}</span>
@@ -317,9 +331,7 @@
     }
 
     $(function () {
-        $("#beginDate,#endDate").calendar({
-
-        });
+        $("#beginDate,#endDate").calendar({});
         $("#beginDate").val("2016-12-05");
         $("#endDate").val("2017-01-05");
 

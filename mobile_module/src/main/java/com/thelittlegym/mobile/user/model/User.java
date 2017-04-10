@@ -24,6 +24,8 @@ public class User {
     @Column(name="isdelete")
     private Boolean isDelete;
     private String head_src;
+    @Column(name="id_family")
+    private Integer idFamily;
 
     public Integer getId() {
         return id;
@@ -78,5 +80,13 @@ public class User {
 
     public void setHead_src(String head_src) {
         this.head_src = head_src;
+    }
+
+    public Integer getIdFamily() {
+        return idFamily;
+    }
+
+    public void setIdFamily(Integer idFamily) {
+        this.idFamily = idFamily;
     }
 }

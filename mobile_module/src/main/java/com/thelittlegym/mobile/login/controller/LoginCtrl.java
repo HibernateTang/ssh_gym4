@@ -9,8 +9,10 @@ import java.util.Random;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.alibaba.fastjson.JSONObject;
 import com.thelittlegym.mobile.common.HttpResult;
 import com.thelittlegym.mobile.common.HttpService;
+import com.thelittlegym.mobile.entity.Family;
 import com.thelittlegym.mobile.utils.msg.config.AppConfig;
 import com.thelittlegym.mobile.utils.msg.lib.MESSAGEXsend;
 import com.thelittlegym.mobile.utils.msg.utils.ConfigLoader;
@@ -29,11 +31,13 @@ import com.thelittlegym.mobile.user.service.IUserService;
 @RequestMapping("/login")
 public class LoginCtrl {
     private static AppConfig config = ConfigLoader.load(ConfigLoader.ConfigType.Message);
-
+    private static String POST_URL = "https://bbk.800app.com/uploadfile/staticresource/238592/279832/MobileApiPost.aspx";
     @Autowired
     private ILoginService loginService;
     @Autowired
     private IUserService userService;
+    @Autowired
+    private HttpService httpService;
 
     @RequestMapping(value = "/tologin", method = RequestMethod.POST)
     @ResponseBody
@@ -65,10 +69,32 @@ public class LoginCtrl {
     public Map<String, Object> register(HttpServletRequest request, String username, String valnum, String password, String email) {
         Map<String, Object> returnMap = new HashMap<String, Object>();
         Map valNumMap = new HashMap();
-        long minsPass;
+
+        Map<String,String> existMap = new HashMap<String,String>();
+        String sqlExist = "select  crm_surname name,id,crmzdy_80620120 tel,crmzdy_81802271 childname,crmzdy_81778300 zx from   crm_sj_238592_view  where charindex('" +username+"',crmzdy_81767199)>0";
+        existMap.put("sql1", sqlExist);
+
         HttpSession session = request.getSession();
 
         try {
+            HttpResult httpResult = httpService.doPost(POST_URL, existMap);
+            JSONObject obj = JSONObject.parseObject(httpResult.getData());
+            //是否是会员校验
+            if (obj != null){
+                if (!obj.getString("resultCode").equals("100") || obj.getInteger("totalRecord") < 1){
+                    returnMap.put("message", "手机号非会员!");
+                    returnMap.put("success", false);
+                    return returnMap;
+                }
+            }else {
+                returnMap.put("message", "异常:注册失败!");
+                returnMap.put("success", false);
+                return returnMap;
+            }
+
+            JSONObject familyObj = obj.getJSONArray("list").getJSONObject(0);
+            Family family = JSONObject.toJavaObject(familyObj,Family.class);
+
             //验证码校验
             if (session.getAttribute("valNumMap") != null) {
                 valNumMap = (HashMap) session.getAttribute("valNumMap");
@@ -77,7 +103,7 @@ public class LoginCtrl {
                     returnMap.put("success", false);
                     return returnMap;
                 }
-                minsPass = getDateDiffMins((Date) valNumMap.get("valTimeStamp"), new Date());
+                long minsPass = getDateDiffMins((Date) valNumMap.get("valTimeStamp"), new Date());
                 if (minsPass > 30) {
                     returnMap.put("message", "验证码已过期!");
                     returnMap.put("success", false);
@@ -89,7 +115,7 @@ public class LoginCtrl {
                 return returnMap;
             }
 
-            Map<String, Object> map = loginService.register(username, password,email);
+            Map<String, Object> map = loginService.register(username, password,email,family.getId());
             //获取user实体
             Object object = map.get("value");
             if (object != null) {
@@ -175,7 +201,7 @@ public class LoginCtrl {
         submail.setProject("IkkGR1");
         submail.addVar("time", "30分钟");
         submail.addVar("code", valnum);
-//        submail.xsend();
+        submail.xsend();
 
 
         try {

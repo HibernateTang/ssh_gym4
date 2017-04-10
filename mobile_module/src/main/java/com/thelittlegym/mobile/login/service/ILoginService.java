@@ -12,5 +12,5 @@ public interface ILoginService {
     public Map<String,Object> login(String username, String password) throws Exception;
 
     //注册
-    public Map<String,Object> register(String username, String password,String email) throws Exception;
+    public Map<String,Object> register(String username, String password,String email,Integer idFamily) throws Exception;
 }

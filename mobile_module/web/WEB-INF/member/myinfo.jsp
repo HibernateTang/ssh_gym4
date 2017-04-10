@@ -6,6 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -99,29 +101,31 @@
                     </div>
 
                 </div>
+
                 <div class="card-content">
                     <div class="card-conntent-inner">
+                    <c:when test="${not empty infoObj}">
                         <div class="list-block gym-list">
                             <ul>
                                 <li class="item-content">
                                     <div class="item-inner">
-                                        <div class="item-title">报名日期：2016/04/01</div>
+                                        <div class="item-title">报名日期：${infoObj['报名日期']}</div>
                                     </div>
                                     <div class="item-inner">
-                                        <div class="item-title">有效期：2018/04/01</div>
-                                    </div>
-                                </li>
-                                <li class="item-content">
-                                    <div class="item-inner">
-                                        <div class="item-title">剩余课时数：45节</div>
-                                    </div>
-                                    <div class="item-inner">
-                                        <div class="item-title">报名课时数：100节</div>
+                                        <div class="item-title">有效期：${infoObj['有效期']}</div>
                                     </div>
                                 </li>
                                 <li class="item-content">
                                     <div class="item-inner">
-                                        <div class="item-title">累计请假：0节</div>
+                                        <div class="item-title">剩余课时数：${infoObj['剩余课时数']}节</div>
+                                    </div>
+                                    <div class="item-inner">
+                                        <div class="item-title">报名课时数：${infoObj['报名课时数	']}节</div>
+                                    </div>
+                                </li>
+                                <li class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-title">累计请假：${infoObj['累计请假数']}节</div>
                                     </div>
                                     <div class="item-inner">
                                         <div class="item-title">报名金额：11800</div>
@@ -129,22 +133,26 @@
                                 </li>
                                 <li class="item-content">
                                     <div class="item-inner">
-                                        <div class="item-title">班级：小鸟班</div>
+                                        <div class="item-title">班级：${infoObj['课程']}</div>
                                     </div>
                                     <div class="item-inner">
-                                        <div class="item-title">赠课：球类怪兽10节</div>
+                                        <div class="item-title">赠课：${infoObj['赠课']}</div>
                                     </div>
                                 </li>
                                 <li class="item-content">
                                     <div class="item-inner">
-                                        <div class="item-title">积分：1000</div>
+                                        <div class="item-title">积分：${infoObj['积分']}</div>
                                     </div>
                                     <div class="item-inner">
-                                        <div class="item-title">所有合同</div>
+                                        <div class="item-title">所有合同<i class="fa fa-angle-double-right" aria-hidden="true"></i></div>
                                     </div>
                                 </li>
                             </ul>
                         </div>
+                    </c:when>
+                    <c:otherwise>
+                        没有合同信息！
+                    </c:otherwise>
                     </div>
                 </div>
             </div>

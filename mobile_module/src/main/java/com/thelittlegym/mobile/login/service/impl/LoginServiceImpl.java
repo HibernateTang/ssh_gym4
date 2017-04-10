@@ -46,7 +46,7 @@ public class LoginServiceImpl implements ILoginService {
     }
 
     @Override
-    public Map<String, Object> register(String username, String password,String email) throws Exception {
+    public Map<String, Object> register(String username, String password,String email,Integer idFamily) throws Exception {
         Map<String,Object> returnMap = new HashMap<String,Object>();
         String hql = "from User u where u.username='"+username+"'";
         User user = new User();
@@ -59,6 +59,7 @@ public class LoginServiceImpl implements ILoginService {
             user.setPassword(password);
             user.setTel(username);
             user.setEmail(email);
+            user.setIdFamily(idFamily);
             user.setCreateTime(new Date());
             user.setIsDelete(false);
             userDao.save(user);
