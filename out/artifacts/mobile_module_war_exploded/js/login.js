@@ -1,17 +1,15 @@
 
 $(document).ready(function () {
-    var loadingIndex;
+    var indexLoading
     $.ajaxSetup({
         beforeSend: function () {
-            loadingIndex = layer.load(2, {
-                shade: [0.4,'#fff'] //0.1透明度的白色背景
-            });
+            indexLoading = layer.load(2)
         },
         complete: function () {
-            layer.close(loadingIndex);
+            layer.close(indexLoading);
         },
         error: function () {
-            layer.close(loadingIndex);
+            layer.close(indexLoading);
         }
     });
 
@@ -88,7 +86,7 @@ $(document).ready(function () {
                     if (data.success == true) {
                         time($("#btn-valnum"));
                     } else {
-                        alert("发送失败，请稍后再试.");
+                        layer.msg("发送失败，请稍后再试");
                     }
                 }
             });
@@ -130,15 +128,13 @@ $(document).ready(function () {
             success: function (data) {
                 console.log(data);
                 if (data.success == true && data.message == "登录成功") {
-                    layer.msg('登录成功')
+                    layer.msg("登录成功");
 
                     window.location.href = "/index";
-//                            window.location.href = "../jsp/infojsp/info.jsp?userName="+data.value.username+
-//                                    "&userId="+data.value.id;
                 } else if (data.success == false && data.message == "密码错误") {
-                    layer.msg('密码错误');
+                    layer.msg("密码错误");
                 } else if (data.success == false && data.message == "该用户不存在!") {
-                    layer.msg('该用户不存在');
+                    layer.msg("该用户不存在");
                 }
             }
         });
@@ -158,7 +154,7 @@ $(document).ready(function () {
             success: function (data) {
                 console.log(data);
                 if (data.success == true && data.message == "注册成功") {
-                    layer.msg('注册成功!正在跳转...');
+                    layer.msg("注册成功");
                     mySwiper.unlockSwipes();
                     mySwiper.slidePrev(fadeInClass());
                     mySwiper.lockSwipes();

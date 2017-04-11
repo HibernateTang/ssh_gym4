@@ -231,9 +231,9 @@
                     <div>
                         <div class="gym-datepicker">
                             <i class="fa fa-angle-double-left"></i>
-                            <input type="text" readonly id="beginDate" data-toggle="data"/> -
+                            <input type="text" readonly id="beginDate" value="${gymDate['beginDate']}" data-toggle="data"/> -
 
-                            <input type="text" readonly id="endDate" data-toggle="data"/>
+                            <input type="text" readonly id="endDate" value="${gymDate['endDate']}"  data-toggle="data"/>
                             <i class="fa fa-angle-double-right"></i>
                         </div>
                         <div class="row no-gutter gym-icon-list">
@@ -270,14 +270,6 @@
                                                 </li>
                                             </c:forEach>
                                         </c:if>
-                                        <li class="row no-gutter">
-
-                                            <span class="col-20  date">2017.1.18</span>
-                                            <span class="col-20  time">10:00</span>
-                                            <span class="col-20  class">小鸟班</span>
-                                            <span class="col-20  state">已出勤</span>
-                                            <a href="/index/topic"><span class="col-20 details">课程亮点</span></a>
-                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -293,13 +285,9 @@
 
 <script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
 <script type='text/javascript' src='/js/sm.min.js' charset='utf-8'></script>
-<script src="/js/layer/layer.js"></script>
 <script src="/js/swiper-3.4.2.jquery.min.js"></script>
 <script>
 
-    $("#toMyInfo").click(function () {
-        layer.load();
-    })
     if ($('.swiper-container-dlist').size()) {
         $('.swiper-container-dlist').find('.swiper-slide').height('auto');
         var swiper_dList = new Swiper('.swiper-container-dlist', {
@@ -313,40 +301,26 @@
 
     }
 
-
-    function getInfo() {
-        function pandoraCall(data) {
-            console.log(data);
-        }
-
-        $.ajax({
-            type: "get",
-            url: "https://bbk.800app.com/uploadfile/staticresource/238592/279832/mobileApi.aspx",
-            data: "sql1=select top 50 crm_name childName,crmzdy_80653840_id idFamily,crmzdy_81802109 age,crmzdy_80653844 gender from crm_zdytable_238592_23893_238592_view where crmzdy_81802109 ='18661950393' ",
-            dataType: "jsonp",
-            jsonp: "jsoncallback",
-            jsonpCallback: "jsonpCallback_success",
-            success: function (data) {
-//                alert(data.info[0].rec[0].childName)
-
-            },
-            error: function (e) {
-                alert("数据异常！");
-            }
-        });
-
-    }
-
     $(function () {
         $("#beginDate,#endDate").calendar({});
-        $("#beginDate").val("2016-12-05");
-        $("#endDate").val("2017-01-05");
-
-
         $.init();
-
-        getInfo();
     })
+
+    $("#beginDate,#endDate").change(function () {
+        attend_ajax(79987, $("#beginDate").val(), $("#endDate").val());
+    })
+    function attend_ajax(idChild,beginDate,endDate){
+            $.ajax({
+                type: "GET",
+                url: "/index/attend",
+                data: {"idChild": idChild, "beginDate":beginDate, "endDate": endDate},
+                contentType: "application/x-www-form-urlencoded",
+                dataType: "json",
+                success: function (data) {
+                    alert(data[0].date);
+                }
+            });
+    }
 </script>
 </body>
 

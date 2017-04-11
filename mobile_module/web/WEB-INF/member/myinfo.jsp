@@ -36,6 +36,9 @@
             color: #999;
         }
 
+        .gym-myinfo a:active {
+            color: #fff;
+        }
         .gym-myinfo {
             background: url('/images/member/myinfo-banner.jpg') no-repeat;
             background-size: 100% 100%;
@@ -87,7 +90,7 @@
 <div class="content">
     <div class="card">
         <div class="card-content gym-myinfo">
-            <a href="/index"><i class="fa fa-angle-double-left fa-3x"></i></a>
+            <a href="/index" class="myinfo-row"><i class="fa fa-angle-double-left fa-3x"></i></a>
             <div class="gym-myinfo-title">我的信息</div>
         </div>
     </div>
