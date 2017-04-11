@@ -134,41 +134,6 @@ public class LoginCtrl {
         return returnMap;
     }
 
-    @RequestMapping(value = "/deleteOneUser", method = RequestMethod.POST)
-    @ResponseBody
-    public Map<String, Object> deleteOneUser(HttpServletRequest request, Integer id) {
-        Map<String, Object> returnMap = new HashMap<String, Object>();
-
-        try {
-            Map<String, Object> map = userService.deleteOneUser(id);
-
-            returnMap.put("message", map.get("message"));
-            returnMap.put("success", map.get("success"));
-        } catch (Exception e) {
-            returnMap.put("message", "异常：操作失败!");
-            returnMap.put("success", false);
-            e.printStackTrace();
-        }
-        return returnMap;
-    }
-
-    @RequestMapping(value = "/getUserPageList", method = RequestMethod.POST)
-    @ResponseBody
-    public Map<String, Object> getUserPageList(HttpServletRequest request, int currentPage, int pageSize, String blurUserName) {
-        Map<String, Object> returnMap = new HashMap<String, Object>();
-
-        try {
-            Page<User> userPage = userService.getUserPageList(currentPage, pageSize);
-
-            returnMap.put("page", userPage);
-            returnMap.put("success", true);
-        } catch (Exception e) {
-            returnMap.put("message", "异常：获取失败!");
-            returnMap.put("success", false);
-            e.printStackTrace();
-        }
-        return returnMap;
-    }
 
     @RequestMapping(value = "/getUserPageListForSearch", method = RequestMethod.POST)
     @ResponseBody
@@ -215,6 +180,42 @@ public class LoginCtrl {
             returnMap.put("success", true);
         } catch (Exception e) {
             returnMap.put("message", "异常：发送失败!");
+            returnMap.put("success", false);
+            e.printStackTrace();
+        }
+        return returnMap;
+    }
+
+    @RequestMapping(value = "/deleteOneUser", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> deleteOneUser(HttpServletRequest request, Integer id) {
+        Map<String, Object> returnMap = new HashMap<String, Object>();
+
+        try {
+            Map<String, Object> map = userService.deleteOneUser(id);
+
+            returnMap.put("message", map.get("message"));
+            returnMap.put("success", map.get("success"));
+        } catch (Exception e) {
+            returnMap.put("message", "异常：操作失败!");
+            returnMap.put("success", false);
+            e.printStackTrace();
+        }
+        return returnMap;
+    }
+
+    @RequestMapping(value = "/getUserPageList", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> getUserPageList(HttpServletRequest request, int currentPage, int pageSize, String blurUserName) {
+        Map<String, Object> returnMap = new HashMap<String, Object>();
+
+        try {
+            Page<User> userPage = userService.getUserPageList(currentPage, pageSize);
+
+            returnMap.put("page", userPage);
+            returnMap.put("success", true);
+        } catch (Exception e) {
+            returnMap.put("message", "异常：获取失败!");
             returnMap.put("success", false);
             e.printStackTrace();
         }

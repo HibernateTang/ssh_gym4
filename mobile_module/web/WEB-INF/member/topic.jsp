@@ -127,8 +127,6 @@
         </div>
         <div class="card-content">
             <div class="card-content-inner">
-
-
                 <p class="small">兼容性最好，支持ie6+，及所有现代浏览器。 支持按字体的方式去动态调整图标大小，颜色等等。 但是因为是字体，所以不支持多色。只能使用平台里单色的图标，就算项目里有多色图标也会自动去色。</p>
             </div>
         </div>
@@ -139,7 +137,6 @@
 <script src="/js/swiper-3.4.2.jquery.min.js"></script>
 <script src="http://cdn.bootcss.com/video.js/6.0.0-RC.5/video.min.js"></script>
 <script>
-
     $.init()
 </script>
 </body>

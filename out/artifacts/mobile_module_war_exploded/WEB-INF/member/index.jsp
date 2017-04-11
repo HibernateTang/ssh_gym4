@@ -179,7 +179,7 @@
                 </div>
             </div>
 
-            <div onClick="location.href='/index/myinfo'" id="toMyInfo" class="card facebook-card" ontouchstart="return false;">
+            <div onClick="location.href='/index/myinfo?idhz=${indexObj['idhz']}'" id="toMyInfo" class="card facebook-card" ontouchstart="return false;">
                 <div class="card-header row-right">
                     <div class="facebook-avatar">
                         <img src="/images/member/head.jpg">
@@ -218,7 +218,7 @@
                         </c:when>
                         <c:otherwise>
                             <div class="card-content-inner">
-                                你暂时还没有排名！
+                                <h1>你暂时还没有排名！</h1>
                             </div>
                         </c:otherwise>
                     </c:choose>

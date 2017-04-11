@@ -130,8 +130,8 @@ $(document).ready(function () {
             success: function (data) {
                 console.log(data);
                 if (data.success == true && data.message == "登录成功") {
+                    layer.msg('登录成功')
 
-                    layer.msg('登录成功');
                     window.location.href = "/index";
 //                            window.location.href = "../jsp/infojsp/info.jsp?userName="+data.value.username+
 //                                    "&userId="+data.value.id;
@@ -158,13 +158,13 @@ $(document).ready(function () {
             success: function (data) {
                 console.log(data);
                 if (data.success == true && data.message == "注册成功") {
-                    alert("注册成功!");
+                    layer.msg('注册成功!正在跳转...');
                     mySwiper.unlockSwipes();
                     mySwiper.slidePrev(fadeInClass());
                     mySwiper.lockSwipes();
                     $("#login_tel").val(username);
                 } else if (data.success == false) {
-                    alert(data.message);
+                    layer.msg(data.message);
                 }
 
             }

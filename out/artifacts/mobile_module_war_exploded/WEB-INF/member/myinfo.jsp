@@ -98,16 +98,17 @@
                 <img src="/images/member/head.jpg">
             </div>
             <div>
-                <div class="facebook-title">费云路</div>
-                <div class="facebook-text">年龄：18个月</div>
+                <div class="facebook-title">${childObj['name']}</div>
+                <div class="facebook-text">年龄：${childObj['age']}</div>
             </div>
 
         </div>
 
         <div class="card-content">
-            <div class="card-conntent-inner">
-                <c:choose>
-                    <c:when test="${not empty infoObj}">
+
+            <c:choose>
+                <c:when test="${not empty infoObj}">
+                    <div class="card-conntent-inner">
                         <div class="list-block gym-list">
                             <ul>
                                 <li class="item-content">
@@ -131,7 +132,7 @@
                                         <div class="item-title">累计请假：${infoObj['累计请假数']}节</div>
                                     </div>
                                     <div class="item-inner">
-                                        <div class="item-title">报名金额：11800</div>
+                                        <div class="item-title">报名金额：${infoObj['合同金额']}</div>
                                     </div>
                                 </li>
                                 <li class="item-content">
@@ -153,13 +154,14 @@
                                 </li>
                             </ul>
                         </div>
-
-                    </c:when>
-                    <c:otherwise>
-                        没有合同信息！
-                    </c:otherwise>
-                </c:choose>
-            </div>
+                    </div>
+                </c:when>
+                <c:otherwise>
+                    <div class="card-conntent-inner text-center">
+                        <h3>没有合同信息！</h3>
+                    </div>
+                </c:otherwise>
+            </c:choose>
         </div>
     </div>
 
