@@ -159,6 +159,9 @@
         .gym-card-title a:active {
             color: #eee;
         }
+        .gym-picker {
+            border: none;
+        }
     </style>
 
 
@@ -179,7 +182,8 @@
                 </div>
             </div>
 
-            <div onClick="location.href='/index/myinfo?idhz=${indexObj['idhz']}'" id="toMyInfo" class="card facebook-card" ontouchstart="return false;">
+            <div onClick="location.href='/index/myinfo?idhz=${indexObj['idhz']}'" id="toMyInfo"
+                 class="card facebook-card" ontouchstart="return false;">
                 <div class="card-header row-right">
                     <div class="facebook-avatar">
                         <img src="/images/member/head.jpg">
@@ -189,7 +193,7 @@
                         <div class="facebook-title">${indexObj['name']}</div>
                         <div class="facebook-text">年龄：${indexObj['age']}</div>
                         <div class="facebook-text">合同剩余课时数：${indexObj['rest']}节课</div>
-                        <div class="facebook-text">活动通知：<span class="inform"></span></div>
+                        <div class="facebook-text">活动通知：<span class="inform">植树节活动</span></div>
                     </div>
                 </div>
             </div>
@@ -206,7 +210,7 @@
                                 <div class="card-exercise-time">${rankObj['mins']}分钟</div>
                                 <div class="row">
                                     <div class="col-50 exercise-total">完成${rankObj['times']}次</div>
-
+                                    <div class="col-50 exercise-total">累积${rankObj['times']}天</div>
                                 </div>
                                 <div class="card-exercise-beyond">
                                     过去<strong>三个月</strong>超过全国<strong>${rankObj['outpass']}%</strong>的会员
@@ -226,14 +230,18 @@
             </div>
 
             <div class="card">
+                <div class="card-header">
+                    <input class="gym-picker" type="text" readonly value="月球中心" id="gym"/>
+                </div>
                 <div class="card-content-inner">
                     <!--<input id="birthday" data-toggle="date" readonly type="text" />-->
                     <div>
                         <div class="gym-datepicker">
                             <i class="fa fa-angle-double-left"></i>
-                            <input type="text" readonly id="beginDate" value="${gymDate['beginDate']}" data-toggle="data"/> -
-
-                            <input type="text" readonly id="endDate" value="${gymDate['endDate']}"  data-toggle="data"/>
+                            <input type="text" readonly id="beginDate" value="${sessionScope.gymDate['beginDate']}"
+                                   data-toggle="data"/> -
+                            <input type="text" readonly id="endDate" value="${sessionScope.gymDate['endDate']}"
+                                   data-toggle="data"/>
                             <i class="fa fa-angle-double-right"></i>
                         </div>
                         <div class="row no-gutter gym-icon-list">
@@ -258,18 +266,27 @@
                                 <div class="swiper-slide swiper-slide-active">
 
                                     <ul class="details_list">
-                                        <c:if test="${not empty listGymClass}">
-                                            <c:forEach items="${listGymClass}" var="gymClass">
-                                                <li class="row no-gutter">
+                                        <c:choose>
+                                            <c:when test="${not empty listGymClass}">
+                                                <c:forEach items="${listGymClass}" var="gymClass">
+                                                    <li class="row no-gutter">
                                                 <span class="col-20  date"><fmt:formatDate value="${gymClass['date']}"
                                                                                            pattern="yyyy.MM.dd"/></span>
-                                                    <span class="col-20  time">${gymClass['time']}</span>
-                                                    <span class="col-20  class">${gymClass['course']}</span>
-                                                    <span class="col-20  state">${gymClass['kq']}</span>
-                                                    <a href="/index/topic"><span class="col-20 details">课程亮点</span></a>
+                                                        <span class="col-20  time">${gymClass['time']}</span>
+                                                        <span class="col-20  class">${gymClass['course']}</span>
+                                                        <span class="col-20  state">${gymClass['kq']}</span>
+                                                        <a href="/index/topic"><span class="col-20 details">课程亮点</span></a>
+                                                    </li>
+                                                </c:forEach>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <li class="row no-gutter">
+                                                    <h3>没有查询到课程</h3>
                                                 </li>
-                                            </c:forEach>
-                                        </c:if>
+                                            </c:otherwise>
+                                        </c:choose>
+
+
                                     </ul>
                                 </div>
                             </div>
@@ -305,21 +322,46 @@
         $("#beginDate,#endDate").calendar({});
         $.init();
     })
-
+    $("#gym").picker({
+        toolbarTemplate: '<header class="bar bar-nav">\
+      <button class="button button-link pull-right close-picker">确定</button>\
+      <h1 class="title">所在中心</h1>\
+      </header>',
+        cols: [
+            {
+                textAlign: 'center',
+                values: ['上海松江中心','奇怪的中心','月球中心']
+            }
+        ]
+    });
     $("#beginDate,#endDate").change(function () {
-        attend_ajax(79987, $("#beginDate").val(), $("#endDate").val());
+        attend_ajax(${indexObj['idhz']}, $("#beginDate").val(), $("#endDate").val());
     })
-    function attend_ajax(idChild,beginDate,endDate){
-            $.ajax({
-                type: "GET",
-                url: "/index/attend",
-                data: {"idChild": idChild, "beginDate":beginDate, "endDate": endDate},
-                contentType: "application/x-www-form-urlencoded",
-                dataType: "json",
-                success: function (data) {
-                    alert(data[0].date);
+    function attend_ajax(idChild, beginDate, endDate) {
+        $.ajax({
+            type: "GET",
+            url: "/index/attend",
+            data: {"idChild": idChild, "beginDate": beginDate, "endDate": endDate},
+            contentType: "application/x-www-form-urlencoded",
+            dataType: "json",
+//            beforeSend: ,
+            success: function (data) {
+                var divGymClass = "";
+                if (data != null){
+                    $.each(data, function (index, content) {
+                        divGymClass += "<li class='row no-gutter'>"
+                        divGymClass += "<span class='col-20  date'>" + content.date + "</span>";
+                        divGymClass += "<span class='col-20  time'>" + content.time + "</span>";
+                        divGymClass += "<span class='col-20  class'>" + content.course + "</span>";
+                        divGymClass += "<span class='col-20  state'>" + content.kq + "</span>";
+                        divGymClass += "<a href='/index/topic'><span class='col-20 details'>课程亮点</span></a>";
+                        divGymClass += "</li>";
+                    });
                 }
-            });
+
+                $("ul .details_list").html(divGymClass);
+            }
+        });
     }
 </script>
 </body>

@@ -40,32 +40,66 @@ public class UserCtrl {
     public String index(HttpServletRequest request, Model model) throws Exception {
         HttpSession session = request.getSession();
         Object objSession = session.getAttribute("user");
+        Object dateSession = session.getAttribute("gymDate");
+        Object gymSession = session.getAttribute("gym");
+        Integer idGym = 0;
+        HashMap<String, String> gymMap = new HashMap<String, String>();
+
         User user;
-        if (objSession == null){
+
+        if (objSession == null) {
             return "redirect:/login.html";
-        }else{
-            user =(User)objSession;
+        } else {
+            user = (User) objSession;
         }
         //家庭
         Integer idFamily = user.getIdFamily();
-        String sqlUser = "declare @rest float;set @rest =isnull((select sum(kss)rest from(select top 6 crmzdy_81739422 kss from crm_zdytable_238592_25111_238592_view zx join crm_zdytable_238592_25115_238592_view bmksb on zx.crmzdy_81611091_id= "  + idFamily + " and bmksb.crmzdy_81756836_id=zx.id and bmksb.crmzdy_81733119='销售'  and bmksb.crmzdy_81739422/*rest*/>0 join crm_zdytable_238592_23796_238592_view ht on ht.id=bmksb.crmzdy_81486464_id and datediff(d,getdate(),crmzdy_81733324/*dtDaoQi*/)>=0 order by bmksb.id desc)bmksb),0);select hz.id idhz,hz.crm_name name,hz.crmzdy_81497217 age,replace(isnull(hz.crmzdy_82017585,''),'''','\\\"')ranking,@rest rest from crm_zdytable_238592_23893_238592_view hz where crmzdy_80653840_id=" + idFamily;
+        String sqlUser = "declare @rest float;set @rest =isnull((select sum(kss)rest from(select top 6 crmzdy_81739422 kss from crm_zdytable_238592_25111_238592_view zx join crm_zdytable_238592_25115_238592_view bmksb on zx.crmzdy_81611091_id= " + idFamily + " and bmksb.crmzdy_81756836_id=zx.id and bmksb.crmzdy_81733119='销售'  and bmksb.crmzdy_81739422/*rest*/>0 join crm_zdytable_238592_23796_238592_view ht on ht.id=bmksb.crmzdy_81486464_id and datediff(d,getdate(),crmzdy_81733324/*dtDaoQi*/)>=0 order by bmksb.id desc)bmksb),0);select hz.id idhz,hz.crm_name name,hz.crmzdy_81497217 age,replace(isnull(hz.crmzdy_82017585,''),'''','\\\"')ranking,@rest rest from crm_zdytable_238592_23893_238592_view hz where crmzdy_80653840_id=" + idFamily;
         JSONArray indexArray = getResultJson(sqlUser);
         JSONObject indexObj = indexArray.getJSONObject(0);
         indexObj.put("showAnother", indexArray.size() > 1 ? true : false);
 
+        //gym picker
+        String sqlGym = "select crmzdy_81620171 gymname,crmzdy_8162017_id idgym from crm_zdytable_238592_25111_238592_view where crmzdy_81611091_id = " + idFamily;
+        JSONArray zxArray = getResultJson(sqlGym);
+        JSONObject gymObj = null;
+        if (zxArray != null){
+            gymObj = zxArray.getJSONObject(0);
+            if (gymSession != null ){
+                idGym = (Integer) session.getAttribute("gym");
+            }else {
+                idGym = gymObj.getInteger("idgym");
+            }
+        }
 
         //全国排名
         JSONObject rankObj = rankUtil(indexObj.getString("ranking"), "last3");
 
+        String beginDate;
+        String endDate;
         //孩子考勤
-        String beginDate = "2017-03-01";
-        String endDate = "2017-04-10";
+        if (dateSession != null) {
+            gymMap = (HashMap<String, String>) dateSession;
+            beginDate = gymMap.get("beginDate");
+            endDate = gymMap.get("endDate");
+        } else {
+            beginDate = "2017-04-01";
+            endDate = "2017-04-10";
+            gymMap.put("beginDate", beginDate);
+            gymMap.put("endDate", endDate);
+            session.setAttribute("gymDate", gymMap);
+        }
         List<GymClass> listGymClass = new ArrayList<GymClass>();
         String idChild = indexObj.getString("idhz");
-        String sqlClass = "select rq.crm_name date,bj.crmzdy_80612384 time,bj.crmzdy_80612382 course,kq from(select crmzdy_81486481 kq,crmzdy_81486480_id idrq from crm_zdytable_238592_25118_238592_view bmks where bmks.crmzdy_81618215_id="+idChild+"/*idhz*/ and bmks.crmzdy_81636525>='" + beginDate + "'/*dtbegin*/ and bmks.crmzdy_81636525<='" + endDate + "'/*dtend*/ and crmzdy_81619234='已报名' union all select crmzdy_80652349,crmzdy_80652340_id from crm_zdytable_238592_23696_238592_view bk where crmzdy_80658051_id=352741 and bk.crmzdy_81761865>='2015-01-01'/*dtbegin*/ and bk.crmzdy_81761865<='2017-04-01'/*dtend*/)ks join crm_zdytable_238592_23870_238592_view rq on ks.idrq=rq.id join crm_zdytable_238592_23583_238592_view bj on rq.crmzdy_80650267_id=bj.id and bj.crmzdy_80620202_id='9'/*idgym*/order by date";
-        JSONArray classArray = getResultJson(sqlClass);
-        listGymClass = JSONObject.parseArray(classArray.toString(), GymClass.class);
+        String sqlClass = "select rq.crm_name date,bj.crmzdy_80612384 time,bj.crmzdy_80612382 course,kq from(select crmzdy_81486481 kq,crmzdy_81486480_id idrq from crm_zdytable_238592_25118_238592_view bmks where bmks.crmzdy_81618215_id="+idChild+" /*idhz*/ and datediff(d,'" +beginDate+"',bmks.crmzdy_81636525)>=0/*dtbegin*/ and  datediff(d,'"+endDate+"',bmks.crmzdy_81636525)<=0/*dtend*/ and crmzdy_81619234='已报名' union all select crmzdy_80652349,crmzdy_80652340_id from crm_zdytable_238592_23696_238592_view bk where crmzdy_80658051_id="+idChild+" and datediff(d,'"+beginDate+"',bk.crmzdy_81761865)>=0 /*dtbegin*/ and datediff(d,'"+endDate+"',bk.crmzdy_81761865)<=0 /*dtend*/)ks join crm_zdytable_238592_23870_238592_view rq on ks.idrq=rq.id join crm_zdytable_238592_23583_238592_view bj on rq.crmzdy_80650267_id=bj.id order by date";
+//        and bj.crmzdy_80620202_id=0
+        System.out.println(sqlClass);
+        sqlClass = "select rq.crm_name date,bj.crmzdy_80612384 time,bj.crmzdy_80612382 course,kq from(select crmzdy_81486481 kq,crmzdy_81486480_id idrq from crm_zdytable_238592_25118_238592_view bmks where bmks.crmzdy_81618215_id=352741/*idhz*/ and bmks.crmzdy_81636525>='2015-01-01'/*dtbegin*/ and bmks.crmzdy_81636525<='2017-04-01'/*dtend*/ and crmzdy_81619234='已报名' union all select crmzdy_80652349,crmzdy_80652340_id from crm_zdytable_238592_23696_238592_view bk where crmzdy_80658051_id=352741 and bk.crmzdy_81761865>='2015-01-01'/*dtbegin*/ and bk.crmzdy_81761865<='2017-04-01'/*dtend*/)ks join crm_zdytable_238592_23870_238592_view rq on ks.idrq=rq.id join crm_zdytable_238592_23583_238592_view bj on rq.crmzdy_80650267_id=bj.id and bj.crmzdy_80620202_id='9'/*idgym*/order by date";
 
+        JSONArray classArray = getResultJson(sqlClass);
+        if (classArray != null){
+            listGymClass = JSONObject.parseArray(classArray.toString(), GymClass.class);
+        }
 
         model.addAttribute("indexObj", indexObj);
         model.addAttribute("rankObj", rankObj);
@@ -91,27 +125,30 @@ public class UserCtrl {
 
 
     @RequestMapping(value = "/myinfo", method = RequestMethod.GET)
-    public String myinfo(HttpServletRequest request,String idhz,Model model) throws Exception {
+    public String myinfo(HttpServletRequest request, String idhz, Model model) throws Exception {
         HttpSession session = request.getSession();
         Object objSession = session.getAttribute("user");
         User user;
-        if (objSession != null){
-            user =(User)objSession;
-        }else{
+        if (objSession != null) {
+            user = (User) objSession;
+        } else {
             return "redirect:/login.html";
         }
         //我的信息
         Integer idFamily = user.getIdFamily();
         String sqlMyInfo = "select top 6 convert(varchar(10),ht.crmzdy_80646021,111) 报名日期,ht.crmzdy_80646031  报名课时数,ht.crmzdy_81636090 合同金额,convert(varchar(10),crmzdy_81733324,111)   有效期,bmksb.crmzdy_81739422 剩余课时数,bmksb.crmzdy_81739425 累计请假数,isnull(bjap.kc,'暂未排课') 课程,ht.crmzdy_81733120 赠课,zx.crmzdy_81802626 积分 from crm_zdytable_238592_25111_238592_view zx join crm_zdytable_238592_25115_238592_view bmksb on zx.crmzdy_81611091_id=" + idFamily + " and bmksb.crmzdy_81756836_id=zx.id  join crm_zdytable_238592_23796_238592_view ht on ht.id=bmksb.crmzdy_81486464_id  outer apply(select top 1 bj.crmzdy_80612382 kc from crm_zdytable_238592_25117_238592_view bjap join crm_zdytable_238592_23583_238592_view bj on bj.id=bjap.crmzdy_81486476_id where ht.id=bjap.crmzdy_81598938_id)bjap where bmksb.crmzdy_81733119='销售'  and bmksb.crmzdy_81739422/*rest*/>0 and datediff(d,getdate(),ht.crmzdy_81733324/*dtDaoQi*/)>=0";
         JSONArray infoArray = getResultJson(sqlMyInfo);
-        JSONObject infoObj = infoArray.getJSONObject(0);
+        JSONObject infoObj = null;
+        if (infoArray != null){
+            infoObj = infoArray.getJSONObject(0);
+        }
 
         //孩子id查询信息
         String sqlChild = "select  crm_name name,crmzdy_81497217 age from crm_zdytable_238592_23893_238592_view where id = " + idhz;
         JSONObject childObj = getResultJson(sqlChild).getJSONObject(0);
 
-        model.addAttribute("infoObj",infoObj);
-        model.addAttribute("childObj",childObj);
+        model.addAttribute("infoObj", infoObj);
+        model.addAttribute("childObj", childObj);
 
         if (user != null) {
             return "/member/myinfo";
@@ -120,13 +157,25 @@ public class UserCtrl {
         }
     }
 
+
+    //date change
     @RequestMapping(value = "/attend", method = RequestMethod.GET)
     @ResponseBody
-    public JSONArray getAttend(HttpServletRequest request,Integer idChild,String beginDate,String endDate){
-        String sqlClass = "select rq.crm_name date,bj.crmzdy_80612384 time,bj.crmzdy_80612382 course,kq from(select crmzdy_81486481 kq,crmzdy_81486480_id idrq from crm_zdytable_238592_25118_238592_view bmks where bmks.crmzdy_81618215_id="+idChild+"/*idhz*/ and bmks.crmzdy_81636525>='" + beginDate + "'/*dtbegin*/ and bmks.crmzdy_81636525<='" + endDate + "'/*dtend*/ and crmzdy_81619234='已报名' union all select crmzdy_80652349,crmzdy_80652340_id from crm_zdytable_238592_23696_238592_view bk where crmzdy_80658051_id=352741 and bk.crmzdy_81761865>='2015-01-01'/*dtbegin*/ and bk.crmzdy_81761865<='2017-04-01'/*dtend*/)ks join crm_zdytable_238592_23870_238592_view rq on ks.idrq=rq.id join crm_zdytable_238592_23583_238592_view bj on rq.crmzdy_80650267_id=bj.id and bj.crmzdy_80620202_id='9'/*idgym*/order by date";
-        JSONArray classArray = getResultJson(sqlClass);
+    public JSONArray getAttend(HttpServletRequest request,Integer idgym, Integer idChild, String beginDate, String endDate) {
+        HashMap<String, String> dateMap = new HashMap<String, String>();
+        HttpSession session = request.getSession();
+        //TODO session判断
+        JSONArray classArray;
+        dateMap.put("beginDate", beginDate);
+        dateMap.put("endDate", endDate);
+        session.setAttribute("gymDate", dateMap);
+        String sqlClass = "select rq.crm_name date,bj.crmzdy_80612384 time,bj.crmzdy_80612382 course,kq from(select crmzdy_81486481 kq,crmzdy_81486480_id idrq from crm_zdytable_238592_25118_238592_view bmks where bmks.crmzdy_81618215_id="+idChild+" /*idhz*/ and datediff(d,'" +beginDate+"',bmks.crmzdy_81636525)>=0/*dtbegin*/ and  datediff(d,'"+endDate+"',bmks.crmzdy_81636525)<=0/*dtend*/ and crmzdy_81619234='已报名' union all select crmzdy_80652349,crmzdy_80652340_id from crm_zdytable_238592_23696_238592_view bk where crmzdy_80658051_id="+idChild+" and datediff(d,'"+beginDate+"',bk.crmzdy_81761865)>=0 /*dtbegin*/ and datediff(d,'"+endDate+"',bk.crmzdy_81761865)<=0 /*dtend*/)ks join crm_zdytable_238592_23870_238592_view rq on ks.idrq=rq.id join crm_zdytable_238592_23583_238592_view bj on rq.crmzdy_80650267_id=bj.id and bj.crmzdy_80620202_id=" +idgym+ "/*idgym*/order by date";
+//        String sqlClass = "select rq.crm_name date,bj.crmzdy_80612384 time,bj.crmzdy_80612382 course,kq from(select crmzdy_81486481 kq,crmzdy_81486480_id idrq from crm_zdytable_238592_25118_238592_view bmks where bmks.crmzdy_81618215_id="+idChild+" /*idhz*/ and datediff(d,'" +beginDate+"',bmks.crmzdy_81636525)>=0/*dtbegin*/ and  datediff(d,'"+endDate+"',bmks.crmzdy_81636525)<=0/*dtend*/ and crmzdy_81619234='已报名' union all select crmzdy_80652349,crmzdy_80652340_id from crm_zdytable_238592_23696_238592_view bk where crmzdy_80658051_id="+idChild+" and datediff(d,'"+beginDate+"',bk.crmzdy_81761865)>=0 /*dtbegin*/ and datediff(d,'"+endDate+"',bk.crmzdy_81761865)<=0 /*dtend*/)ks join crm_zdytable_238592_23870_238592_view rq on ks.idrq=rq.id join crm_zdytable_238592_23583_238592_view bj on rq.crmzdy_80650267_id=bj.id order by date";
+        classArray = getResultJson(sqlClass);
+
         return classArray;
     }
+
     /*
     ranking转化jsonobject
      */
@@ -141,9 +190,9 @@ public class UserCtrl {
     }
 
     //输入sql获得list的jsonarray
-    public JSONArray getResultJson(String sql){
-        HashMap<String,String> hashMap = new HashMap<String,String>();
-        hashMap.put("sql1",sql);
+    public JSONArray getResultJson(String sql) {
+        HashMap<String, String> hashMap = new HashMap<String, String>();
+        hashMap.put("sql1", sql);
         JSONArray jsonArray = null;
         HttpResult httpResultUser = null;
         try {
@@ -160,6 +209,7 @@ public class UserCtrl {
         }
         return jsonArray;
     }
+
 
     //获得某一天的日期
 
