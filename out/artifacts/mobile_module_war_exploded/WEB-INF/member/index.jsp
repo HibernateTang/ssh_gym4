@@ -231,6 +231,8 @@
 
             <div class="card">
                 <div class="card-header">
+                    <div class="list-block">
+                    <div class="item-input"><select ><option>1</option><option>1</option></select></div></div>
                     <input class="gym-picker" type="text" readonly value="月球中心" id="gym"/>
                 </div>
                 <div class="card-content-inner">
@@ -322,18 +324,31 @@
         $("#beginDate,#endDate").calendar({});
         $.init();
     })
+
     $("#gym").picker({
         toolbarTemplate: '<header class="bar bar-nav">\
       <button class="button button-link pull-right close-picker">确定</button>\
       <h1 class="title">所在中心</h1>\
       </header>',
-        cols: [
+            cols: [
             {
                 textAlign: 'center',
-                values: ['上海松江中心','奇怪的中心','月球中心']
+                values: getGyms(),
             }
         ]
     });
+
+    function getGyms(param){
+        var gyms = ${sessionScope.gym.gyms};
+        var gymsName = [];
+        if (gyms != null ){
+            $.each(gyms,function(i,n){
+                gymsName.push(n.gymname);
+            });
+        }
+        return gymsName;
+    }
+
     $("#beginDate,#endDate").change(function () {
         attend_ajax(${indexObj['idhz']}, $("#beginDate").val(), $("#endDate").val());
     })
