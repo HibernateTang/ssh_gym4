@@ -87,134 +87,126 @@
 </head>
 
 <body>
-<div class="content">
-    <div class="card">
-        <div class="card-content gym-myinfo">
-            <a href="/index" class="myinfo-row"><i class="fa fa-angle-double-left fa-3x"></i></a>
-            <div class="gym-myinfo-title">我的信息</div>
-        </div>
-    </div>
-
-    <div class="card facebook-card">
-        <div class="card-header">
-            <div class="facebook-avatar">
-                <input id="file_input"  style="display: none"  accept="image/*"/>
-                <a ><img id ="avatar" src="/images/member/head.jpg"></a>
-            </div>
-            <div>
-
-                <div class="facebook-title">${childObj['name']}</div>
-                <div class="facebook-text">年龄：${childObj['age']}</div>
+        <div class="content">
+            <div class="card">
+                <div class="card-content gym-myinfo">
+                    <a href="/index" class="myinfo-row"><i class="fa fa-angle-double-left fa-3x"></i></a>
+                    <div class="gym-myinfo-title">我的信息</div>
+                </div>
             </div>
 
+            <div class="card facebook-card">
+                <div class="card-header">
+                    <div class="facebook-avatar">
+                        <a ><img id ="avatar" src="/images/member/head.jpg"></a>
+                    </div>
+                    <div>
+
+                        <div class="facebook-title">${childObj['name']}</div>
+                        <div class="facebook-text">年龄：${childObj['age']}</div>
+                    </div>
+
+                </div>
+
+                <div class="card-content">
+
+                    <c:choose>
+                        <c:when test="${not empty infoObj}">
+                            <div class="card-conntent-inner">
+                                <div class="list-block gym-list">
+                                    <ul>
+                                        <li class="item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title">报名日期：${infoObj['报名日期']}</div>
+                                            </div>
+                                            <div class="item-inner">
+                                                <div class="item-title">有效期：${infoObj['有效期']}</div>
+                                            </div>
+                                        </li>
+                                        <li class="item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title">剩余课时数：${infoObj['剩余课时数']}节</div>
+                                            </div>
+                                            <div class="item-inner">
+                                                <div class="item-title">报名课时数：${infoObj['报名课时数	']}节</div>
+                                            </div>
+                                        </li>
+                                        <li class="item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title">累计请假：${infoObj['累计请假数']}节</div>
+                                            </div>
+                                            <div class="item-inner">
+                                                <div class="item-title">报名金额：${infoObj['合同金额']}</div>
+                                            </div>
+                                        </li>
+                                        <li class="item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title">班级：${infoObj['课程']}</div>
+                                            </div>
+                                            <div class="item-inner">
+                                                <div class="item-title">赠课：${infoObj['赠课']}</div>
+                                            </div>
+                                        </li>
+                                        <li class="item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title">积分：${infoObj['积分']}</div>
+                                            </div>
+                                            <div class="item-inner">
+                                                <div class="item-title">所有合同<i class="fa fa-angle-double-right"
+                                                                               aria-hidden="true"></i></div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="card-conntent-inner text-center">
+                                <h3>没有合同信息！</h3>
+                                <br/>
+                                <br/>
+                                <br/>
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header no-border gym-card-title"><i></i>上海环球中心本月通知<i></i></div>
+                <div class="card-content">
+                    <img src="/images/member/inform.jpg" width="100%"></div>
+            </div>
+
+            <div class="content">
+                <div class="content-block">
+                    <p><a href="#" class="open-about" data-popup="popup popup-about" >Open About Popup </a></p>
+                    <p><a href="#" class="open-services">Open Services Popup </a></p>
+                </div>
+
+            </div>
+            <!-- About Popup -->
+            <div class="popup popup-about">
+                <div class="content-block">
+                    <p>About</p>
+                    <p><a href="#" class="close-popup">Close popup</a></p>
+                    <p>Lorem ipsum dolor ...</p>
+                </div>
+            </div>
         </div>
 
-        <div class="card-content">
-
-            <c:choose>
-                <c:when test="${not empty infoObj}">
-                    <div class="card-conntent-inner">
-                        <div class="list-block gym-list">
-                            <ul>
-                                <li class="item-content">
-                                    <div class="item-inner">
-                                        <div class="item-title">报名日期：${infoObj['报名日期']}</div>
-                                    </div>
-                                    <div class="item-inner">
-                                        <div class="item-title">有效期：${infoObj['有效期']}</div>
-                                    </div>
-                                </li>
-                                <li class="item-content">
-                                    <div class="item-inner">
-                                        <div class="item-title">剩余课时数：${infoObj['剩余课时数']}节</div>
-                                    </div>
-                                    <div class="item-inner">
-                                        <div class="item-title">报名课时数：${infoObj['报名课时数	']}节</div>
-                                    </div>
-                                </li>
-                                <li class="item-content">
-                                    <div class="item-inner">
-                                        <div class="item-title">累计请假：${infoObj['累计请假数']}节</div>
-                                    </div>
-                                    <div class="item-inner">
-                                        <div class="item-title">报名金额：${infoObj['合同金额']}</div>
-                                    </div>
-                                </li>
-                                <li class="item-content">
-                                    <div class="item-inner">
-                                        <div class="item-title">班级：${infoObj['课程']}</div>
-                                    </div>
-                                    <div class="item-inner">
-                                        <div class="item-title">赠课：${infoObj['赠课']}</div>
-                                    </div>
-                                </li>
-                                <li class="item-content">
-                                    <div class="item-inner">
-                                        <div class="item-title">积分：${infoObj['积分']}</div>
-                                    </div>
-                                    <div class="item-inner">
-                                        <div class="item-title">所有合同<i class="fa fa-angle-double-right"
-                                                                       aria-hidden="true"></i></div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </c:when>
-                <c:otherwise>
-                    <div class="card-conntent-inner text-center">
-                        <h3>没有合同信息！</h3>
-                        <br/>
-                        <br/>
-                        <br/>
-                    </div>
-                </c:otherwise>
-            </c:choose>
-            <button id="test" onclick="alert(11)">asdas</button>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-header no-border gym-card-title"><i></i>上海环球中心本月通知<i></i></div>
-        <div class="card-content">
-            <img src="/images/member/inform.jpg" width="100%"></div>
-    </div>
-</div>
 
 <script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
 <script type='text/javascript' src='/js/sm.min.js' charset='utf-8'></script>
-<script src="/js/swiper-3.4.2.jquery.min.js"></script>
 
 <script>
+    $(document).on('click','.open-about', function () {
+        $.popup('.popup-about');
+    });
+$(function () {
+    $.init();
+})
 
-
-    $("#avatar").click(function () {
-        var buttons1 = [
-            {
-                text: '设置头像',
-                label: true
-            },
-            {
-                text: '拍照上传',
-                bold: true,
-                onClick: function() {
-                }
-            },
-            {
-                text: '从相册中选择',
-                onClick: function() {
-                    $("#file_input").click();
-                }
-            }
-        ];
-        var buttons2 = [
-            {
-                text: '取消',
-            }
-        ];
-        var groups = [buttons1, buttons2];
-        $.actions(groups);
-    })
     
 
 </script>
