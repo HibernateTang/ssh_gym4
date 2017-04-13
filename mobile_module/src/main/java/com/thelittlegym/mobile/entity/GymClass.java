@@ -8,10 +8,19 @@ import java.util.Date;
  */
 @Entity
 public class GymClass {
+    private String idgym;
     private Date date;
     private String time;
     private String course;
     private String kq;
+
+    public String getIdgym() {
+        return idgym;
+    }
+
+    public void setIdgym(String idgym) {
+        this.idgym = idgym;
+    }
 
     public Date getDate() {
         return date;

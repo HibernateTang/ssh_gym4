@@ -22,7 +22,9 @@
     <link rel="stylesheet" href="/css/sm.min.css">
     <link rel="stylesheet" href="/css/swiper-3.4.2.min.css">
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
     <style>
+
         .card-exercise-time {
             font-size: 1.5rem;
             text-align: center;
@@ -159,8 +161,9 @@
         .gym-card-title a:active {
             color: #eee;
         }
-        .gym-picker {
-            border: none;
+
+        .text-danger {
+            color: #a94442;
         }
     </style>
 
@@ -201,6 +204,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="item-title">我的旅行</div>
+                    <i class="fa fa-send-o"></i>
                 </div>
                 <div class="card-content">
                     <c:choose>
@@ -208,10 +212,7 @@
 
                             <div class="card-content-inner">
                                 <div class="card-exercise-time">${rankObj['mins']}分钟</div>
-                                <div class="row">
-                                    <div class="col-50 exercise-total">完成${rankObj['times']}次</div>
-                                    <div class="col-50 exercise-total">累积${rankObj['times']}天</div>
-                                </div>
+                                <div class="exercise-total">完成${rankObj['times']}次</div>
                                 <div class="card-exercise-beyond">
                                     过去<strong>三个月</strong>超过全国<strong>${rankObj['outpass']}%</strong>的会员
                                 </div>
@@ -230,18 +231,38 @@
             </div>
 
             <div class="card">
-                <div class="card-header">
-                    <div class="list-block">
-                    <div class="item-input"><select ><option>1</option><option>1</option></select></div></div>
+                <div class="list-block">
+                    <div class="item-content">
+                        <div class="item-media"><i class="fa fa-soccer-ball-o"></i></div>
+                        <div class="item-inner">
+                            <select id="gyms">
+                                <c:choose>
+                                    <c:when test="${not empty sessionScope.listGym}">
+                                        <c:forEach items="${sessionScope.listGym}" var="mygym">
+                                            <option value="${mygym['idGym']}"
+                                                    <c:if test="${mygym['idGym'] == sessionScope.gym['idGymSelected']}">selected </c:if> >${mygym['gymName']}
+                                            </option>
+                                        </c:forEach>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option value="0">没有中心</option>
+                                    </c:otherwise>
+                                </c:choose>
+                            </select>
+                        </div>
+                    </div>
                 </div>
+
+
+
                 <div class="card-content-inner">
-                    <!--<input id="birthday" data-toggle="date" readonly type="text" />-->
+
                     <div>
                         <div class="gym-datepicker">
                             <i class="fa fa-angle-double-left"></i>
-                            <input type="text" readonly id="beginDate" value="${sessionScope.gymDate['beginDate']}"
+                            <input type="text" readonly id="beginDate" value="${sessionScope.gym['beginDate']}"
                                    data-toggle="data"/> -
-                            <input type="text" readonly id="endDate" value="${sessionScope.gymDate['endDate']}"
+                            <input type="text" readonly id="endDate" value="${sessionScope.gym['endDate']}"
                                    data-toggle="data"/>
                             <i class="fa fa-angle-double-right"></i>
                         </div>
@@ -266,7 +287,7 @@
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide swiper-slide-active">
 
-                                    <ul class="details_list">
+                                    <ul id="details_list" class="details_list">
                                         <c:choose>
                                             <c:when test="${not empty listGymClass}">
                                                 <c:forEach items="${listGymClass}" var="gymClass">
@@ -282,7 +303,7 @@
                                             </c:when>
                                             <c:otherwise>
                                                 <li class="row no-gutter">
-                                                    <h3>没有查询到课程</h3>
+                                                    <h3 class="col-100 text-center">没有查询到课程</h3>
                                                 </li>
                                             </c:otherwise>
                                         </c:choose>
@@ -305,6 +326,15 @@
 <script type='text/javascript' src='/js/sm.min.js' charset='utf-8'></script>
 <script src="/js/swiper-3.4.2.jquery.min.js"></script>
 <script>
+    $(function () {
+        $("#beginDate").calendar({
+            value: [$("#beginDate").val()]
+        });
+        $("#endDate").calendar({
+            value: [$("#endDate").val()]
+        });
+        $.init();
+    })
 
     if ($('.swiper-container-dlist').size()) {
         $('.swiper-container-dlist').find('.swiper-slide').height('auto');
@@ -319,51 +349,51 @@
 
     }
 
-    $(function () {
-        $("#beginDate,#endDate").calendar({});
-        $.init();
+
+    $("#beginDate,#endDate,#gyms").change(function () {
+        attend_ajax($("#gyms").val(), ${indexObj['idhz']}, $("#beginDate").val(), $("#endDate").val());
     })
 
-    function getGyms(param){
-        var gyms = ${sessionScope.gym.gyms};
-        var gymsName = [];
-        if (gyms != null ){
-            $.each(gyms,function(i,n){
-                gymsName.push(n.gymname);
-            });
-        }
-        return gymsName;
-    }
-
-    $("#beginDate,#endDate").change(function () {
-        attend_ajax(${indexObj['idhz']}, $("#beginDate").val(), $("#endDate").val());
-    })
-    function attend_ajax(idChild, beginDate, endDate) {
+    //考勤明细
+    function attend_ajax(idGym, idChild, beginDate, endDate) {
         $.ajax({
             type: "GET",
             url: "/index/attend",
-            data: {"idChild": idChild, "beginDate": beginDate, "endDate": endDate},
+            data: {"idGym": idGym, "idChild": idChild, "beginDate": beginDate, "endDate": endDate},
             contentType: "application/x-www-form-urlencoded",
             dataType: "json",
-//            beforeSend: ,
+            beforeSend: function () {
+                $("#details_list").html('<li class="row no-gutter"><span class="col-100 text-center"><i class="fa  fa-refresh  fa-2x fa-spin"></i></span></li>')
+            },
             success: function (data) {
                 var divGymClass = "";
-                if (data != null){
+                if (data != null) {
                     $.each(data, function (index, content) {
                         divGymClass += "<li class='row no-gutter'>"
                         divGymClass += "<span class='col-20  date'>" + content.date + "</span>";
                         divGymClass += "<span class='col-20  time'>" + content.time + "</span>";
                         divGymClass += "<span class='col-20  class'>" + content.course + "</span>";
-                        divGymClass += "<span class='col-20  state'>" + content.kq + "</span>";
+                        if (content.kq == "尚未开课"){
+                            divGymClass += "<span class='col-20  state text-danger'>";
+                        }else{
+                            divGymClass += "<span class='col-20  state'>"
+                        }
+                        divGymClass += content.kq + "</span>";
                         divGymClass += "<a href='/index/topic'><span class='col-20 details'>课程亮点</span></a>";
                         divGymClass += "</li>";
                     });
+                } else {
+                    divGymClass = '<li class="row no-gutter">' +
+                            '<h3 class="col-100 text-center">没有查询到课程</h3>' +
+                            '</li>';
                 }
 
-                $("ul .details_list").html(divGymClass);
+                $("#details_list").html(divGymClass);
             }
         });
     }
+
+
 </script>
 </body>
 
