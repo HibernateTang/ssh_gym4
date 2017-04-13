@@ -20,7 +20,7 @@
     <title>我的信息</title>
     <link rel="stylesheet" href="/css/sm.min.css">
     <link rel="stylesheet" href="/css/swiper-3.4.2.min.css">
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
     <style>
         .gym-card-title {
             background: url('/images/member/card-bg.png');
@@ -98,9 +98,11 @@
     <div class="card facebook-card">
         <div class="card-header">
             <div class="facebook-avatar">
-                <img src="/images/member/head.jpg">
+                <input id="file_input"  style="display: none"  accept="image/*"/>
+                <a ><img id ="avatar" src="/images/member/head.jpg"></a>
             </div>
             <div>
+
                 <div class="facebook-title">${childObj['name']}</div>
                 <div class="facebook-text">年龄：${childObj['age']}</div>
             </div>
@@ -168,6 +170,7 @@
                     </div>
                 </c:otherwise>
             </c:choose>
+            <button id="test" onclick="alert(11)">asdas</button>
         </div>
     </div>
 
@@ -181,10 +184,39 @@
 <script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
 <script type='text/javascript' src='/js/sm.min.js' charset='utf-8'></script>
 <script src="/js/swiper-3.4.2.jquery.min.js"></script>
+
 <script>
-    $(function () {
-        $.init();
+
+
+    $("#avatar").click(function () {
+        var buttons1 = [
+            {
+                text: '设置头像',
+                label: true
+            },
+            {
+                text: '拍照上传',
+                bold: true,
+                onClick: function() {
+                }
+            },
+            {
+                text: '从相册中选择',
+                onClick: function() {
+                    $("#file_input").click();
+                }
+            }
+        ];
+        var buttons2 = [
+            {
+                text: '取消',
+            }
+        ];
+        var groups = [buttons1, buttons2];
+        $.actions(groups);
     })
+    
+
 </script>
 </body>
 

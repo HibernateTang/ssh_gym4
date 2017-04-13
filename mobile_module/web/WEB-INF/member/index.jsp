@@ -114,6 +114,9 @@
             font-size: 1.7vh;
             float: left;
         }
+        .details_list li span.text-danger {
+            color: #a94442;
+        }
 
         .details_list li .details {
             color: #3f4896;
@@ -162,9 +165,7 @@
             color: #eee;
         }
 
-        .text-danger {
-            color: #a94442;
-        }
+
     </style>
 
 
@@ -376,7 +377,7 @@
                         if (content.kq == "尚未开课"){
                             divGymClass += "<span class='col-20  state text-danger'>";
                         }else{
-                            divGymClass += "<span class='col-20  state'>"
+                            divGymClass += "<span class='col-20  state'>";
                         }
                         divGymClass += content.kq + "</span>";
                         divGymClass += "<a href='/index/topic'><span class='col-20 details'>课程亮点</span></a>";

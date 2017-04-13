@@ -23,15 +23,6 @@
     <link rel="stylesheet" href="/css/swiper-3.4.2.min.css">
     <link href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <style type="text/css">
-        .iconAli {
-            width: 1em;
-            height: 1em;
-            vertical-align: -0.15em;
-            fill: currentColor;
-            overflow: hidden;
-        }
-    </style>
     <style>
 
         .card-exercise-time {
@@ -123,6 +114,9 @@
             font-size: 1.7vh;
             float: left;
         }
+        .details_list li span.text-danger {
+            color: #a94442;
+        }
 
         .details_list li .details {
             color: #3f4896;
@@ -171,6 +165,7 @@
             color: #eee;
         }
 
+
     </style>
 
 
@@ -218,10 +213,7 @@
 
                             <div class="card-content-inner">
                                 <div class="card-exercise-time">${rankObj['mins']}分钟</div>
-                                <div class="row">
-                                    <div class="col-50 exercise-total">完成${rankObj['times']}次</div>
-                                    <div class="col-50 exercise-total">累积${rankObj['times']}天</div>
-                                </div>
+                                <div class="exercise-total">完成${rankObj['times']}次</div>
                                 <div class="card-exercise-beyond">
                                     过去<strong>三个月</strong>超过全国<strong>${rankObj['outpass']}%</strong>的会员
                                 </div>
@@ -382,7 +374,12 @@
                         divGymClass += "<span class='col-20  date'>" + content.date + "</span>";
                         divGymClass += "<span class='col-20  time'>" + content.time + "</span>";
                         divGymClass += "<span class='col-20  class'>" + content.course + "</span>";
-                        divGymClass += "<span class='col-20  state'>" + content.kq + "</span>";
+                        if (content.kq == "尚未开课"){
+                            divGymClass += "<span class='col-20  state text-danger'>";
+                        }else{
+                            divGymClass += "<span class='col-20  state'>";
+                        }
+                        divGymClass += content.kq + "</span>";
                         divGymClass += "<a href='/index/topic'><span class='col-20 details'>课程亮点</span></a>";
                         divGymClass += "</li>";
                     });

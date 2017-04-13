@@ -91,7 +91,7 @@ public class UserCtrl {
         }
         List<GymClass> listGymClass = new ArrayList<GymClass>();
 
-        String sqlClass = "select bj.crmzdy_80620202_id idgym,rq.crm_name date,bj.crmzdy_80612384 time,bj.crmzdy_80612382 course,case when kq='未考勤' then '尚未开课' end kq from(select crmzdy_81486481 kq,crmzdy_81486480_id idrq from " +
+        String sqlClass = "select bj.crmzdy_80620202_id idgym,rq.crm_name date,bj.crmzdy_80612384 time,bj.crmzdy_80612382 course,case when kq='未考勤' then '尚未开课' else kq  end kq from(select crmzdy_81486481 kq,crmzdy_81486480_id idrq from " +
                 "crm_zdytable_238592_25118_238592_view bmks where bmks.crmzdy_81618215_id="+idChild+"/*idhz*/ and bmks.crmzdy_81636525>='"+beginDate+"'/*dtbegin*/ and bmks.crmzdy_81636525<='"+endDate+"'/*dtend*/ and crmzdy_81619234='已报名' union all select crmzdy_80652349,crmzdy_80652340_id from crm_zdytable_238592_23696_238592_view bk where crmzdy_80658051_id=3519 and bk.crmzdy_81761865>='"+beginDate+"'/*dtbegin*/ and bk.crmzdy_81761865<='"+endDate+"'/*dtend*/)ks join crm_zdytable_238592_23870_238592_view rq on ks.idrq=rq.id join crm_zdytable_238592_23583_238592_view bj on rq.crmzdy_80650267_id=bj.id and bj.crmzdy_80620202_id="+idGym+"/*idgym*/order by date desc";
         System.out.println("sqlClass"+sqlClass);
 
@@ -172,7 +172,7 @@ public class UserCtrl {
         gymMap.put("beginDate", beginDate);
         gymMap.put("endDate", endDate);
         session.setAttribute("gym", gymMap);
-        String sqlClass = "select bj.crmzdy_80620202_id idgym,rq.crm_name date,bj.crmzdy_80612384 time,bj.crmzdy_80612382 course,case when kq='未考勤' then '尚未开课' end kq from(select crmzdy_81486481 kq,crmzdy_81486480_id idrq " +
+        String sqlClass = "select bj.crmzdy_80620202_id idgym,rq.crm_name date,bj.crmzdy_80612384 time,bj.crmzdy_80612382 course,case when kq='未考勤' then '尚未开课' else kq  end kq from(select crmzdy_81486481 kq,crmzdy_81486480_id idrq " +
                 "from crm_zdytable_238592_25118_238592_view bmks where bmks.crmzdy_81618215_id="+ idChild+ " /*idhz*/ and bmks.crmzdy_81636525>='"+beginDate+"'/*dtbegin*/ and bmks.crmzdy_81636525<='"+endDate+"'/*dtend*/ and crmzdy_81619234='已报名' union all select crmzdy_80652349,crmzdy_80652340_id from crm_zdytable_238592_23696_238592_view bk where crmzdy_80658051_id=3519 and bk.crmzdy_81761865>='"+beginDate+"'/*dtbegin*/ and bk.crmzdy_81761865<='"+endDate+"'/*dtend*/)ks join crm_zdytable_238592_23870_238592_view rq on ks.idrq=rq.id join crm_zdytable_238592_23583_238592_view bj on rq.crmzdy_80650267_id=bj.id and bj.crmzdy_80620202_id="+idGym+"/*idgym*/order by date desc";
         System.out.println("2个:\n"+sqlClass);
         classArray = getResultJson(sqlClass);
