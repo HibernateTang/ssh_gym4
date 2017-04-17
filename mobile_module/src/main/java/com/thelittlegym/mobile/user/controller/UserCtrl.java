@@ -9,20 +9,21 @@ import com.thelittlegym.mobile.entity.GymClass;
 import com.thelittlegym.mobile.user.model.User;
 import com.thelittlegym.mobile.utils.msg.config.AppConfig;
 import com.thelittlegym.mobile.utils.msg.utils.ConfigLoader;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by 汁 on 2017/3/25.
@@ -57,7 +58,11 @@ public class UserCtrl {
         Integer idFamily = user.getIdFamily();
         String sqlUser = "declare @rest float;set @rest =isnull((select sum(kss)rest from(select top 6 crmzdy_81739422 kss from crm_zdytable_238592_25111_238592_view zx join crm_zdytable_238592_25115_238592_view bmksb on zx.crmzdy_81611091_id= " + idFamily + " and bmksb.crmzdy_81756836_id=zx.id and bmksb.crmzdy_81733119='销售'  and bmksb.crmzdy_81739422/*rest*/>0 join crm_zdytable_238592_23796_238592_view ht on ht.id=bmksb.crmzdy_81486464_id and datediff(d,getdate(),crmzdy_81733324/*dtDaoQi*/)>=0 order by bmksb.id desc)bmksb),0);select hz.id idhz,hz.crm_name name,hz.crmzdy_81497217 age,replace(isnull(hz.crmzdy_82017585,''),'''','\\\"')ranking,@rest rest from crm_zdytable_238592_23893_238592_view hz where crmzdy_80653840_id=" + idFamily;
         JSONArray indexArray = getResultJson(sqlUser);
-        JSONObject indexObj = indexArray.getJSONObject(0);
+        JSONObject indexObj = null;
+        if (indexArray != null){
+            indexObj = indexArray.getJSONObject(0);
+        }
+
         indexObj.put("showAnother", indexArray.size() > 1 ? true : false);
 
         //全国排名
@@ -177,6 +182,54 @@ public class UserCtrl {
         System.out.println("2个:\n"+sqlClass);
         classArray = getResultJson(sqlClass);
         return classArray;
+    }
+
+    @RequestMapping(value = "/upload",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> getAttend(MultipartFile avatar, HttpServletRequest request, String idGym) {
+        HashMap<String, Object> returnMap = new HashMap<String, Object>();
+        HttpSession session = request.getSession();
+        try {
+            // 获取图片原始文件名
+            String originalFilename = avatar.getOriginalFilename();
+            System.out.println(originalFilename);
+
+            // 文件名使用当前时间
+            String name = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+
+            // 获取上传图片的扩展名(jpg/png/...)
+            String extension = FilenameUtils.getExtension(originalFilename);
+
+            // 图片上传的相对路径（因为相对路径放到页面上就可以显示图片）
+            String path = "/upload/" + name + "." + extension;
+            System.out.println(path);
+            // 图片上传的绝对路径
+            String url = request.getSession().getServletContext().getRealPath("") + path;
+
+            File dir = new File(url);
+            if(!dir.exists()) {
+                dir.mkdirs();
+            }
+
+            // 上传图片
+            avatar.transferTo(new File(url));
+
+//            // 将相对路径写回（json格式）
+//            JSONObject jsonObject = new JSONObject();
+//            // 将图片上传到本地
+//            jsonObject.put("path", path);
+
+//            // 设置响应数据的类型json
+//            response.setContentType("application/json; charset=utf-8");
+//            // 写回
+//            response.getWriter().write(jsonObject.toString());
+              returnMap.put("success",true);
+              returnMap.put("message",path);
+        } catch (Exception e) {
+            throw new RuntimeException("服务器繁忙，上传图片失败");
+        }
+
+        return returnMap;
     }
 
     /*

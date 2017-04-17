@@ -21,7 +21,7 @@
     <title>会员主页</title>
     <link rel="stylesheet" href="/css/sm.min.css">
     <link rel="stylesheet" href="/css/swiper-3.4.2.min.css">
-    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
 
     <style>
 

@@ -39,6 +39,7 @@
         .gym-myinfo a:active {
             color: #fff;
         }
+
         .gym-myinfo {
             background: url('/images/member/myinfo-banner.jpg') no-repeat;
             background-size: 100% 100%;
@@ -82,11 +83,27 @@
         .facebook-card .facebook-text {
             font-size: 0.6rem;
         }
+
+        .file input {
+            position: absolute;
+            font-size: 100px;
+            right: 0;
+            top: 0;
+            opacity: 0;
+        }
+
+        .pre-avatar {
+            width: 100%;
+            height: 20rem;
+        }
+
     </style>
 
 </head>
 
 <body>
+<div class="page-group">
+    <div class="page ">
         <div class="content">
             <div class="card">
                 <div class="card-content gym-myinfo">
@@ -98,7 +115,8 @@
             <div class="card facebook-card">
                 <div class="card-header">
                     <div class="facebook-avatar">
-                        <a ><img id ="avatar" src="/images/member/head.jpg"></a>
+                        <a class="open-avatar" data-popup="popup popup-avatar"><img id="avatar"
+                                                                                    src="/images/member/head.jpg"></a>
                     </div>
                     <div>
 
@@ -178,37 +196,59 @@
                     <img src="/images/member/inform.jpg" width="100%"></div>
             </div>
 
-            <div class="content">
-                <div class="content-block">
-                    <p><a href="#" class="open-about" data-popup="popup popup-about" >Open About Popup </a></p>
-                    <p><a href="#" class="open-services">Open Services Popup </a></p>
-                </div>
 
-            </div>
-            <!-- About Popup -->
-            <div class="popup popup-about">
-                <div class="content-block">
-                    <p>About</p>
-                    <p><a href="#" class="close-popup">Close popup</a></p>
-                    <p>Lorem ipsum dolor ...</p>
-                </div>
-            </div>
         </div>
+    </div>
+</div>
+
+
+<!-- About Popup -->
+<div class="popup popup-avatar">
+    <div class="card facebook-card no-border">
+        <div class="card-content">
+            <img src="/images/member/head.jpg" id="pre_avatar"  class="pre-avatar">
+        </div>
+    </div>
+    <div class="content-block">
+        <p ><a href="javascript:;" class="button  button-big file"><input type="file" id="avatarFile" accept="image/*">更换头像</a></p>
+        <p><a href="javascript:;" class="button  button-danger button-big close-popup">取消</a></p>
+    </div>
+
+</div>
 
 
 <script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
 <script type='text/javascript' src='/js/sm.min.js' charset='utf-8'></script>
 
 <script>
-    $(document).on('click','.open-about', function () {
-        $.popup('.popup-about');
+
+    $(".open-avatar").on('click', function () {
+        $.popup('.popup-avatar');
     });
-$(function () {
+
+    $("#avatarFile").on('change', function () {
+            var $file = $(this);
+            var fileObj = $file[0];
+            var windowURL = window.URL || window.webkitURL;
+            var dataURL;
+            var $img = $("#pre_avatar");
+
+            if(fileObj && fileObj.files && fileObj.files[0]){
+                dataURL = windowURL.createObjectURL(fileObj.files[0]);
+                $img.attr('src',dataURL);
+            }else{
+                dataURL = $file.val();
+                var imgObj = document.getElementById("preview");
+                imgObj.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+                imgObj.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = dataURL;
+            }
+        });
+
+    function upload_ajax(){
+
+    }
+
     $.init();
-})
-
-    
-
 </script>
 </body>
 
