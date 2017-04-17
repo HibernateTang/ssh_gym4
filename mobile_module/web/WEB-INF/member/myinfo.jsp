@@ -94,7 +94,7 @@
 
         .pre-avatar {
             width: 100%;
-            height: 20rem;
+            height: 16rem;
         }
 
     </style>
@@ -204,16 +204,19 @@
 
 <!-- About Popup -->
 <div class="popup popup-avatar">
-    <div class="card facebook-card no-border">
-        <div class="card-content">
-            <img src="/images/member/head.jpg" id="pre_avatar"  class="pre-avatar">
+    <form id="uploadForm" enctype="multipart/form-data">
+        <div class="card facebook-card no-border">
+            <div class="card-content">
+                <img src="/images/member/head.jpg" id="pre_avatar" class="pre-avatar">
+            </div>
         </div>
-    </div>
-    <div class="content-block">
-        <p ><a href="javascript:;" class="button  button-big file"><input type="file" id="avatarFile" accept="image/*">更换头像</a></p>
-        <p><a href="javascript:;" class="button  button-danger button-big close-popup">取消</a></p>
-    </div>
-
+        <div class="content-block">
+            <p><a href="javascript:;" class="button  button-big file"><input type="file" name="file" id="avatarFile"
+                                                                             accept="image/*">更换头像</a></p>
+            <p><a href="javascript:;" class="button  button-big" id="updateAvatar">确定</a></p>
+            <p><a href="javascript:;" class="button  button-danger button-big close-popup">取消</a></p>
+        </div>
+    </form>
 </div>
 
 
@@ -226,26 +229,44 @@
         $.popup('.popup-avatar');
     });
 
+    $("#updateAvatar").on('click', function () {
+//        upload_ajax();
+    })
     $("#avatarFile").on('change', function () {
-            var $file = $(this);
-            var fileObj = $file[0];
-            var windowURL = window.URL || window.webkitURL;
-            var dataURL;
-            var $img = $("#pre_avatar");
+        upload_ajax();
+    });
 
-            if(fileObj && fileObj.files && fileObj.files[0]){
-                dataURL = windowURL.createObjectURL(fileObj.files[0]);
-                $img.attr('src',dataURL);
-            }else{
-                dataURL = $file.val();
-                var imgObj = document.getElementById("preview");
-                imgObj.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
-                imgObj.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = dataURL;
+    function upload_ajax() {
+        var formData = new FormData();
+        formData.append('file', $("#avatarFile")[0].files[0]);
+        var imageSize = $("#avatarFile")[0].files[0].size;
+        if (imageSize > 1024 * 1024 * 3) {
+            $.alert("图片大于3M,请重新选择！")
+            return;
+        }
+        $.ajax({
+            url: '/index/upload',
+            type: 'POST',
+            data: formData,
+//            async: false,
+//            cache: false,
+            contentType: false,
+            processData: false,
+            beforeSend: function () {
+                $.showIndicator();
+            },
+            success: function (data) {
+                if (data.success == true) {
+                    $("#pre_avatar").attr("src", data.message);
+                }
+            },
+            complete: function () {
+                $.hideIndicator();
+            },
+            error: function (data) {
+                $.alert("异常错误,稍后再试");
             }
         });
-
-    function upload_ajax(){
-
     }
 
     $.init();

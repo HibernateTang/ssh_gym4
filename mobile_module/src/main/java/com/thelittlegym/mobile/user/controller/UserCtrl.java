@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -152,7 +153,10 @@ public class UserCtrl {
 
         //孩子id查询信息
         String sqlChild = "select  crm_name name,crmzdy_81497217 age from crm_zdytable_238592_23893_238592_view where id = " + idhz;
-        JSONObject childObj = getResultJson(sqlChild).getJSONObject(0);
+        JSONObject childObj = null;
+        if (getResultJson(sqlChild) != null){
+            childObj = getResultJson(sqlChild).getJSONObject(0);
+        }
 
         model.addAttribute("infoObj", infoObj);
         model.addAttribute("childObj", childObj);
@@ -186,47 +190,49 @@ public class UserCtrl {
 
     @RequestMapping(value = "/upload",method = RequestMethod.POST)
     @ResponseBody
-    public Map<String,Object> getAttend(MultipartFile avatar, HttpServletRequest request, String idGym) {
+    public Map<String,Object> getAttend(HttpServletRequest request, @RequestParam(value="file", required=false) MultipartFile file) {
         HashMap<String, Object> returnMap = new HashMap<String, Object>();
         HttpSession session = request.getSession();
+        Object objSession = session.getAttribute("user");
+        User user = null;
+        if (objSession != null) {
+            user = (User) objSession;
+        } else {
+            returnMap.put("success",false);
+            returnMap.put("message","请重新登录后再试");
+            return returnMap;
+        }
+        String tel = user.getTel();
         try {
             // 获取图片原始文件名
-            String originalFilename = avatar.getOriginalFilename();
+            String originalFilename = file.getOriginalFilename();
             System.out.println(originalFilename);
 
             // 文件名使用当前时间
-            String name = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
-
+//            String name = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+            String name = "avatar";
             // 获取上传图片的扩展名(jpg/png/...)
             String extension = FilenameUtils.getExtension(originalFilename);
 
             // 图片上传的相对路径（因为相对路径放到页面上就可以显示图片）
-            String path = "/upload/" + name + "." + extension;
-            System.out.println(path);
+            String path = "/upload/avatar/" + tel + "/" + name + "." + extension;
+            System.out.println("相对路径"+path);
             // 图片上传的绝对路径
             String url = request.getSession().getServletContext().getRealPath("") + path;
-
+            System.out.println("绝对路径"+url);
             File dir = new File(url);
             if(!dir.exists()) {
                 dir.mkdirs();
             }
 
             // 上传图片
-            avatar.transferTo(new File(url));
+            file.transferTo(new File(url));
 
-//            // 将相对路径写回（json格式）
-//            JSONObject jsonObject = new JSONObject();
-//            // 将图片上传到本地
-//            jsonObject.put("path", path);
-
-//            // 设置响应数据的类型json
-//            response.setContentType("application/json; charset=utf-8");
-//            // 写回
-//            response.getWriter().write(jsonObject.toString());
               returnMap.put("success",true);
               returnMap.put("message",path);
         } catch (Exception e) {
-            throw new RuntimeException("服务器繁忙，上传图片失败");
+            returnMap.put("success",false);
+            returnMap.put("message","请重新登录后再试");
         }
 
         return returnMap;
