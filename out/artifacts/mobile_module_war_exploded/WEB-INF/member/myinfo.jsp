@@ -116,7 +116,7 @@
                 <div class="card-header">
                     <div class="facebook-avatar">
                         <a class="open-avatar" data-popup="popup popup-avatar"><img id="avatar"
-                                                                                    src="/images/member/head.jpg"></a>
+                                                                                    src="${sessionScope.user.head_src}"></a>
                     </div>
                     <div>
 
@@ -207,7 +207,7 @@
     <form id="uploadForm" enctype="multipart/form-data">
         <div class="card facebook-card no-border">
             <div class="card-content">
-                <img src="/images/member/head.jpg" id="pre_avatar" class="pre-avatar">
+                <img src="${sessionScope.user.head_src}" id="pre_avatar" class="pre-avatar">
             </div>
         </div>
         <div class="content-block">
@@ -230,17 +230,19 @@
     });
 
     $("#updateAvatar").on('click', function () {
-//        upload_ajax();
+        upload_ajax();
     })
     $("#avatarFile").on('change', function () {
-        upload_ajax();
+        var objUrl = getObjectURL($("#avatarFile")[0].files[0]);
+        if (objUrl){
+            $("#pre_avatar").attr("src", objUrl);
+        }
     });
 
     function upload_ajax() {
         var formData = new FormData();
         formData.append('file', $("#avatarFile")[0].files[0]);
         var imageSize = $("#avatarFile")[0].files[0].size;
-        alert("图片大小：" + imageSize + "B")
         if (imageSize > 1024 * 1024 * 3) {
             $.alert("图片大于3M,请重新选择！")
             return;
@@ -258,7 +260,8 @@
             },
             success: function (data) {
                 if (data.success == true) {
-                    $("#pre_avatar").attr("src", data.message);
+                    $.toast("上传成功");
+                    location.reload();
                 }
             },
             complete: function () {
@@ -270,6 +273,18 @@
         });
     }
 
+
+    function getObjectURL(file) {
+        var url = null ;
+        if (window.createObjectURL!=undefined) { // basic
+            url = window.createObjectURL(file) ;
+        } else if (window.URL!=undefined) { // mozilla(firefox)
+            url = window.URL.createObjectURL(file) ;
+        } else if (window.webkitURL!=undefined) { // webkit or chrome
+            url = window.webkitURL.createObjectURL(file) ;
+        }
+        return url ;
+    }
     $.init();
 </script>
 </body>

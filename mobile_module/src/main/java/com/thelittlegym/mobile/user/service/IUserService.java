@@ -20,4 +20,6 @@ public interface IUserService {
 
     public User getUserById(Integer id) throws Exception;
 
+    public void updateUser(User user) throws Exception;
+
 }

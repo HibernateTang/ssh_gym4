@@ -190,7 +190,7 @@
                  class="card facebook-card" ontouchstart="return false;">
                 <div class="card-header row-right">
                     <div class="facebook-avatar">
-                        <img src="/images/member/head.jpg">
+                        <img src="${sessionScope.user.head_src}">
                     </div>
 
                     <div>
