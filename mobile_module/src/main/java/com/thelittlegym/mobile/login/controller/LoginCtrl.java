@@ -1,17 +1,15 @@
 package com.thelittlegym.mobile.login.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.thelittlegym.mobile.common.HttpResult;
-import com.thelittlegym.mobile.common.HttpService;
+import com.thelittlegym.mobile.common.OasisService;
 import com.thelittlegym.mobile.entity.Family;
 import com.thelittlegym.mobile.utils.msg.config.AppConfig;
 import com.thelittlegym.mobile.utils.msg.lib.MESSAGEXsend;
@@ -31,14 +29,15 @@ import com.thelittlegym.mobile.user.service.IUserService;
 @RequestMapping("/login")
 public class LoginCtrl {
     private static AppConfig config = ConfigLoader.load(ConfigLoader.ConfigType.Message);
-    private static String POST_URL = "https://bbk.800app.com/uploadfile/staticresource/238592/279832/MobileApiPost.aspx";
+//    private static String POST_URL = "https://bbk.800app.com/uploadfile/staticresource/238592/279832/MobileApiPost.aspx";
     @Autowired
     private ILoginService loginService;
     @Autowired
     private IUserService userService;
+//    @Autowired
+//    private HttpService httpService;
     @Autowired
-    private HttpService httpService;
-
+    private OasisService oasisService;
     @RequestMapping(value = "/tologin", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> login(HttpServletRequest request, String username, String password) {
@@ -70,29 +69,24 @@ public class LoginCtrl {
         Map<String, Object> returnMap = new HashMap<String, Object>();
         Map valNumMap = new HashMap();
 
-        Map<String,String> existMap = new HashMap<String,String>();
+//        Map<String,String> existMap = new HashMap<String,String>();
         String sqlExist = "select  crm_surname name,id,crmzdy_80620120 tel,crmzdy_81802271 childname,crmzdy_81778300 zx from   crm_sj_238592_view  where charindex('" +username+"',crmzdy_81767199)>0";
-        existMap.put("sql1", sqlExist);
+//        existMap.put("sql1", sqlExist);
 
         HttpSession session = request.getSession();
 
         try {
-            HttpResult httpResult = httpService.doPost(POST_URL, existMap);
-            JSONObject obj = JSONObject.parseObject(httpResult.getData());
+//            HttpResult httpResult = httpService.doPost(POST_URL, existMap);
+//            JSONObject obj = JSONObject.parseObject(httpResult.getData());
+            JSONArray jsonArray = oasisService.getResultJson(sqlExist);
             //是否是会员校验
-            if (obj != null){
-                if (!obj.getString("resultCode").equals("100") || obj.getInteger("totalRecord") < 1){
+            if (jsonArray != null){
                     returnMap.put("message", "手机号非会员!");
                     returnMap.put("success", false);
                     return returnMap;
-                }
-            }else {
-                returnMap.put("message", "异常:注册失败!");
-                returnMap.put("success", false);
-                return returnMap;
             }
 
-            JSONObject familyObj = obj.getJSONArray("list").getJSONObject(0);
+            JSONObject familyObj = jsonArray.getJSONObject(0);
             Family family = JSONObject.toJavaObject(familyObj,Family.class);
 
             //验证码校验
@@ -221,6 +215,24 @@ public class LoginCtrl {
         }
         return returnMap;
     }
+
+
+    @RequestMapping(value = "/exist", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> exist(String telephone) {
+        Map<String, Object> returnMap = new HashMap<String, Object>();
+        String sqlExist = "select  crm_surname name,id,crmzdy_80620120 tel,crmzdy_81802271 childname,crmzdy_81778300 zx from   crm_sj_238592_view  where charindex('" +telephone+"',crmzdy_81767199)>0";
+        if (oasisService.getResultJson(sqlExist) != null){
+            returnMap.put("success",true);
+            returnMap.put("message","该号码是会员");
+        }else{
+            returnMap.put("success",false);
+            returnMap.put("message","该号码非会员");
+        }
+        return returnMap;
+    }
+
+
 
     /*
     生成随机数验证码

@@ -94,7 +94,7 @@
 
         .pre-avatar {
             width: 100%;
-            height: 16rem;
+            height: 18rem;
         }
 
     </style>
@@ -103,11 +103,11 @@
 
 <body>
 <div class="page-group">
-    <div class="page ">
+    <div class="page page page-current">
         <div class="content">
             <div class="card">
                 <div class="card-content gym-myinfo">
-                    <a href="/index" class="myinfo-row"><i class="fa fa-angle-double-left fa-3x"></i></a>
+                    <a href="/index" class="myinfo-row " external><i class="fa fa-angle-double-left fa-3x"></i></a>
                     <div class="gym-myinfo-title">我的信息</div>
                 </div>
             </div>
@@ -214,7 +214,7 @@
             <p><a href="javascript:;" class="button  button-big file"><input type="file" name="file" id="avatarFile"
                                                                              accept="image/*">更换头像</a></p>
             <p><a href="javascript:;" class="button  button-big" id="updateAvatar">确定</a></p>
-            <p><a href="javascript:;" class="button  button-danger button-big close-popup">取消</a></p>
+            <p><a href="javascript:;" class="button  button-danger button-big close-popup" id="cancelUpdate">取消</a></p>
         </div>
     </form>
 </div>
@@ -227,8 +227,12 @@
 
     $(".open-avatar").on('click', function () {
         $.popup('.popup-avatar');
-    });
 
+    });
+    $("#cancelUpdate").on('click',function () {
+        $("#pre_avatar").attr("src",$("#avatar").attr("src") );
+        $("#avatarFile").val("");
+    })
     $("#updateAvatar").on('click', function () {
         upload_ajax();
     })
@@ -240,9 +244,21 @@
     });
 
     function upload_ajax() {
+        var uploadFile = $("#avatarFile");
+        if (uploadFile.val() == ""){
+            $.closeModal(".popup-avatar");
+            return false;
+        }
+        var fileExtension = uploadFile.val().substring(uploadFile.val().lastIndexOf("."),uploadFile.val().length);
+        var extensions = ".jpg,.JPG,.jpeg,.JPEG,.gif,.GIF,.png,.PNG";
+        if (extensions.indexOf(fileExtension) < 0){
+            $.alert("请选择正确的图片格式!");
+            return false;
+        }
         var formData = new FormData();
-        formData.append('file', $("#avatarFile")[0].files[0]);
-        var imageSize = $("#avatarFile")[0].files[0].size;
+        formData.append('file', uploadFile[0].files[0]);
+        var imageSize = uploadFile[0].files[0].size;
+
         if (imageSize > 1024 * 1024 * 3) {
             $.alert("图片大于3M,请重新选择！")
             return;
@@ -274,6 +290,7 @@
     }
 
 
+    //获得文件的网络路径
     function getObjectURL(file) {
         var url = null ;
         if (window.createObjectURL!=undefined) { // basic

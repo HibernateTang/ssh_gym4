@@ -13,6 +13,8 @@
         <spring.version>4.1.4.RELEASE</spring.version>
         <hibernate.version>4.3.8.Final</hibernate.version>
         <jackson.version>2.5.0</jackson.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
     <dependencies>
@@ -225,5 +227,13 @@
             <artifactId>httpmime</artifactId>
             <version>4.5.1</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator 图片处理工具-->
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+            <version>0.4.8</version>
+        </dependency>
+
     </dependencies>
 </project>

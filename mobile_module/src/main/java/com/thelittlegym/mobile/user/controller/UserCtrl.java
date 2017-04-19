@@ -8,8 +8,7 @@ import com.thelittlegym.mobile.entity.Gym;
 import com.thelittlegym.mobile.entity.GymClass;
 import com.thelittlegym.mobile.user.model.User;
 import com.thelittlegym.mobile.user.service.IUserService;
-import com.thelittlegym.mobile.utils.msg.config.AppConfig;
-import com.thelittlegym.mobile.utils.msg.utils.ConfigLoader;
+import net.coobird.thumbnailator.Thumbnails;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +23,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -207,7 +205,6 @@ public class UserCtrl {
         try {
             // 获取图片原始文件名
             String originalFilename = file.getOriginalFilename();
-            System.out.println(originalFilename);
 
             // 文件名使用当前时间
 //            String name = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
@@ -216,25 +213,28 @@ public class UserCtrl {
             String extension = FilenameUtils.getExtension(originalFilename);
 
             // 图片上传的相对路径（因为相对路径放到页面上就可以显示图片）
-            String path = "/upload/avatar/" + tel + "/" + name + "." + extension;
-            System.out.println("相对路径" + path);
+            String path = "/upload/avatar/" + tel + "/" + name + "." + extension.toUpperCase();
+            String originalPath = "/upload/avatar/" + tel + "/" + name + "Original" + "." + extension;
             // 图片上传的绝对路径
             String url = request.getSession().getServletContext().getRealPath("") + path;
-            System.out.println("绝对路径" + url);
-            File dir = new File(url);
+            String originalUrl = request.getSession().getServletContext().getRealPath("") + originalPath;
+            File dir = new File(originalUrl);
             if (!dir.exists()) {
                 dir.mkdirs();
             }
 
             // 上传图片
-            file.transferTo(new File(url));
-
+            file.transferTo(new File(originalUrl));
+            //压缩
+            Thumbnails.of(originalUrl).size(200, 200).outputFormat("jpg").toFile(url);
             user.setHead_src(path);
             userService.updateUser(user);
             session.setAttribute("user",user);
             returnMap.put("success", true);
             returnMap.put("message", path);
         } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("上传失败");
             returnMap.put("success", false);
             returnMap.put("message", "请重新登录后再试");
         }

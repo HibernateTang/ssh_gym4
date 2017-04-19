@@ -63,12 +63,12 @@ $(document).ready(function () {
 
     })
 
-    $("#test").click(function () {
-        var reg_tel = $("#reg_tel").val("18566666666");
-        var reg_valnum = $("#reg_valnum").val(1234);
-        var reg_pass = $("#reg_pass").val("zed123");
-        var reg_email = $("#reg_email").val("tangzi_123@163.com");
-    })
+    // $("#test").click(function () {
+    //     var reg_tel = $("#reg_tel").val("18566666666");
+    //     var reg_valnum = $("#reg_valnum").val(1234);
+    //     var reg_pass = $("#reg_pass").val("zed123");
+    //     var reg_email = $("#reg_email").val("tangzi_123@163.com");
+    // })
 
     $("#btn-valnum").click(function () {
         var tel = $("#reg_tel").val();
@@ -111,13 +111,16 @@ $(document).ready(function () {
         }
     }
 
+    $("#reg_tel").on('blur',function () {
+            exist_ajax($("#reg_tel").val());
+    })
+
 
     /*
      ajax方法
      */
     function login_ajax(telephone, password) {
         this.username = telephone;
-//            this.password = hex_md5(password);
         this.password = $.md5(password);
         $.ajax({
             type: "POST",
@@ -167,6 +170,28 @@ $(document).ready(function () {
         });
     }
 
+
+    function exist_ajax(telephone){
+        $.ajax({
+            type:"POST",
+            url: "/login/exist",
+            data: {"telephone": telephone},
+            contentType: "application/x-www-form-urlencoded",
+            dataType: "json",
+            success: function (data) {
+                console.log(data);
+                if (data.success == true) {
+                    layer.confirm('手机号不是会员，反馈给我们？', {
+                        btn: ['我要反馈','取消'] //按钮
+                    }, function(){
+                        layer.msg('此处该有反馈框');
+                    });
+                } else if (data.success == false) {
+                    layer.msg(data.message);
+                }
+            }
+        });
+    }
     function checkLogin() {
         //手机
         var telChecked = checkInput(/^1[34578]\d{9}$/, $("#login_tel"), "手机", "手机号格式不正确");
