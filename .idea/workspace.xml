@@ -2,27 +2,137 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9c822861-46d8-43d5-b9d1-cc5e67db2b1a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_coobird_thumbnailator_0_4_8.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/src/main/java/com/thelittlegym/mobile/common/OasisService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mobile_module/target/classes/com/thelittlegym/mobile/login/controller/LoginCtrl.class" afterPath="$PROJECT_DIR$/mobile_module/target/classes/com/thelittlegym/mobile/login/controller/LoginCtrl.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mobile_module/target/classes/com/thelittlegym/mobile/user/controller/UserCtrl.class" afterPath="$PROJECT_DIR$/mobile_module/target/classes/com/thelittlegym/mobile/user/controller/UserCtrl.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mobile_module_war_exploded/WEB-INF/classes/com/thelittlegym/mobile/login/controller/LoginCtrl.class" afterPath="$PROJECT_DIR$/out/artifacts/mobile_module_war_exploded/WEB-INF/classes/com/thelittlegym/mobile/login/controller/LoginCtrl.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mobile_module_war_exploded/WEB-INF/classes/com/thelittlegym/mobile/user/controller/UserCtrl.class" afterPath="$PROJECT_DIR$/out/artifacts/mobile_module_war_exploded/WEB-INF/classes/com/thelittlegym/mobile/user/controller/UserCtrl.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mobile_module_war_exploded/upload/avatar/15949190026/avatar.JPG" afterPath="$PROJECT_DIR$/out/artifacts/mobile_module_war_exploded/upload/avatar/15949190026/avatar.JPG" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/css/modules/laydate/icon.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/font/iconfont.eot" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/font/iconfont.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/font/iconfont.woff" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/0.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/1.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/10.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/11.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/12.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/13.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/14.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/15.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/16.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/17.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/18.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/19.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/2.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/20.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/21.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/22.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/23.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/24.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/25.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/26.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/27.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/28.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/29.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/3.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/30.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/31.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/32.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/33.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/34.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/35.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/36.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/37.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/38.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/39.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/4.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/40.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/41.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/42.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/43.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/44.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/45.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/46.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/47.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/48.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/49.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/5.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/50.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/51.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/52.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/53.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/54.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/55.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/56.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/57.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/58.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/59.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/6.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/60.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/61.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/62.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/63.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/64.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/65.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/66.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/67.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/68.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/69.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/7.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/70.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/71.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/8.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/images/face/9.gif" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/mui/fonts/mui.ttf" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/js/layui-module.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/css/layui.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/css/layui.mobile.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/css/modules/code.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/css/modules/laydate/laydate.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/css/modules/layer/default/layer.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/font/iconfont.svg" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/lay/dest/layui.all.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/lay/modules/code.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/lay/modules/element.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/lay/modules/flow.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/lay/modules/form.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/lay/modules/jquery.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/lay/modules/laydate.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/lay/modules/layedit.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/lay/modules/layer.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/lay/modules/laypage.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/lay/modules/laytpl.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/lay/modules/mobile.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/lay/modules/tree.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/lay/modules/upload.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/lay/modules/util.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/layui.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/mui/css/mui.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/mui/css/mui.min.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/mui/js/mui.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mobile_module/web/ui/mui/js/mui.min.js" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/mobile_module/web/js/layer/layer.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/mobile_module/web/js/layer/skin/default/layer.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/artifacts/mobile_module_war_exploded/js/layer/layer.js" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/artifacts/mobile_module_war_exploded/js/layer/skin/default/icon-ext.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/artifacts/mobile_module_war_exploded/js/layer/skin/default/icon.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/artifacts/mobile_module_war_exploded/js/layer/skin/default/layer.css" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/artifacts/mobile_module_war_exploded/js/layer/skin/default/loading-0.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/artifacts/mobile_module_war_exploded/js/layer/skin/default/loading-1.gif" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/artifacts/mobile_module_war_exploded/js/layer/skin/default/loading-2.gif" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/mobile_module_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/mobile_module_war_exploded.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mobile_module/mobile_module.iml" afterPath="$PROJECT_DIR$/mobile_module/mobile_module.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mobile_module/pom.xml" afterPath="$PROJECT_DIR$/mobile_module/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mobile_module/src/main/java/com/thelittlegym/mobile/login/controller/LoginCtrl.java" afterPath="$PROJECT_DIR$/mobile_module/src/main/java/com/thelittlegym/mobile/login/controller/LoginCtrl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mobile_module/src/main/java/com/thelittlegym/mobile/user/controller/UserCtrl.java" afterPath="$PROJECT_DIR$/mobile_module/src/main/java/com/thelittlegym/mobile/user/controller/UserCtrl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mobile_module/src/main/resources/httpclient.properties" afterPath="$PROJECT_DIR$/mobile_module/src/main/resources/httpclient.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mobile_module/target/classes/httpclient.properties" afterPath="$PROJECT_DIR$/mobile_module/target/classes/httpclient.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mobile_module/web/WEB-INF/member/myinfo.jsp" afterPath="$PROJECT_DIR$/mobile_module/web/WEB-INF/member/myinfo.jsp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mobile_module/web/css/login.css" afterPath="$PROJECT_DIR$/mobile_module/web/css/login.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mobile_module/web/js/login.js" afterPath="$PROJECT_DIR$/mobile_module/web/js/login.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mobile_module/web/login.html" afterPath="$PROJECT_DIR$/mobile_module/web/login.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mobile_module_war_exploded/WEB-INF/classes/httpclient.properties" afterPath="$PROJECT_DIR$/out/artifacts/mobile_module_war_exploded/WEB-INF/classes/httpclient.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mobile_module_war_exploded/WEB-INF/member/myinfo.jsp" afterPath="$PROJECT_DIR$/out/artifacts/mobile_module_war_exploded/WEB-INF/member/myinfo.jsp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mobile_module_war_exploded/css/login.css" afterPath="$PROJECT_DIR$/out/artifacts/mobile_module_war_exploded/css/login.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mobile_module_war_exploded/js/login.js" afterPath="$PROJECT_DIR$/out/artifacts/mobile_module_war_exploded/js/login.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/artifacts/mobile_module_war_exploded/login.html" afterPath="$PROJECT_DIR$/out/artifacts/mobile_module_war_exploded/login.html" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/mobile_module/web/js/layer/skin/default/icon-ext.png" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/css/modules/layer/default/icon-ext.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/mobile_module/web/js/layer/skin/default/icon.png" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/css/modules/layer/default/icon.png" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/mobile_module/web/js/layer/skin/default/loading-0.gif" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/css/modules/layer/default/loading-0.gif" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/mobile_module/web/js/layer/skin/default/loading-1.gif" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/css/modules/layer/default/loading-1.gif" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/mobile_module/web/js/layer/skin/default/loading-2.gif" afterPath="$PROJECT_DIR$/mobile_module/web/ui/layer/css/modules/layer/default/loading-2.gif" />
     </list>
     <ignored path="ssh_gym4.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -46,97 +156,44 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="UserCtrl.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mobile_module/src/main/java/com/thelittlegym/mobile/user/controller/UserCtrl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3560">
-              <caret line="265" column="52" selection-start-line="265" selection-start-column="52" selection-end-line="265" selection-end-column="52" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="LoginCtrl.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/mobile_module/src/main/java/com/thelittlegym/mobile/login/controller/LoginCtrl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="159">
-              <caret line="224" column="0" selection-start-line="224" selection-start-column="0" selection-end-line="224" selection-end-column="0" />
-              <folding>
-                <element signature="e#7264#7334#0" expanded="false" />
-                <element signature="method#deleteOneUser#0;class#LoginCtrl#0" expanded="false" />
-                <element signature="e#7919#7991#0" expanded="false" />
-                <element signature="method#getUserPageList#0;class#LoginCtrl#0" expanded="false" />
-                <element signature="e#8798#8814#0" expanded="true" />
-                <marker date="1492595884473" expanded="false" signature="2945:2960" placeholder="&lt;~&gt;" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="OasisService.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mobile_module/src/main/java/com/thelittlegym/mobile/common/OasisService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#647#663#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="IUserService.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mobile_module/src/main/java/com/thelittlegym/mobile/user/service/IUserService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="361">
-              <caret line="22" column="54" selection-start-line="22" selection-start-column="38" selection-end-line="22" selection-end-column="54" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UserServiceImpl.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mobile_module/src/main/java/com/thelittlegym/mobile/user/service/impl/UserServiceImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="73" column="29" selection-start-line="73" selection-start-column="29" selection-end-line="73" selection-end-column="29" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mobile_module/web/WEB-INF/member/index.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="69">
-              <caret line="175" column="33" selection-start-line="175" selection-start-column="16" selection-end-line="175" selection-end-column="33" />
-              <folding>
-                <marker date="1492509314447" expanded="true" signature="14668:14745" placeholder="..." />
-                <marker date="1492509314447" expanded="true" signature="14668:14746" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="login.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mobile_module/web/js/login.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="76">
-              <caret line="177" column="29" selection-start-line="177" selection-start-column="29" selection-end-line="177" selection-end-column="29" />
+            <state relative-caret-position="141">
+              <caret line="189" column="52" selection-start-line="189" selection-start-column="44" selection-end-line="189" selection-end-column="52" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="login.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="layui-module.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mobile_module/web/js/layui-module.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="33" selection-start-line="0" selection-start-column="33" selection-end-line="0" selection-end-column="33" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="login.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mobile_module/web/css/login.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-263">
+              <caret line="340" column="14" selection-start-line="340" selection-start-column="14" selection-end-line="340" selection-end-column="14" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="login.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mobile_module/web/login.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="211">
-              <caret line="61" column="84" selection-start-line="61" selection-start-column="77" selection-end-line="61" selection-end-column="84" />
-              <folding />
+            <state relative-caret-position="221">
+              <caret line="89" column="55" selection-start-line="89" selection-start-column="47" selection-end-line="89" selection-end-column="55" />
+              <folding>
+                <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -164,8 +221,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/mobile_module/src/main/resources/spring-http.xml" />
-        <option value="$PROJECT_DIR$/mobile_module/src/main/resources/httpclient.properties" />
         <option value="$PROJECT_DIR$/mobile_module/src/main/java/com/thelittlegym/mobile/common/HttpResult.java" />
         <option value="$PROJECT_DIR$/mobile_module/src/main/java/com/thelittlegym/mobile/common/HttpService.java" />
         <option value="$PROJECT_DIR$/mobile_module/src/main/resources/app_config.properties" />
@@ -208,13 +263,15 @@
         <option value="$PROJECT_DIR$/mobile_module/pom.xml" />
         <option value="$PROJECT_DIR$/mobile_module/src/main/java/com/thelittlegym/mobile/user/service/IUserService.java" />
         <option value="$PROJECT_DIR$/mobile_module/src/main/java/com/thelittlegym/mobile/user/controller/UserCtrl.java" />
-        <option value="$PROJECT_DIR$/mobile_module/web/WEB-INF/member/myinfo.jsp" />
-        <option value="$PROJECT_DIR$/mobile_module/web/login.html" />
-        <option value="$PROJECT_DIR$/mobile_module/web/css/login.css" />
         <option value="$PROJECT_DIR$/mobile_module/src/main/java/com/thelittlegym/mobile/common/OasisJsonResult.java" />
         <option value="$PROJECT_DIR$/mobile_module/src/main/java/com/thelittlegym/mobile/common/OasisResult.java" />
         <option value="$PROJECT_DIR$/mobile_module/src/main/java/com/thelittlegym/mobile/login/controller/LoginCtrl.java" />
+        <option value="$PROJECT_DIR$/mobile_module/web/WEB-INF/member/myinfo.jsp" />
+        <option value="$PROJECT_DIR$/mobile_module/src/main/resources/httpclient.properties" />
+        <option value="$PROJECT_DIR$/mobile_module/web/js/layui-module.js" />
         <option value="$PROJECT_DIR$/mobile_module/web/js/login.js" />
+        <option value="$PROJECT_DIR$/mobile_module/web/css/login.css" />
+        <option value="$PROJECT_DIR$/mobile_module/web/login.html" />
       </list>
     </option>
   </component>
@@ -402,9 +459,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -491,7 +545,55 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
+              <option name="myItemId" value="ui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ssh_gym4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mobile_module" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ssh_gym4" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="mobile_module" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ui" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -823,6 +925,9 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -844,11 +949,11 @@
       <recent name="G:\nate\ssh_gym4\mobile_module\web\WEB-INF\member" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="G:\GitHub\ssh_gym4\mobile_module\web\ui\mui" />
+      <recent name="G:\GitHub\ssh_gym4\mobile_module\web\ui\layer" />
+      <recent name="G:\GitHub\ssh_gym4\mobile_module\web\layer" />
       <recent name="G:\GitHub\ssh_gym4\mobile_module\src\main\java\com\thelittlegym\mobile\utils" />
       <recent name="G:\GitHub\ssh_gym4\mobile_module\src\main\java\com\thelittlegym\mobile\lib\base" />
-      <recent name="G:\GitHub\ssh_gym4\mobile_module\src\main\resources" />
-      <recent name="G:\GitHub\ssh_gym4\mobile_module\src\main\java\com\thelittlegym\mobile\lib" />
-      <recent name="G:\GitHub\ssh_gym4\mobile_module\src\main\java\lib" />
     </key>
   </component>
   <component name="RunManager" selected="Tomcat Server.Tomcat">
@@ -1327,11 +1432,13 @@
       <workItem from="1492496409461" duration="1191000" />
       <workItem from="1492502266425" duration="2771000" />
       <workItem from="1492567689217" duration="24442000" />
+      <workItem from="1492655739166" duration="7045000" />
+      <workItem from="1492674403406" duration="9158000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="173312000" />
+    <option name="totallyTimeSpent" value="189515000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1352,19 +1459,18 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329582" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3697749" sideWeight="0.50832075" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3697749" sideWeight="0.51134646" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3279743" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299356" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329582" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3697749" sideWeight="0.49167928" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3697749" sideWeight="0.48865354" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329582" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329582" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19969743" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23676248" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1375,6 +1481,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32936078" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -1399,20 +1506,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/mobile_module/src/main/java/com/thelittlegym/mobile/utils/msg/config/MessageConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mobile_module/src/main/java/com/thelittlegym/mobile/utils/msg/config/MailConfig.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mobile_module/src/main/java/com/thelittlegym/mobile/utils/msg/config/AppConfig.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="266">
@@ -1601,13 +1694,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mobile_module/src/main/resources/httpclient.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="7" column="30" selection-start-line="7" selection-start-column="30" selection-end-line="7" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/out/artifacts/mobile_module_war_exploded/upload/20170417170248802.jpg" />
     <entry file="file://$PROJECT_DIR$/mobile_module/web/WEB-INF/web.xml">
       <provider selected="true" editor-type-id="text-editor">
@@ -1637,7 +1723,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="115">
           <caret line="282" column="22" selection-start-line="282" selection-start-column="22" selection-end-line="282" selection-end-column="29" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1645,7 +1730,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="115">
           <caret line="478" column="0" selection-start-line="478" selection-start-column="0" selection-end-line="479" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1658,31 +1742,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-701">
           <caret line="178" column="16" selection-start-line="178" selection-start-column="16" selection-end-line="178" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mobile_module/web/WEB-INF/member/myinfo.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2764">
-          <caret line="237" column="0" selection-start-line="237" selection-start-column="0" selection-end-line="237" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mobile_module/src/main/java/com/thelittlegym/mobile/user/service/impl/UserServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
+        <state relative-caret-position="1235">
           <caret line="73" column="29" selection-start-line="73" selection-start-column="29" selection-end-line="73" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mobile_module/src/main/java/com/thelittlegym/mobile/common/HttpService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="28" column="43" selection-start-line="28" selection-start-column="43" selection-end-line="28" selection-end-column="43" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1694,19 +1760,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mobile_module/web/css/login.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="349" column="17" selection-start-line="349" selection-start-column="16" selection-end-line="349" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/4.1.4.RELEASE/spring-webmvc-4.1.4.RELEASE.jar!/org/springframework/web/servlet/mvc/method/annotation/ServletInvocableHandlerMethod.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="115">
           <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1714,7 +1771,45 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="200">
           <caret line="65" column="0" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mobile_module/src/main/resources/httpclient.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="5" column="21" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mobile_module/src/main/java/com/thelittlegym/mobile/common/HttpService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-171">
+          <caret line="27" column="14" selection-start-line="27" selection-start-column="5" selection-end-line="27" selection-end-column="14" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mobile_module/src/main/java/com/thelittlegym/mobile/login/controller/LoginCtrl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-240">
+          <caret line="224" column="0" selection-start-line="224" selection-start-column="0" selection-end-line="224" selection-end-column="0" />
+          <folding>
+            <element signature="e#7264#7334#0" expanded="false" />
+            <element signature="method#deleteOneUser#0;class#LoginCtrl#0" expanded="false" />
+            <element signature="e#7919#7991#0" expanded="false" />
+            <element signature="method#getUserPageList#0;class#LoginCtrl#0" expanded="false" />
+            <marker date="1492595884473" expanded="false" signature="2945:2960" placeholder="&lt;~&gt;" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mobile_module/src/main/java/com/thelittlegym/mobile/user/controller/UserCtrl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-17">
+          <caret line="265" column="52" selection-start-line="265" selection-start-column="52" selection-end-line="265" selection-end-column="52" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1722,16 +1817,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="286">
           <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#647#663#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mobile_module/web/WEB-INF/member/index.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="69">
+        <state relative-caret-position="3325">
           <caret line="175" column="33" selection-start-line="175" selection-start-column="16" selection-end-line="175" selection-end-column="33" />
           <folding>
             <marker date="1492509314447" expanded="true" signature="14668:14745" placeholder="..." />
@@ -1740,43 +1831,52 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mobile_module/web/login.html">
+    <entry file="file://$PROJECT_DIR$/mobile_module/web/layer/layui.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="211">
-          <caret line="61" column="84" selection-start-line="61" selection-start-column="77" selection-end-line="61" selection-end-column="84" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mobile_module/web/WEB-INF/member/myinfo.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="276" column="43" selection-start-line="276" selection-start-column="43" selection-end-line="276" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mobile_module/web/js/layui-module.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="33" selection-start-line="0" selection-start-column="33" selection-end-line="0" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mobile_module/web/css/login.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-263">
+          <caret line="340" column="14" selection-start-line="340" selection-start-column="14" selection-end-line="340" selection-end-column="14" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mobile_module/web/js/login.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="177" column="29" selection-start-line="177" selection-start-column="29" selection-end-line="177" selection-end-column="29" />
+        <state relative-caret-position="141">
+          <caret line="189" column="52" selection-start-line="189" selection-start-column="44" selection-end-line="189" selection-end-column="52" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mobile_module/src/main/java/com/thelittlegym/mobile/user/controller/UserCtrl.java">
+    <entry file="file://$PROJECT_DIR$/mobile_module/web/login.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3560">
-          <caret line="265" column="52" selection-start-line="265" selection-start-column="52" selection-end-line="265" selection-end-column="52" />
+        <state relative-caret-position="221">
+          <caret line="89" column="55" selection-start-line="89" selection-start-column="47" selection-end-line="89" selection-end-column="55" />
           <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mobile_module/src/main/java/com/thelittlegym/mobile/login/controller/LoginCtrl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="224" column="0" selection-start-line="224" selection-start-column="0" selection-end-line="224" selection-end-column="0" />
-          <folding>
-            <element signature="e#7264#7334#0" expanded="false" />
-            <element signature="method#deleteOneUser#0;class#LoginCtrl#0" expanded="false" />
-            <element signature="e#7919#7991#0" expanded="false" />
-            <element signature="method#getUserPageList#0;class#LoginCtrl#0" expanded="false" />
-            <element signature="e#8798#8814#0" expanded="true" />
-            <marker date="1492595884473" expanded="false" signature="2945:2960" placeholder="&lt;~&gt;" />
+            <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>

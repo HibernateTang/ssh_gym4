@@ -2,20 +2,12 @@
 <html lang="zh-CN">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>登陆丨TheLittleGym</title>
-<!--<link rel="stylesheet" href="/css/sm.min.css">-->
+<title>TheLittleGym</title>
+<!--<link rel="stylesheet" href="ui/layer/css/layui.css">-->
+<link rel="stylesheet" href="css/sm.min.css">
 <link rel="stylesheet" href="css/login.css">
 <link rel="stylesheet" href="css/swiper-3.4.2.min.css">
 <link rel="stylesheet" href="css/animate.css">
-<script src="js/jquery-1.11.3.min.js"></script>
-<script src="js/layer/layer.js"></script>
-<script src="js/md5.js"></script>
-<script src="js/swiper-3.4.2.jquery.min.js"></script>
-<!--背景图片自动更换-->
-<script src="js/supersized.3.2.7.min.js"></script>
-<script src="js/supersized-init.js"></script>
-<script src="js/fastclick.js"></script>
-<script src="js/login.js"></script>
 
 <body>
 <div class="swiper-container">
@@ -31,12 +23,13 @@
 
                 <div class="loginForm" id="loginForm">
                     <div>
-                        <input type="text" name="telephone" class="telephone input-control" id="login_tel" placeholder="手机"
+                        <input type="text" name="telephone" class="telephone input-control" id="login_tel"
+                               placeholder="手机"
                                autocomplete="off"/>
-
                     </div>
                     <div>
-                        <input type="password" name="password" id="login_pass" class="password input-control" placeholder="密码"
+                        <input type="password" name="password" id="login_pass" class="password input-control"
+                               placeholder="密码"
                                oncontextmenu="return false" onpaste="return false"
                         />
                     </div>
@@ -70,22 +63,22 @@
                     </div>
                     <div>
                         <input type="password" class="reg-pass input-control" id="reg_pass" placeholder="输入密码"
-                            value="zed123"   oncontextmenu="return false" onpaste="return false"
+                               value="zed123" oncontextmenu="return false" onpaste="return false"
                         />
                     </div>
                     <div>
                         <input type="password" id="reg_repass" class="reg-repass input-control"
                                placeholder="再次输入密码" oncontextmenu="return false"
-                               value="zed123"   onpaste="return false"/>
+                               value="zed123" onpaste="return false"/>
                     </div>
                     <div>
                         <input type="email" class="reg_email input-control" id="reg_email" placeholder="输入邮箱地址"
-                               value="tangzi_123@163.com"  oncontextmenu="return false" onpaste="return false"/>
+                               value="tangzi_123@163.com" oncontextmenu="return false" onpaste="return false"/>
                     </div>
                     <div>
                         <button id="signUp">注 册</button>
                     </div>
-                    <a href="javascrit:void(0);" id="goSignUp">
+                    <a href="/" id="goSignUp">
                         <button type="button" class="register-tis">已经有账号？</button>
                     </a>
                 </div>
@@ -94,5 +87,55 @@
     </div>
 </div>
 
+<div class="content" style="display: none" id="feedback">
+    <div class="list-block">
+        <ul>
+            <!-- Text inputs -->
+            <li>
+                <div class="item-content">
+                    <div class="item-media"><i class="icon icon-form-name"></i></div>
+                    <div class="item-inner">
+                        <div class="item-title label">姓名</div>
+                        <div class="item-input">
+                            <input type="text" placeholder="Your name">
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="align-top">
+                <div class="item-content">
+                    <div class="item-media"><i class="icon icon-form-comment"></i></div>
+                    <div class="item-inner">
+                        <div class="item-title label">文本域</div>
+                        <div class="item-input">
+                            <textarea></textarea>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="content-block">
+        <div class="row">
+            <div class="col-50"><a href="#" class="button button-big button-fill button-danger">取消</a></div>
+            <div class="col-50"><a href="#" class="button button-big button-fill button-success">提交</a></div>
+        </div>
+    </div>
+</div>
+
+<script src="js/jquery-1.11.3.min.js"></script>
+<script src="js/md5.js"></script>
+<script src="js/swiper-3.4.2.jquery.min.js"></script>
+<!--背景图片自动更换-->
+<script src="js/supersized.3.2.7.min.js"></script>
+<script src="js/supersized-init.js"></script>
+<script src="js/fastclick.js"></script>
+<script src="js/login.js"></script>
+<script src="ui/layer/layui.js"></script>
+<script>
+    layui.config({
+        base: 'js/' //你的模块目录
+    }).use('layui-module'); //加载入口
+</script>
 </body>
 </html>

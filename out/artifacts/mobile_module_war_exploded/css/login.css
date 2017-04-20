@@ -61,8 +61,10 @@ form {
 	text-align:center
 }
 input {
-	width:270px;
-	height:22px;
+	/*width:270px;*/
+	width: 300px;
+	/*height:22px;*/
+	height: 44px;
 	line-height:22px;
 	margin-top:25px;
 	/*padding:0 15px;*/
@@ -336,9 +338,11 @@ label.error {
 }
 
 .reg-group {
+	width: 305px;
 	display: table;
 }
 .reg-group .reg-valnum,.btn-valnum {
+	width: 185px;
 	display: table-cell;
 }
 .reg-valnum {

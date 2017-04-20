@@ -1,5 +1,3 @@
-
-$(document).ready(function () {
     var indexLoading
     $.ajaxSetup({
         beforeSend: function () {
@@ -14,20 +12,14 @@ $(document).ready(function () {
     });
 
     var mySwiper = new Swiper('.swiper-container', {})
-    $(function () {
-        FastClick.attach(document.body);
-    });
+    // $(function () {
+    //     FastClick.attach(document.body);
+    // });
 
     mySwiper.lockSwipes();
     $("#goSignIn").click(function () {
         mySwiper.unlockSwipes();
         mySwiper.slideNext(fadeInClass());
-        mySwiper.lockSwipes();
-    })
-
-    $("#goSignUp").click(function () {
-        mySwiper.unlockSwipes();
-        mySwiper.slidePrev(fadeInClass());
         mySwiper.lockSwipes();
     })
 
@@ -111,8 +103,12 @@ $(document).ready(function () {
         }
     }
 
-    $("#reg_tel").on('blur',function () {
-            exist_ajax($("#reg_tel").val());
+    $("#reg_tel").on('change',function () {
+        var reg_tel = $("#reg_tel").val();
+        if(/^1[34578]\d{9}$/.test($.trim(reg_tel))){
+            exist_ajax(reg_tel);
+        }
+
     })
 
 
@@ -180,14 +176,21 @@ $(document).ready(function () {
             dataType: "json",
             success: function (data) {
                 console.log(data);
-                if (data.success == true) {
-                    layer.confirm('手机号不是会员，反馈给我们？', {
-                        btn: ['我要反馈','取消'] //按钮
-                    }, function(){
-                        layer.msg('此处该有反馈框');
+                if (data.success != true) {
+                    layer.msg('手机号不是我们的会员', {
+                        time: 0 //不自动关闭
+                        ,btn: ['我是会员', '取消']
+                        ,yes: function(index){
+                            layer.close(index);
+                            layer.open({
+                                type: 1,
+                                title: false,
+                                closeBtn: 0,
+                                shadeClose: true,
+                                content:$("#feedback")
+                            });
+                        }
                     });
-                } else if (data.success == false) {
-                    layer.msg(data.message);
                 }
             }
         });
@@ -213,9 +216,9 @@ $(document).ready(function () {
         }
         var telChecked = checkInput(/^1[34578]\d{9}$/, $("#reg_tel"), "输入手机号码", "手机号格式不正确");
         var passChecked = checkInput(/^(\w){6,20}$/, $("#reg_pass"), "输入密码", "6-20个字母、数字、下划线");
-        var valnamChecked = checkInput(/^\d{4}$/, $("#reg_valnum"), "输入验证码", "4位数字");
+        var valnumChecked = checkInput(/^\d{4}$/, $("#reg_valnum"), "输入验证码", "4位数字");
         var mailChecked = checkInput(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/, $("#reg_email"), "输入邮箱地址", "邮箱格式不正确");
-        return telChecked && valnamChecked && passChecked && mailChecked;
+        return telChecked && valnumChecked && passChecked && mailChecked;
     }
 
     function checkInput(regx, ele, ph, phErr) {
@@ -230,4 +233,5 @@ $(document).ready(function () {
             return true;
         }
     }
-});
+
+   

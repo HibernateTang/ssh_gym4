@@ -119,7 +119,6 @@
                                                                                     src="${sessionScope.user.head_src}"></a>
                     </div>
                     <div>
-
                         <div class="facebook-title">${childObj['name']}</div>
                         <div class="facebook-text">年龄：${childObj['age']}</div>
                     </div>
