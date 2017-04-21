@@ -6,7 +6,6 @@ import java.util.Date;
 /**
  * Created by 汁 on 2017/4/9.
  */
-@Entity
 public class GymClass {
     private String idgym;
     private Date date;

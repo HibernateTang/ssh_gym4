@@ -11,6 +11,8 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.thelittlegym.mobile.common.OasisService;
 import com.thelittlegym.mobile.entity.Family;
+import com.thelittlegym.mobile.entity.Feedback;
+import com.thelittlegym.mobile.service.IFeedbackService;
 import com.thelittlegym.mobile.utils.msg.config.AppConfig;
 import com.thelittlegym.mobile.utils.msg.lib.MESSAGEXsend;
 import com.thelittlegym.mobile.utils.msg.utils.ConfigLoader;
@@ -29,13 +31,12 @@ import com.thelittlegym.mobile.user.service.IUserService;
 @RequestMapping("/login")
 public class LoginCtrl {
     private static AppConfig config = ConfigLoader.load(ConfigLoader.ConfigType.Message);
-//    private static String POST_URL = "https://bbk.800app.com/uploadfile/staticresource/238592/279832/MobileApiPost.aspx";
     @Autowired
     private ILoginService loginService;
     @Autowired
     private IUserService userService;
-//    @Autowired
-//    private HttpService httpService;
+    @Autowired
+    private IFeedbackService feedbackService;
     @Autowired
     private OasisService oasisService;
     @RequestMapping(value = "/tologin", method = RequestMethod.POST)
@@ -228,6 +229,26 @@ public class LoginCtrl {
         }else{
             returnMap.put("success",false);
             returnMap.put("message","该号码非会员");
+        }
+        return returnMap;
+    }
+
+    @RequestMapping(value = "/feedback", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> feedback(String Franchisee,String details,String contactTel) {
+        Map<String, Object> returnMap = new HashMap<String, Object>();
+        Feedback feedback = new Feedback();
+        try {
+            feedback.setFranchisee(Franchisee);
+            feedback.setCreateTime(new Date());
+            feedback.setContactTel(contactTel);
+            feedback.setDetails(details);
+            feedbackService.save(feedback);
+            returnMap.put("success",true);
+            returnMap.put("message","反馈成功");
+        } catch (Exception e) {
+            returnMap.put("success",false);
+            returnMap.put("message","反馈失败");
         }
         return returnMap;
     }

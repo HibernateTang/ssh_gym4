@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 /**
  * Created by hibernate on 2017/4/10.
  */
-@Entity
 public class Family {
     private Integer id;
     private String name;

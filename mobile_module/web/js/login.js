@@ -1,13 +1,15 @@
-    var indexLoading
-    $.ajaxSetup({
+var loadingIndex;
+$.ajaxSetup({
         beforeSend: function () {
-            indexLoading = layer.load(2)
+           loadingIndex = layer.open({
+                type:2,
+            });
         },
         complete: function () {
-            layer.close(indexLoading);
+            layer.close(loadingIndex)
         },
         error: function () {
-            layer.close(indexLoading);
+            layer.close(loadingIndex)
         }
     });
 
@@ -55,13 +57,6 @@
 
     })
 
-    // $("#test").click(function () {
-    //     var reg_tel = $("#reg_tel").val("18566666666");
-    //     var reg_valnum = $("#reg_valnum").val(1234);
-    //     var reg_pass = $("#reg_pass").val("zed123");
-    //     var reg_email = $("#reg_email").val("tangzi_123@163.com");
-    // })
-
     $("#btn-valnum").click(function () {
         var tel = $("#reg_tel").val();
         var isRegNum = checkInput(/^1[34578]\d{9}$/, $("#reg_tel"), "手机", "手机号格式不正确");
@@ -74,11 +69,15 @@
                 contentType: "application/x-www-form-urlencoded",
                 dataType: "json",
                 success: function (data) {
-                    console.log(data);
+                    // console.log(data);
                     if (data.success == true) {
                         time($("#btn-valnum"));
                     } else {
-                        layer.msg("发送失败，请稍后再试");
+                        layer.open({
+                            content: '发送失败，请稍后再试'
+                            ,skin: 'msg'
+                            ,time: 2 //2秒后自动关闭
+                        });
                     }
                 }
             });
@@ -111,6 +110,11 @@
 
     })
 
+    function toFeedback() {
+        var Franchisee =
+            
+        feedback_ajax(Franchisee,details,contactTel);
+    }
 
     /*
      ajax方法
@@ -127,15 +131,23 @@
             success: function (data) {
                 console.log(data);
                 if (data.success == true && data.message == "登录成功") {
-                    layer.msg("登录成功");
+
 
                     window.location.href = "/index";
                 } else if (data.success == false && data.message == "密码错误") {
-                    layer.msg("密码错误");
+                    layer.open({
+                        content: '密码错误'
+                        ,skin: 'msg'
+                        ,time: 2 //2秒后自动关闭
+                    });
                 } else if (data.success == false && data.message == "该用户不存在!") {
-                    layer.msg("该用户不存在");
+                    layer.open({
+                        content: '该用户不存在'
+                        ,skin: 'msg'
+                        ,time: 2 //2秒后自动关闭
+                    });
                 }
-            }
+            },
         });
     }
 
@@ -153,13 +165,21 @@
             success: function (data) {
                 console.log(data);
                 if (data.success == true && data.message == "注册成功") {
-                    layer.msg("注册成功");
+                    layer.open({
+                        content: '注册成功'
+                        ,skin: 'msg'
+                        ,time: 2 //2秒后自动关闭
+                    });
                     mySwiper.unlockSwipes();
                     mySwiper.slidePrev(fadeInClass());
                     mySwiper.lockSwipes();
                     $("#login_tel").val(username);
                 } else if (data.success == false) {
-                    layer.msg(data.message);
+                    layer.open({
+                        content: data.message
+                        ,skin: 'msg'
+                        ,time: 2 //2秒后自动关闭
+                    });
                 }
 
             }
@@ -177,23 +197,41 @@
             success: function (data) {
                 console.log(data);
                 if (data.success != true) {
-                    layer.msg('手机号不是我们的会员', {
-                        time: 0 //不自动关闭
-                        ,btn: ['我是会员', '取消']
+                    layer.open({
+                        content: '您不是我们的会员，不能注册'
+                        ,btn: ['我是', '取消']
                         ,yes: function(index){
-                            layer.close(index);
                             layer.open({
-                                type: 1,
-                                title: false,
-                                closeBtn: 0,
-                                shadeClose: true,
-                                content:$("#feedback")
-                            });
+                                type: 1
+                                ,content: $("#feedback").html()
+                                ,anim: 'up'
+                                 });
+                            layer.close(index);
+                            feedback_ajax($("#zxName").val(),$("#details").val(),$("#contactTel").val())
+                            location.reload();
                         }
                     });
                 }
             }
         });
+    }
+
+    function feedback_ajax(Franchisee,details,contactTel){
+        $.ajax({
+            type:POST,
+            url: "/login/feedback",
+            data: {"Franchisee": Franchisee,"details":details,"contactTel":contactTel},
+            contentType: "application/x-www-form-urlencoded",
+            dataType: "json",
+            success: function (data) {
+                layer.open({
+                    content: '我们已收到您的反馈'
+                    ,skin: 'msg'
+                    ,time: 2 //2秒后自动关闭
+                });
+                location.reload();
+            }
+        })
     }
     function checkLogin() {
         //手机

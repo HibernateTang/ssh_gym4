@@ -39,6 +39,7 @@
         <property name="packagesToScan">
             <list>
                 <value>com.thelittlegym.mobile.*.model</value>
+                <value>com.thelittlegym.mobile.entity</value>
             </list>
         </property>
         <property name="dataSource" ref="dataSource"></property>

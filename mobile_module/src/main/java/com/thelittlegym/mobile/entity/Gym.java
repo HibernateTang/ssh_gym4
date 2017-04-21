@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 /**
  * Created by hibernate on 2017/4/13.
  */
-@Entity
 public class Gym {
     private String idGym;
     private String gymName;
