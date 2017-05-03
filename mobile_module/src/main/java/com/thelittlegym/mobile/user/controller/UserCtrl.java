@@ -62,7 +62,7 @@ public class UserCtrl {
         if (indexArray != null) {
             indexObj = indexArray.getJSONObject(0);
         }
-
+        //TODO
         indexObj.put("showAnother", indexArray.size() > 1 ? true : false);
 
         //全国排名

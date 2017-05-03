@@ -110,6 +110,12 @@ $.ajaxSetup({
 
     })
 
+    function toFeedback() {
+        var Franchisee = $("#franchisee").val();
+        var details = $("#details").val();
+        var contactTel = $("#contactTel").val();
+        feedback_ajax(Franchisee,details,contactTel);
+    }
 
     /*
      ajax方法
@@ -176,7 +182,6 @@ $.ajaxSetup({
                         ,time: 2 //2秒后自动关闭
                     });
                 }
-
             }
         });
     }
@@ -198,12 +203,11 @@ $.ajaxSetup({
                         ,yes: function(index){
                             layer.open({
                                 type: 1
-                                ,content: $("#feedback").html()
+                                ,content: $("#feedback").val()
                                 ,anim: 'up'
                                  });
+                            $("#contactTel").val($("#reg_tel").val());
                             layer.close(index);
-                            feedback_ajax($("#zxName").val(),$("#details").val(),$("#contactTel").val())
-                            location.reload();
                         }
                     });
                 }
@@ -211,9 +215,9 @@ $.ajaxSetup({
         });
     }
 
-    function feedback_ajax(zxName,details,contactTel){
+    function feedback_ajax(Franchisee,details,contactTel){
         $.ajax({
-            type:POST,
+            type:"POST",
             url: "/login/feedback",
             data: {"Franchisee": Franchisee,"details":details,"contactTel":contactTel},
             contentType: "application/x-www-form-urlencoded",
@@ -224,7 +228,7 @@ $.ajaxSetup({
                     ,skin: 'msg'
                     ,time: 2 //2秒后自动关闭
                 });
-                location.reload();
+                // location.reload();
             }
         })
     }

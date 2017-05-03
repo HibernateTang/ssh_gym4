@@ -222,7 +222,7 @@ public class LoginCtrl {
     @ResponseBody
     public Map<String, Object> exist(String telephone) {
         Map<String, Object> returnMap = new HashMap<String, Object>();
-        String sqlExist = "select  crm_surname name,id,crmzdy_80620120 tel,crmzdy_81802271 childname,crmzdy_81778300 zx from   crm_sj_238592_view  where charindex('" +telephone+"',crmzdy_81767199)>0";
+        String sqlExist = "select  crm_surname name,id,crmzdy_80620120 tel,crmzdy_81802271 childname,crmzdy_81778300 zx from   crm_sj_238592_view  where crmzdy_81767199 = '" +telephone+"'";
         if (oasisService.getResultJson(sqlExist) != null){
             returnMap.put("success",true);
             returnMap.put("message","该号码是会员");

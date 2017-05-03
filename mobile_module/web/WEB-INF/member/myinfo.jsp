@@ -189,13 +189,11 @@
                 </div>
             </div>
 
-            <div class="card">
+            <div class="card" id="activity">
                 <div class="card-header no-border gym-card-title"><i></i>上海环球中心本月通知<i></i></div>
                 <div class="card-content">
                     <img src="/images/member/inform.jpg" width="100%"></div>
             </div>
-
-
         </div>
     </div>
 </div>
@@ -301,6 +299,10 @@
         }
         return url ;
     }
+
+    $("#activity").on('click',function () {
+        location.href = "/activity";
+    })
     $.init();
 </script>
 </body>
