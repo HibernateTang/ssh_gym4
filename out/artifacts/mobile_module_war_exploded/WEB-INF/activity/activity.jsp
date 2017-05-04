@@ -16,7 +16,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>活动详情</title>
     <link rel="stylesheet" href="/css/sm.min.css">
-    <link rel="stylesheet" href="/css/swiper-3.4.2.min.css">
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <style>
@@ -131,16 +130,11 @@
 <body>
 <div class="page-group">
     <div class="page">
-        <header class="bar bar-nav">
-            <a class="button button-link pull-left "><i class="fa fa-location-arrow" aria-hidden="true"></i> <small>地点：<label id="mycity"></label></small></a>
-            <a class="button button-link  fa fa-user pull-right " id="myinfo"  href="/activity/myinfo"></a>
-            <a class="button button-link  fa fa-search  pull-right " id="search" href="/activity/search"></a>
-            <a class="button button-link  fa fa-home  pull-right " id="home" href="/activity"></a>
-        </header>
+        <jsp:include page="header.jsp" flush="true"/>
         <div class="content">
             <div class="card">
                 <div class="card-content gym-activity">
-                    <a href="activities.html"><i class="fa fa-angle-double-left fa-3x"></i></a>
+                    <a href="/activity"><i class="fa fa-angle-double-left fa-3x"></i></a>
                     <div class="gym-title">植树节活动</div>
 
                 </div>
@@ -232,7 +226,7 @@
                 <div class="card-footer">
                     <div class="gym-checkbox"><label><input id="agree" type="checkbox" checked>我已同意小小运动馆相关条约和规定</label></div>
 
-                    <a class="button button-fill popup-about" id="pickerActivity" href="#">选择场次</a>
+                    <a class="button button-fill popup-about" id="pickerActivity" href="javascript:;">选择场次</a>
                 </div>
             </div>
 
@@ -282,8 +276,8 @@
         </div>
         <div class="content-block">
             <div class="row">
-                <div class="col-50"><a href="#" class="button button-big button-fill button-danger close-popup">取消</a></div>
-                <div class="col-50"><a href="#" class="button button-big button-fill button-success">提交</a></div>
+                <div class="col-50"><a href="javascript:;" class="button button-big button-fill button-danger close-popup">取消</a></div>
+                <div class="col-50"><a href="javascript:;" class="button button-big button-fill button-success">提交</a></div>
             </div>
         </div>
     </div>
@@ -292,11 +286,14 @@
 
 
 <script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
-<script type='text/javascript' src='/js/fx.js' charset='utf-8'></script>
 <!--禁用路由 -->
 <script>$.config = {router: false}</script>
 <script type='text/javascript' src='/js/sm.min.js' charset='utf-8'></script>
 <script src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script>
+<script>
+    var city = remote_ip_info['city'];
+    $("#mycity").text(city);
+</script>
 
 <script>
 
@@ -349,7 +346,12 @@
     });
 
     $("#pickerActivity").on('click', function () {
-        $.popup('.popup-about');
+        if (!$(this).hasClass("disabled")){
+            $.popup('.popup-about');
+        }else{
+            $.alert("您必须同意小小运动馆相关条约和规定！")
+        }
+
     });
 
     function ajax_getlike(avtivity_name) {

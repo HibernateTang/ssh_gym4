@@ -33,32 +33,37 @@
         padding: .5rem .1rem;
         line-height: 1.2rem;
     }
+
+    .bar .button.pull-right {
+        margin-left: 1rem;
+        font-size: 1.5rem;
+    }
 </style>
 
 <body>
 <div class="page-group">
     <div class="page">
-        <header class="bar bar-nav">
-            <a class="button button-link pull-left "><i class="fa fa-location-arrow" aria-hidden="true"></i> <small>地点：<label id="mycity"></label></small></a>
-            <a class="button button-link  fa fa-user pull-right " id="myinfo"  href="/activity/myinfo"></a>
-            <a class="button button-link  fa fa-search  pull-right " id="search" href="/activity/search"></a>
-            <a class="button button-link  fa fa-home  pull-right " id="home" href="/activity"></a>
-        </header>
+        <jsp:include page="header.jsp" flush="true"/>
         <div class="bar bar-header-secondary">
             <div class="searchbar">
                 <a class="searchbar-cancel">取消</a>
                 <div class="search-input">
                     <label class="search-fa fa fa-search" aria-hidden="true" for="search"></label>
-                    <input type="search" id='keyword' placeholder='输入关键字...' />
+                    <input type="search" id='search' placeholder='输入关键字...' />
                 </div>
             </div>
         </div>
     </div>
-
+</div>
     <script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
     <!--禁用路由 -->
     <script>$.config = {router: false}</script>
     <script type='text/javascript' src='/js/sm.min.js' charset='utf-8'></script>
+<script src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script>
+<script>
+    var city = remote_ip_info['city'];
+    $("#mycity").text(city);
+</script>
     <script>
         $("#search").addClass("active");
         $.init()

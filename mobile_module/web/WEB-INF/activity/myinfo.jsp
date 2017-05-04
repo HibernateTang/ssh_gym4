@@ -19,12 +19,13 @@
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
     <style>
-        .item-inner .item-input input {
-            padding-left: 0;
-        }
 
-        .text-danger {
-            color: #ce4844;
+
+
+
+        .bar .button.pull-right {
+            margin-left: 1rem;
+            font-size: 1.5rem;
         }
     </style>
 </head>
@@ -32,12 +33,7 @@
 <body>
 <div class="page-group">
     <div class="page">
-        <header class="bar bar-nav">
-            <a class="button button-link pull-left "><i class="fa fa-location-arrow" aria-hidden="true"></i> <small>地点：<label id="mycity"></label></small></a>
-            <a class="button button-link  fa fa-user pull-right " id="myinfo" external href="/activity/myinfo"></a>
-            <a class="button button-link  fa fa-search  pull-right " id="search" href="/activity/search"></a>
-            <a class="button button-link  fa fa-home  pull-right " id="home" href="/activity"></a>
-        </header>
+        <jsp:include page="header.jsp" flush="true"/>
         <div class="content">
             <div class="content-block-title">个人信息</div>
             <div class="list-block">
@@ -126,13 +122,18 @@
 <script>$.config = {router: false}</script>
 <script type='text/javascript' src='/js/sm.min.js' charset='utf-8'></script>
 <script type='text/javascript' src='/js/sm-city-picker.min.js' charset='utf-8'></script>
+<script src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script>
+<script>
+    var city = remote_ip_info['city'];
+    $("#mycity").text(city);
+</script>
 <script>
     $("#myinfo").addClass("active");
     $("#info").on('click', function () {
         $.popup('.popup-about');
     });
 
-    $("#city-picker").cityPicker();
+    $("#city-picker").cityPicker({});
     $("#changeCity").on('click', function () {
         $("#city-picker").picker("open");
     })
