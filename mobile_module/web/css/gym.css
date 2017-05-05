@@ -1,0 +1,179 @@
+.card-backinfo {
+    background: url('/images/member/backinfo.jpg') no-repeat;
+    background-size: 100% 100%;
+    min-height: 5rem;
+}
+
+.gym-icon-list p {
+    margin: 0;
+    font-size: 12px;
+}
+
+.swiper-container-dlist {
+    /*position: absolute;*/
+    width: 100%;
+    height: 7.2rem;
+    overflow: hidden;
+}
+
+.details_list {
+    list-style: none;
+    margin: 0px;
+    padding: 0px
+}
+
+.details_list li {
+    position: relative;
+    width: 100%;
+    height: 1.8rem;
+    line-height: 1.8rem;
+    margin: 0 auto;
+    border-top: 1px solid #d7d7d7;
+}
+
+.details_list li span {
+    text-align: center;
+    color: #1f1c1d;
+    font-size: 1.7vh;
+    float: left;
+}
+
+.details_list li span.text-danger {
+    color: #a94442;
+}
+
+.details_list li .details {
+    color: #3f4896;
+}
+
+.details_list li .state[data-noClass='1'] {
+    color: #dc2b46;
+}
+
+.gym-card-title {
+    background: url('/images/member/card-bg.png');
+    color: #fff;
+    font-weight: 500;
+}
+
+.gym-card-title a {
+    color: #fff;
+}
+
+.gym-header {
+    margin-top: .75rem;
+    margin-bottom: 1rem;
+}
+
+.header-text {
+    display: table;
+    padding-left: 1.75rem;;
+}
+
+.header-text .header-p, .header-text .header-row-right {
+    display: table-cell;
+    vertical-align: top;
+}
+
+.header-text p {
+    font-size: 13px;
+    color: #eeeeee;
+    text-align: justify;
+    margin: .25rem;
+}
+
+.header-img {
+    text-align: center;
+}
+
+.header-img img {
+    width: 85px;
+    height: 85px;
+    border-radius: 50%;
+    margin-right: 12px;
+}
+.header-row-right {
+    width: 48px;
+    height: 48px;
+    margin-left: -.75rem;
+    margin-top: .75rem;
+    color: #d2d2d2;
+}
+
+.gym-datepicker {
+    display: table;
+    margin: auto;
+}
+
+.gym-datepicker input {
+    display: table-cell;
+    border: none;
+    width: 4.8rem;
+    text-align: center;
+}
+
+.gym-datepicker i {
+    display: table-cell;
+}
+
+.gym-card-title a:active {
+    color: #eee;
+}
+
+.inform {
+    display: table;
+    position: absolute;
+    right: 0.1rem;
+    top: .3rem;
+    color: rgb(255, 243, 105);
+    text-align: left;
+    font-size: 12px;
+    width: 7rem;
+    vertical-align: top;
+}
+
+.inform-title {
+    display: table-cell;
+    vertical-align: top;
+    width: 3rem;
+}
+
+.activity-info {
+    display: table-cell;
+}
+
+
+.exercise-content {
+    font-size: 12px;
+    text-align: center;
+    padding: 0;
+}
+
+.exercise-content > p:last-child {
+    margin-bottom: .5rem;
+}
+
+.exercise-text {
+    padding-bottom: .5rem;
+}
+
+.big {
+    font-size: 20pt;
+}
+
+.sign-first {
+    margin: .5rem 0 .75rem;
+}
+
+.card {
+    margin: .5rem 0;
+}
+
+.row-box:first-child, .row-box:last-child {
+    border-bottom: 1px #f2f2f2 solid;
+}
+
+.row-box > .c {
+    border-left: 1px #f2f2f2 solid;
+    border-right: 1px #f2f2f2 solid;
+}

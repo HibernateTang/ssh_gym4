@@ -20,150 +20,10 @@
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>会员主页</title>
     <link rel="stylesheet" href="/css/sm.min.css">
-    <link rel="stylesheet" href="/css/swiper-3.4.2.min.css">
+    <link rel="stylesheet" href="/css/gym.css">
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
 
     <style>
-
-        .card-exercise-time {
-            font-size: 1.5rem;
-            text-align: center;
-            line-height: 1.5rem;
-        }
-
-        .card-exercise-rank {
-            font-size: 0.7rem;
-            text-align: center;
-            color: #31708f;
-        }
-
-        .card-exercise-beyond {
-            font-size: 0.825rem;
-            text-align: center;
-            color: #31708f;
-        }
-
-        .exercise-total {
-            text-align: center;
-            font-size: 0.7rem;
-        }
-
-        .facebook-card .card-header {
-            display: flex;
-            -webkit-justify-content: flex-start;
-            justify-content: flex-start;
-        }
-
-        .facebook-card .card-header.row-right {
-            background: url("/images/member/single-row-right.png") no-repeat 95% 50%;
-        }
-
-        /*点击header*/
-
-        .facebook-card .card-header:active, .card-header:visited {
-            background-color: #d9d9d9;
-        }
-
-        .facebook-card .facebook-title {
-            font-size: 0.825rem;
-            font-weight: bold;
-        }
-
-        .facebook-card .facebook-text {
-            font-size: 0.6rem;
-        }
-
-        .facebook-card .facebook-text .inform {
-            color: #398bfb;
-        }
-
-        strong {
-            font-size: 125%;
-        }
-
-        .gym-icon-list p {
-            margin: 0;
-            font-size: 12px;
-        }
-
-        .swiper-container-dlist {
-            /*position: absolute;*/
-            width: 100%;
-            height: 7.2rem;
-            overflow: hidden;
-        }
-
-        .details_list {
-            list-style: none;
-            margin: 0px;
-            padding: 0px
-        }
-
-        .details_list li {
-            position: relative;
-            width: 100%;
-            height: 1.8rem;
-            line-height: 1.8rem;
-            margin: 0 auto;
-            border-top: 1px solid #d7d7d7;
-        }
-
-        .details_list li span {
-            text-align: center;
-            color: #1f1c1d;
-            font-size: 1.7vh;
-            float: left;
-        }
-        .details_list li span.text-danger {
-            color: #a94442;
-        }
-
-        .details_list li .details {
-            color: #3f4896;
-        }
-
-        .details_list li .state[data-noClass='1'] {
-            color: #dc2b46;
-        }
-
-        .gym-card-title {
-            background: url('/images/member/card-bg.png');
-            color: #fff;
-            font-weight: 500;
-        }
-
-        .gym-card-title a {
-            color: #fff;
-        }
-
-        .facebook-avatar img {
-            float: left;
-            width: 72px;
-            height: 72px;
-            border-radius: 50%;
-            border: 2px solid #fff;
-            margin-right: 12px;
-        }
-
-        .gym-datepicker {
-            display: table;
-            margin: auto;
-        }
-
-        .gym-datepicker input {
-            display: table-cell;
-            border: none;
-            width: 4.8rem;
-            text-align: center;
-        }
-
-        .gym-datepicker i {
-            display: table-cell;
-        }
-
-        .gym-card-title a:active {
-            color: #eee;
-        }
 
 
     </style>
@@ -187,38 +47,61 @@
             </div>
 
             <div onClick="location.href='/index/myinfo?idhz=${indexObj['idhz']}'" id="toMyInfo"
-                 class="card facebook-card" ontouchstart="return false;">
-                <div class="card-header row-right">
-                    <div class="facebook-avatar">
-                        <img src="${sessionScope.user.head_src}">
-                    </div>
+                 class="card" ontouchstart="return false;">
+                <div class="card-header no-padding card-backinfo">
+                    <i></i>
+                    <div class="gym-header">
+                        <div class="header-img">
+                            <img src="${sessionScope.user.head_src}"/>
+                        </div>
+                        <div class="header-text">
+                            <div class="header-p">
+                                <p>姓名：${indexObj['name']}</p>
+                                <p>年龄：${indexObj['age']}</p>
+                                <p>剩余课时：${indexObj['rest']}节课</p>
+                            </div>
+                            <div class="header-row-right">
+                                <i class="fa fa-angle-right fa-4x "></i>
+                            </div>
 
-                    <div>
-                        <div class="facebook-title">${indexObj['name']}</div>
-                        <div class="facebook-text">年龄：${indexObj['age']}</div>
-                        <div class="facebook-text">合同剩余课时数：${indexObj['rest']}节课</div>
-                        <div class="facebook-text">活动通知：<span class="inform">植树节活动</span></div>
+                        </div>
                     </div>
+                    <div class="inform">
+                        <div class="inform-title">活动通知：</div>
+                        <div class="activity-info">植树节活动|4月1号全面涨价</div>
+                    </div>
+                    <i></i>
                 </div>
             </div>
 
             <div class="card">
                 <div class="card-header">
                     <div class="item-title">我的旅行</div>
-                    <i class="fa fa-send-o"></i>
+                    <i></i>
                 </div>
                 <div class="card-content">
                     <c:choose>
                         <c:when test="${not empty rankObj}">
-
-                            <div class="card-content-inner">
-                                <div class="card-exercise-time">${rankObj['mins']}分钟</div>
-                                <div class="exercise-total">完成${rankObj['times']}次</div>
-                                <div class="card-exercise-beyond">
-                                    过去<strong>三个月</strong>超过全国<strong>${rankObj['outpass']}%</strong>的会员
+                            <div class="card-content-inner exercise-content">
+                                <div class="row no-gutter  row-box">
+                                    <div class="col-33 ">
+                                        <div class="sign-first">过去三月超过全国</div>
+                                        <label class="big">${rankObj['outpass']}</label>%会员
+                                    </div>
+                                    <div class="col-33 c">
+                                        <div class="sign-first">总共训练</div>
+                                        <label class="big">${rankObj['mins']}</label>分钟
+                                    </div>
+                                    <div class="col-33">
+                                        <div class="sign-first">全国会员中排第</div>
+                                        <label class="big">${rankObj['ranking']}</label>名<i
+                                            class="fa fa-angle-double-right"></i></div>
                                 </div>
-                                <div class="card-exercise-rank">在全国所有会员中排名<strong>${rankObj['ranking']}</strong>名<i
-                                        class="fa fa-angle-double-right"></i></div>
+                                <div class="exercise-text">
+                                    <p><label class="big">219</label>天您已加入小小运动馆</p>
+                                    <p><label class="big">1.5</label>次您孩子每周锻炼次数</p>
+                                </div>
+
                             </div>
 
                         </c:when>
@@ -232,28 +115,15 @@
             </div>
 
             <div class="card">
-                <div class="list-block">
-                    <div class="item-content">
-                        <div class="item-media"><i class="fa fa-soccer-ball-o"></i></div>
-                        <div class="item-inner">
-                            <select id="gyms">
-                                <c:choose>
-                                    <c:when test="${not empty sessionScope.listGym}">
-                                        <c:forEach items="${sessionScope.listGym}" var="mygym">
-                                            <option value="${mygym['idGym']}"
-                                                    <c:if test="${mygym['idGym'] == sessionScope.gym['idGymSelected']}">selected </c:if> >${mygym['gymName']}
-                                            </option>
-                                        </c:forEach>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <option value="0">没有中心</option>
-                                    </c:otherwise>
-                                </c:choose>
-                            </select>
-                        </div>
-                    </div>
+                <div class="card-header">
+                    <a class="gym-select" id="gym-select" gym-id="${sessionScope.gym['idGymSelected']}">假装月球中心</a>
+                    <%--var button_json;--%>
+                    <%--<c:forEach items="${sessionScope.listGym}" var="mygym">--%>
+                        <%--var gymName = ${mygym['gymName']};--%>
+                        <%--var gymId = ${mygym['idGym']};--%>
+                        <%--button_json = "{text:'" + gymName + "',onClick:function(){ $.alert('" + gymId + "') } }";--%>
+                    <%--</c:forEach>--%>
                 </div>
-
 
 
                 <div class="card-content-inner">
@@ -284,7 +154,8 @@
                                 <p>课程详情</p>
                             </div>
                         </div>
-                        <section class="swiper-container-dlist swiper-container-vertical swiper-container-free-mode">
+                        <section
+                                class="swiper-container-dlist swiper-container-vertical swiper-container-free-mode">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide swiper-slide-active">
 
@@ -298,7 +169,8 @@
                                                         <span class="col-20  time">${gymClass['time']}</span>
                                                         <span class="col-20  class">${gymClass['course']}</span>
                                                         <span class="col-20  state">${gymClass['kq']}</span>
-                                                        <a href="/index/topic"><span class="col-20 details">课程亮点</span></a>
+                                                        <a href="/index/topic"><span
+                                                                class="col-20 details">课程亮点</span></a>
                                                     </li>
                                                 </c:forEach>
                                             </c:when>
@@ -317,6 +189,10 @@
 
             </div>
         </div>
+    </div>
+
+    <div class="page" id="child_2">
+
     </div>
 </div>
 
@@ -373,9 +249,9 @@
                         divGymClass += "<span class='col-20  date'>" + content.date + "</span>";
                         divGymClass += "<span class='col-20  time'>" + content.time + "</span>";
                         divGymClass += "<span class='col-20  class'>" + content.course + "</span>";
-                        if (content.kq == "尚未开课"){
+                        if (content.kq == "尚未开课") {
                             divGymClass += "<span class='col-20  state text-danger'>";
-                        }else{
+                        } else {
                             divGymClass += "<span class='col-20  state'>";
                         }
                         divGymClass += content.kq + "</span>";
@@ -393,7 +269,55 @@
         });
     }
 
+    $('.gym-select').on('click', function () {
+        var buttons1 = [
+            {
+                text: '请选择中心',
+                label: true
+            },
+            {
+                text: '卖出',
+                bold: true,
+                color: 'danger',
+                onClick: function () {
+                    $.alert("你选择了“卖出“" + $(".gym-select").attr("gym-id"));
+                }
+            },
+            {
+                text: '买入',
+                onClick: function () {
+                    $.alert("你选择了“买入“");
+                }
+            }
+        ];
+        var buttons2 = [
+            {
+                text: '取消',
+                bg: 'danger'
+            }
+        ];
+        var groups = [buttons1, buttons2];
+        var button_json = {text:'',onClick:''};
+        <c:forEach items="${sessionScope.listGym}" var="mygym">
+        var gymName = "${mygym['gymName']}";
+        var gymId = "${mygym['idGym']}";
+        button_json.text = gymName;
+        button_json.onClick = function () {
+            $.alert(gymId)
+        }
+//        button_json += "{'text':'" + gymName + "','onClick':function(){ $.alert('" + gymId + "') } }";
+        buttons1.push(JSON.parse(button_json));
+        </c:forEach>
+//        alert(button_json)
 
+        $.actions(groups);
+    });
+
+    function gym_change(gymName,gymId){
+        <%--$("#gym-select").text(gymName);--%>
+        <%--$("#gym-select").attr("gym-id",gymId);--%>
+        <%--attend_ajax($("#gym-select").attr("gym-id"), ${indexObj['idhz']}, $("#beginDate").val(), $("#endDate").val());--%>
+    }
 </script>
 </body>
 
