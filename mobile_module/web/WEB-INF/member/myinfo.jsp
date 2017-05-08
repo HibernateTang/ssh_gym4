@@ -47,6 +47,7 @@
         }
 
         .gym-myinfo .gym-myinfo-title {
+            font-family: 'Microsoft Yahei';
             position: absolute;
             font-size: 2.2rem;
             color: #fff;
@@ -115,8 +116,20 @@
             <div class="card facebook-card">
                 <div class="card-header">
                     <div class="facebook-avatar">
-                        <a class="open-avatar" data-popup="popup popup-avatar"><img id="avatar"
-                                                                                    src="${sessionScope.user.head_src}"></a>
+                        <a class="open-avatar" data-popup="popup popup-avatar">
+                            <div class="header-img">
+                                <img id="avatar"
+                                        <c:choose>
+                                            <c:when test="${sessionScope.user.head_src!=''}">
+                                                src="${sessionScope.user.head_src}"
+                                            </c:when>
+                                            <c:otherwise>
+                                                src="/images/member/head.jpg"
+                                            </c:otherwise>
+                                        </c:choose>
+                                />
+                            </div>
+                        </a>
                     </div>
                     <div>
                         <div class="facebook-title">${childObj['name']}</div>
@@ -226,8 +239,8 @@
         $.popup('.popup-avatar');
 
     });
-    $("#cancelUpdate").on('click',function () {
-        $("#pre_avatar").attr("src",$("#avatar").attr("src") );
+    $("#cancelUpdate").on('click', function () {
+        $("#pre_avatar").attr("src", $("#avatar").attr("src"));
         $("#avatarFile").val("");
     })
     $("#updateAvatar").on('click', function () {
@@ -235,20 +248,20 @@
     })
     $("#avatarFile").on('change', function () {
         var objUrl = getObjectURL($("#avatarFile")[0].files[0]);
-        if (objUrl){
+        if (objUrl) {
             $("#pre_avatar").attr("src", objUrl);
         }
     });
 
     function upload_ajax() {
         var uploadFile = $("#avatarFile");
-        if (uploadFile.val() == ""){
+        if (uploadFile.val() == "") {
             $.closeModal(".popup-avatar");
             return false;
         }
-        var fileExtension = uploadFile.val().substring(uploadFile.val().lastIndexOf("."),uploadFile.val().length);
+        var fileExtension = uploadFile.val().substring(uploadFile.val().lastIndexOf("."), uploadFile.val().length);
         var extensions = ".jpg,.JPG,.jpeg,.JPEG,.gif,.GIF,.png,.PNG";
-        if (extensions.indexOf(fileExtension) < 0){
+        if (extensions.indexOf(fileExtension) < 0) {
             $.alert("请选择正确的图片格式!");
             return false;
         }
@@ -289,18 +302,18 @@
 
     //获得文件的网络路径
     function getObjectURL(file) {
-        var url = null ;
-        if (window.createObjectURL!=undefined) { // basic
-            url = window.createObjectURL(file) ;
-        } else if (window.URL!=undefined) { // mozilla(firefox)
-            url = window.URL.createObjectURL(file) ;
-        } else if (window.webkitURL!=undefined) { // webkit or chrome
-            url = window.webkitURL.createObjectURL(file) ;
+        var url = null;
+        if (window.createObjectURL != undefined) { // basic
+            url = window.createObjectURL(file);
+        } else if (window.URL != undefined) { // mozilla(firefox)
+            url = window.URL.createObjectURL(file);
+        } else if (window.webkitURL != undefined) { // webkit or chrome
+            url = window.webkitURL.createObjectURL(file);
         }
-        return url ;
+        return url;
     }
 
-    $("#activity").on('click',function () {
+    $("#activity").on('click', function () {
         location.href = "/activity";
     })
     $.init();

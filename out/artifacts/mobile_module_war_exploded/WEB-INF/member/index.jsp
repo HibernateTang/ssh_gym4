@@ -21,16 +21,11 @@
     <title>会员主页</title>
     <link rel="stylesheet" href="/css/sm.min.css">
     <link rel="stylesheet" href="/css/gym.css">
+    <link rel="stylesheet" href="/css/animate.css">
+    <link rel="stylesheet" href="/css/swiper-3.4.2.min.css">
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
 
-    <style>
-
-
-    </style>
-
-
 </head>
-
 <body>
 <div class="page-group">
     <div class="page page-current" id="child1">
@@ -46,13 +41,20 @@
                 </div>
             </div>
 
-            <div onClick="location.href='/index/myinfo?idhz=${indexObj['idhz']}'" id="toMyInfo"
-                 class="card" ontouchstart="return false;">
+            <div  id="toMyInfo"
+                 class="card" >
                 <div class="card-header no-padding card-backinfo">
                     <i></i>
                     <div class="gym-header">
                         <div class="header-img">
-                            <img src="${sessionScope.user.head_src}"/>
+                            <c:choose>
+                                <c:when test="${sessionScope.user.head_src=''}">
+                                    <img src="${sessionScope.user.head_src}"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <img src="/images/member/head.jpg"/>
+                                </c:otherwise>
+                            </c:choose>
                         </div>
                         <div class="header-text">
                             <div class="header-p">
@@ -107,7 +109,7 @@
                         </c:when>
                         <c:otherwise>
                             <div class="card-content-inner">
-                                <h1>你暂时还没有排名！</h1>
+                                <p>你暂时还没有排名 数据！</p>
                             </div>
                         </c:otherwise>
                     </c:choose>
@@ -116,13 +118,7 @@
 
             <div class="card">
                 <div class="card-header">
-                    <a class="gym-select" id="gym-select" gym-id="${sessionScope.gym['idGymSelected']}">假装月球中心</a>
-                    <%--var button_json;--%>
-                    <%--<c:forEach items="${sessionScope.listGym}" var="mygym">--%>
-                        <%--var gymName = ${mygym['gymName']};--%>
-                        <%--var gymId = ${mygym['idGym']};--%>
-                        <%--button_json = "{text:'" + gymName + "',onClick:function(){ $.alert('" + gymId + "') } }";--%>
-                    <%--</c:forEach>--%>
+                    <a class="gym-select" id="gym-select" gym-id="${sessionScope.gym.gym_selected['idGym']}">${sessionScope.gym.gym_selected['gymName']}</a>
                 </div>
 
 
@@ -158,7 +154,6 @@
                                 class="swiper-container-dlist swiper-container-vertical swiper-container-free-mode">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide swiper-slide-active">
-
                                     <ul id="details_list" class="details_list">
                                         <c:choose>
                                             <c:when test="${not empty listGymClass}">
@@ -175,9 +170,7 @@
                                                 </c:forEach>
                                             </c:when>
                                             <c:otherwise>
-                                                <li class="row no-gutter">
-                                                    <h3 class="col-100 text-center">没有查询到课程</h3>
-                                                </li>
+                                                    <p class="text-center">没有查询到课程</p>
                                             </c:otherwise>
                                         </c:choose>
                                     </ul>
@@ -202,15 +195,13 @@
 <script src="/js/swiper-3.4.2.jquery.min.js"></script>
 
 <script>
-    $(function () {
         $("#beginDate").calendar({
             value: [$("#beginDate").val()]
         });
         $("#endDate").calendar({
             value: [$("#endDate").val()]
         });
-        $.init();
-    })
+
 
     if ($('.swiper-container-dlist').size()) {
         $('.swiper-container-dlist').find('.swiper-slide').height('auto');
@@ -225,21 +216,25 @@
 
     }
 
+    $("#toMyInfo").on('click',function () {
+        $.showIndicator();
+        location.href='/index/myinfo?idhz=${indexObj['idhz']}';
+    })
 
-    $("#beginDate,#endDate,#gyms").change(function () {
-        attend_ajax($("#gyms").val(), ${indexObj['idhz']}, $("#beginDate").val(), $("#endDate").val());
+    $("#beginDate,#endDate").on('change',function () {
+        attend_ajax($("#gym-select").attr('gym-id'),$("#gym-select").text(), ${indexObj['idhz']}, $("#beginDate").val(), $("#endDate").val());
     })
 
     //考勤明细
-    function attend_ajax(idGym, idChild, beginDate, endDate) {
+    function attend_ajax(idGym, nameGym,idChild, beginDate, endDate) {
         $.ajax({
             type: "GET",
             url: "/index/attend",
-            data: {"idGym": idGym, "idChild": idChild, "beginDate": beginDate, "endDate": endDate},
+            data: {"idGym": idGym,"nameGym":nameGym, "idChild": idChild, "beginDate": beginDate, "endDate": endDate},
             contentType: "application/x-www-form-urlencoded",
             dataType: "json",
             beforeSend: function () {
-                $("#details_list").html('<li class="row no-gutter"><span class="col-100 text-center"><i class="fa  fa-refresh  fa-2x fa-spin"></i></span></li>')
+                $("#details_list").html('<p class="text-center  animated slideInDown "><i class="fa fa-circle-o-notch fa-2x fa-spin"></i></p>');
             },
             success: function (data) {
                 var divGymClass = "";
@@ -259,65 +254,55 @@
                         divGymClass += "</li>";
                     });
                 } else {
-                    divGymClass = '<li class="row no-gutter">' +
-                            '<h3 class="col-100 text-center">没有查询到课程</h3>' +
-                            '</li>';
+                    divGymClass = '<p class="text-center">没有查询到课程</p>';
                 }
-
                 $("#details_list").html(divGymClass);
-            }
+            },
         });
     }
 
+//    gyms绑定到actions上
     $('.gym-select').on('click', function () {
+        var selectedGymId = $("#gym-select").attr("gym-id");
         var buttons1 = [
             {
                 text: '请选择中心',
                 label: true
-            },
-            {
-                text: '卖出',
-                bold: true,
-                color: 'danger',
-                onClick: function () {
-                    $.alert("你选择了“卖出“" + $(".gym-select").attr("gym-id"));
-                }
-            },
-            {
-                text: '买入',
-                onClick: function () {
-                    $.alert("你选择了“买入“");
-                }
             }
         ];
+        var gymId = "";
+        var gymName = "";
+        <c:forEach items="${sessionScope.listGym}" var="mygym">
+        gymName = "${mygym['gymName']}";
+        gymId = "${mygym['idGym']}";
+//        alert(selectedGymId == gymId?'#005691':'')
+        var button_json = {
+            text:gymName,
+            disabled:selectedGymId == gymId,
+            id:gymId,
+            onClick:function () {
+                gym_change(this.text,this.id);
+            }
+        };
         var buttons2 = [
             {
                 text: '取消',
                 bg: 'danger'
             }
         ];
-        var groups = [buttons1, buttons2];
-        var button_json = {text:'',onClick:''};
-        <c:forEach items="${sessionScope.listGym}" var="mygym">
-        var gymName = "${mygym['gymName']}";
-        var gymId = "${mygym['idGym']}";
-        button_json.text = gymName;
-        button_json.onClick = function () {
-            $.alert(gymId)
-        }
-//        button_json += "{'text':'" + gymName + "','onClick':function(){ $.alert('" + gymId + "') } }";
-        buttons1.push(JSON.parse(button_json));
+        buttons1.push(button_json);
         </c:forEach>
-//        alert(button_json)
-
+        var groups = [buttons1, buttons2];
         $.actions(groups);
     });
 
     function gym_change(gymName,gymId){
-        <%--$("#gym-select").text(gymName);--%>
-        <%--$("#gym-select").attr("gym-id",gymId);--%>
-        <%--attend_ajax($("#gym-select").attr("gym-id"), ${indexObj['idhz']}, $("#beginDate").val(), $("#endDate").val());--%>
+        $("#gym-select").text(gymName);
+        $("#gym-select").attr("gym-id",gymId);
+        attend_ajax(gymId,gymName,${indexObj['idhz']}, $("#beginDate").val(), $("#endDate").val());
     }
+
+        $.init();
 </script>
 </body>
 
