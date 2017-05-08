@@ -19,92 +19,13 @@
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>我的信息</title>
     <link rel="stylesheet" href="/css/sm.min.css">
-    <link rel="stylesheet" href="/css/swiper-3.4.2.min.css">
+    <link rel="stylesheet" href="/css/gym.css">
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
-    <style>
-        .gym-card-title {
-            background: url('/images/member/card-bg.png');
-            color: #fff;
-            font-weight: 500;
-        }
-
-        .gym-card-title a {
-            color: #fff;
-        }
-
-        .gym-myinfo a {
-            color: #999;
-        }
-
-        .gym-myinfo a:active {
-            color: #fff;
-        }
-
-        .gym-myinfo {
-            background: url('/images/member/myinfo-banner.jpg') no-repeat;
-            background-size: 100% 100%;
-            min-height: 7.5rem;
-        }
-
-        .gym-myinfo .gym-myinfo-title {
-            font-family: 'Microsoft Yahei';
-            position: absolute;
-            font-size: 2.2rem;
-            color: #fff;
-            font-weight: 400;
-            text-shadow: 2px 2px 2px #333;
-            text-align: center;
-            width: 100%;
-        }
-
-        .facebook-card .card-header {
-            display: flex;
-            -webkit-justify-content: flex-start;
-            justify-content: flex-start;
-        }
-
-        .gym-list {
-            font-size: 0.65rem;
-        }
-
-        .facebook-avatar img {
-            float: left;
-            width: 72px;
-            height: 72px;
-            border-radius: 50%;
-            border: 2px solid #fff;
-            margin-right: 12px;
-        }
-
-        .facebook-card .facebook-title {
-            font-size: 0.825rem;
-            font-weight: bold;
-        }
-
-        .facebook-card .facebook-text {
-            font-size: 0.6rem;
-        }
-
-        .file input {
-            position: absolute;
-            font-size: 100px;
-            right: 0;
-            top: 0;
-            opacity: 0;
-        }
-
-        .pre-avatar {
-            width: 100%;
-            height: 18rem;
-        }
-
-    </style>
-
 </head>
 
 <body>
 <div class="page-group">
-    <div class="page page page-current">
+    <div class="page">
         <div class="content">
             <div class="card">
                 <div class="card-content gym-myinfo">
