@@ -6,16 +6,16 @@ import javax.persistence.Entity;
  * Created by hibernate on 2017/4/13.
  */
 public class Gym {
-    private String idGym;
+    private String gymId;
     private String gymName;
-    private String idgym_default;
+    private String defaultId;
 
-    public String getIdGym() {
-        return idGym;
+    public String getGymId() {
+        return gymId;
     }
 
-    public void setIdGym(String idGym) {
-        this.idGym = idGym;
+    public void setGymId(String gymId) {
+        this.gymId = gymId;
     }
 
     public String getGymName() {
@@ -26,11 +26,11 @@ public class Gym {
         this.gymName = gymName;
     }
 
-    public String getIdgym_default() {
-        return idgym_default;
+    public String getDefaultId() {
+        return defaultId;
     }
 
-    public void setIdgym_default(String idgym_default) {
-        this.idgym_default = idgym_default;
+    public void setDefaultId(String defaultId) {
+        this.defaultId = defaultId;
     }
 }
