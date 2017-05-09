@@ -28,7 +28,7 @@
 </head>
 <body>
 <div class="page-group">
-    <div class="page page-current" child-index="0" id="child1">
+    <div class="page  page-current" child-index="0" child-id="${listChild[0]['idhz']}" id="child1">
         <div class="content">
             <div class="card">
                 <div class="card-header no-border gym-card-title">
@@ -122,9 +122,9 @@
                     <div>
                         <div class="gym-datepicker">
                             <i class="fa fa-angle-double-left"></i>
-                            <input type="text" readonly id="beginDate_1" class="beginDate" value="${listGymSelectedSession[0]['beginDate']}"
+                            <input type="text" readonly id="beginDate_0" class="beginDate" value="${listGymSelectedSession[0]['beginDate']}"
                                    data-toggle="data"/> -
-                            <input type="text" readonly id="endDate_1" class="endDate" value="${listGymSelectedSession[0]['endDate']}"
+                            <input type="text" readonly id="endDate_0" class="endDate" value="${listGymSelectedSession[0]['endDate']}"
                                    data-toggle="data"/>
                             <i class="fa fa-angle-double-right"></i>
                         </div>
@@ -151,8 +151,8 @@
                                 <div class="swiper-slide swiper-slide-active">
                                     <ul class="details_list">
                                         <c:choose>
-                                            <c:when test="${not empty listGymClass[0]}">
-                                                <c:forEach items="${listGymClass[0]}" var="gymClass">
+                                            <c:when test="${not empty listGymClassAll[0]}">
+                                                <c:forEach items="${listGymClassAll[0]}" var="gymClass">
                                                     <li class="row no-gutter">
                                                 <span class="col-20  date"><fmt:formatDate value="${gymClass['date']}"
                                                                                            pattern="yyyy.MM.dd"/></span>
@@ -179,12 +179,12 @@
         </div>
     </div>
 
-    <div class="page" child-index="1" id="child2">
+    <div class="page" child-index="1" child-id="${listChild[1]['idhz']}" id="child2">
         <div class="content">
             <div class="card">
                 <div class="card-header no-border gym-card-title">
                         <a href="#child1">
-                            <i class="fa fa-angle-double-left"></i><small>查询另一个宝宝</small></a>
+                            <i class="fa fa-angle-double-left"></i><small> 查询另一个宝宝</small></a>
 
                     <label>${listChild[1]['name']}</label>
                 </div>
@@ -273,9 +273,9 @@
                     <div>
                         <div class="gym-datepicker">
                             <i class="fa fa-angle-double-left"></i>
-                            <input type="text" readonly id="beginDate_2" class="beginDate" value="${listGymSelectedSession[1]['beginDate']}"
+                            <input type="text" readonly id="beginDate_1" class="beginDate" value="${listGymSelectedSession[1]['beginDate']}"
                                    data-toggle="data"/> -
-                            <input type="text" readonly id="endDate_2" class="endDate" value="${listGymSelectedSession[1]['endDate']}"
+                            <input type="text" readonly id="endDate_1" class="endDate" value="${listGymSelectedSession[1]['endDate']}"
                                    data-toggle="data"/>
                             <i class="fa fa-angle-double-right"></i>
                         </div>
@@ -302,8 +302,8 @@
                                 <div class="swiper-slide swiper-slide-active">
                                     <ul  class="details_list">
                                         <c:choose>
-                                            <c:when test="${not empty listGymClass[1]}">
-                                                <c:forEach items="${listGymClass[1]}" var="gymClass">
+                                            <c:when test="${not empty listGymClassAll[1]}">
+                                                <c:forEach items="${listGymClassAll[1]}" var="gymClass">
                                                     <li class="row no-gutter">
                                                 <span class="col-20  date"><fmt:formatDate value="${gymClass['date']}"
                                                                                            pattern="yyyy.MM.dd"/></span>
@@ -336,16 +336,31 @@
 <script src="/js/swiper-3.4.2.jquery.min.js"></script>
 
 <script>
-    /*当前孩子标识index 0|1 */
-    var CHILD_INDEX = 0;
-    CHILD_INDEX = $(".page-current").attr("child-index");
 
-    $(".beginDate").calendar({
-       value:['2017-04-01']
+    /*全局孩子标识*/
+    var PAGE_ID = $(".page-current").attr("id")?$(".page-current").attr("id"):'child1';
+    var CHILD_ID = $("#" + PAGE_ID).attr("child-id");
+    var CHILD_INDEX = $("#" + PAGE_ID).attr("child-index");
+    $(document).on("pageInit", function(e, pageId, $page) {
+        CHILD_ID = $page.attr("child-id");
+        PAGE_ID = pageId;
+        CHILD_INDEX =  $page.attr("child-index");
     });
-    $(".endDate").calendar({
-        value:['2017-04-21']
+
+    //手动处理
+    $("#beginDate_0").calendar({
+       value:['${listGymSelectedSession[0]['beginDate']}']
     });
+    $("#endDate_0").calendar({
+        value:['${listGymSelectedSession[0]['endDate']}']
+    });
+    ;
+    $("#beginDate_1").calendar({
+        value:['${listGymSelectedSession[1]['beginDate']}']
+    });
+    $("#endDate_1").calendar({
+        value:['${listGymSelectedSession[1]['endDate']}']
+    })
 
     if ($('.swiper-container-dlist').size()) {
         $('.swiper-container-dlist').find('.swiper-slide').height('auto');
@@ -360,17 +375,15 @@
 
     $(".toMyInfo").on('click', function () {
         $.showIndicator();
-        location.href = '/index/myinfo?idhz=${listChild[0]['idhz']}';
+        location.href = '/index/myinfo?idhz=' + CHILD_ID;
     })
 
     $(".beginDate,.endDate").on('change', function () {
-        var gymId = $(".gym-select").eq(CHILD_INDEX).attr('gym-id');
-        var gymName = $(".gym-select").eq(CHILD_INDEX).text();
-
-        var hzId = ${listChild[0]['idhz']};
-        var beginDate = $(".beginDate").eq(CHILD_INDEX).val();
-        var endDate = $(".endDate").eq(CHILD_INDEX).val();
-        attend_ajax(gymId, gymName, hzId, beginDate, endDate);
+        var gymId = $("#" + PAGE_ID + " .gym-select").attr('gym-id');
+        var gymName = $("#" + PAGE_ID + " .gym-select").text();
+        var beginDate = $("#" + PAGE_ID + " .beginDate").val();
+        var endDate = $("#" + PAGE_ID + " .endDate").val();
+        attend_ajax(gymId, gymName, CHILD_ID, beginDate, endDate);
     })
 
     //考勤明细
@@ -378,11 +391,11 @@
         $.ajax({
             type: "GET",
             url: "/index/attend",
-            data: {"idGym": idGym, "nameGym": nameGym, "idChild": idChild, "beginDate": beginDate, "endDate": endDate},
+            data: {"idGym": idGym, "nameGym": nameGym, "idChild": idChild, "beginDate": beginDate, "endDate": endDate,"child_index":CHILD_INDEX},
             contentType: "application/x-www-form-urlencoded",
             dataType: "json",
             beforeSend: function () {
-                $(".details_list").eq(CHILD_INDEX).html('<p class="text-center  animated slideInDown "><i class="fa fa-circle-o-notch fa-2x fa-spin"></i></p>');
+                $("#" + PAGE_ID + " .details_list").html('<p class="text-center  animated slideInDown "><i class="fa fa-circle-o-notch fa-2x fa-spin"></i></p>');
             },
             success: function (data) {
                 var divGymClass = "";
@@ -404,14 +417,14 @@
                 } else {
                     divGymClass = '<p class="text-center">没有查询到课程</p>';
                 }
-                $(".details_list").eq(CHILD_INDEX).html(divGymClass);
+                $("#" + PAGE_ID + " .details_list").html(divGymClass);
             },
         });
     }
 
     //    gyms绑定到actions上
     $('.gym-select').on('click', function () {
-        var selectedGymId = $(".gym-select").eq(CHILD_INDEX).attr("gym-id");
+        var selectedGymId = $("#" + PAGE_ID + " .gym-select").attr("gym-id");
         var buttons1 = [
             {
                 text: '请选择中心',
@@ -445,12 +458,12 @@
     });
 
     function gym_change(gymName, gymId) {
-        $(".gym-select").eq(CHILD_INDEX).text(gymName);
-        $(".gym-select").eq(CHILD_INDEX).attr("gym-id", gymId);
-        attend_ajax(gymId, gymName, ${listChild[0]['idhz']}, $(".beginDate").eq(CHILD_INDEX).val(), $(".endDate").eq(CHILD_INDEX).val());
+        $("#" + PAGE_ID + " .gym-select").text(gymName);
+        $("#" + PAGE_ID + " .gym-select").attr("gym-id", gymId);
+        attend_ajax(gymId, gymName, CHILD_ID, $("#" + PAGE_ID + " .beginDate").val(), $("#" + PAGE_ID + " .endDate").val());
     }
 
-    $.init();
+//    $.init();
 </script>
 </body>
 

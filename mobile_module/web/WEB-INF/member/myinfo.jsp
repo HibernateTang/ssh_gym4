@@ -17,7 +17,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>我的信息</title>
+    <title>My Info</title>
     <link rel="stylesheet" href="/css/sm.min.css">
     <link rel="stylesheet" href="/css/gym.css">
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
@@ -29,7 +29,7 @@
         <div class="content">
             <div class="card">
                 <div class="card-content gym-myinfo">
-                    <a href="/index" class="myinfo-row " external><i class="fa fa-angle-double-left fa-3x"></i></a>
+                    <a href="/index" class="back myinfo-row"><i class="fa fa-angle-double-left fa-3x"></i></a>
                     <div class="gym-myinfo-title">我的信息</div>
                 </div>
             </div>
@@ -103,8 +103,8 @@
                                                 <div class="item-title">积分：${infoObj['积分']}</div>
                                             </div>
                                             <div class="item-inner">
-                                                <div class="item-title">所有合同<i class="fa fa-angle-double-right"
-                                                                               aria-hidden="true"></i></div>
+                                                <a class="item-title">所有合同<i class="fa fa-angle-double-right"
+                                                                               aria-hidden="true"></i></a>
                                             </div>
                                         </li>
                                     </ul>
@@ -125,8 +125,8 @@
 
             <div class="card" id="activity">
                 <div class="card-header no-border gym-card-title"><i></i>上海环球中心本月通知<i></i></div>
-                <div class="card-content">
-                    <img src="/images/member/inform.jpg" width="100%"></div>
+                <div class="card-content card-content-cover">
+                    <img  src="/images/member/inform.jpg"/></div>
             </div>
         </div>
     </div>

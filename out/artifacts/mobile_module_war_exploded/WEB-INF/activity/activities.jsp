@@ -187,7 +187,7 @@
             </a>
             <a class="button button-link  fa fa-user pull-right " href="#myinfo"></a>
             <a class="button button-link  fa fa-search  pull-right " href="#search"></a>
-            <a class="button button-link  fa fa-home  pull-right active" href="#home"></a>
+            <a class="button button-link  fa fa-home  pull-right active" href="javascript:;"></a>
         </header>
         <div class="content  pull-to-refresh-content infinite-scroll infinite-scroll-bottom">
             <div class="pull-to-refresh-layer">

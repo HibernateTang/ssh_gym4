@@ -41,12 +41,12 @@ public class UserCtrl {
         Object objSession = session.getAttribute("user");
         Object gymSession = session.getAttribute("gym");
         Object gymListSession = session.getAttribute("gymList");
-        Object listGymSelectedSession = session.getAttribute("listGymSelected");
+        Object listGymSelectedSession = session.getAttribute("listGymSelectedSession");
 //        HashMap<String, Object> gymMap = new HashMap<String, Object>();
         List<Gym> listGym = new ArrayList<Gym>();
         List<Child> listChild = new ArrayList<Child>();
         List<Rank> listRank = new ArrayList<Rank>();
-        List<GymClass> listGymClass = new ArrayList<GymClass>();
+
         //存储两个不同孩子的list的list
         List listGymClassAll = new ArrayList<ArrayList<GymClass>>();
         List<GymSelected> listGymSelected = new ArrayList<GymSelected>();
@@ -65,6 +65,9 @@ public class UserCtrl {
 
         if (childArray != null) {
             for (Object childItem : childArray) {
+                List<GymClass> listGymClass = new ArrayList<GymClass>();
+
+                int i = 0;
                 JSONObject childObj = JSONObject.parseObject(childItem.toString());
                 JSONObject rankObj = rankUtil(childObj.getString("ranking"), "last3");
                 Child child = JSONObject.parseObject(childItem.toString(), Child.class);
@@ -196,7 +199,7 @@ public class UserCtrl {
             classArray.add(jsonObject);
             return classArray;
         }
-        Object listGymSelectedSession = session.getAttribute("listGymSelected");
+        Object listGymSelectedSession = session.getAttribute("listGymSelectedSession");
         if (listGymSelectedSession != null){
             listGymSelected = (List<GymSelected>)listGymSelectedSession;
             GymSelected gymSelected = new GymSelected();
