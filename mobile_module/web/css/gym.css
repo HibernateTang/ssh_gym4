@@ -267,3 +267,49 @@
 .card-content.card-content-cover img:active {
     opacity: .4;
 }
+
+.gym-topic a {
+    color: #999;
+}
+
+.gym-topic {
+    background: url('/images/member/classThemeBanner.jpg') no-repeat;
+    background-size: 100% 100%;
+    min-height: 7.5rem;
+    /*padding-top: 3.5em;*/
+}
+
+.gym-topic .gym-topic-title {
+    position: absolute;
+    font-size: 2.2rem;
+    color: #fff;
+    text-align: center;
+    width: 100%;
+}
+
+.gym-table {
+    display: table;
+}
+
+.gym-table div {
+    display: table-row;
+}
+
+.gym-table div div {
+    display: table-cell;
+}
+
+.gym-table div :first-child {
+    color: #13227a;
+    width: 27%;
+    font-size: 90%;
+    font-weight: 600;
+}
+
+.gym-table div :last-child {
+    font-size: smaller;
+}
+
+.vjs-poster {
+    background-size: 100% 100%;
+}

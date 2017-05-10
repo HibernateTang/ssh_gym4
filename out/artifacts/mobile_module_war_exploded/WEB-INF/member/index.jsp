@@ -431,6 +431,12 @@
                 label: true
             }
         ];
+        var buttons2 = [
+            {
+                text: '取消',
+                bg: 'danger'
+            }
+        ];
         var gymId = "";
         var gymName = "";
 
@@ -445,14 +451,11 @@
                 gym_change(this.text, this.id);
             }
         };
-        var buttons2 = [
-            {
-                text: '取消',
-                bg: 'danger'
-            }
-        ];
+
         buttons1.push(button_json);
         </c:forEach>
+
+
         var groups = [buttons1, buttons2];
         $.actions(groups);
     });

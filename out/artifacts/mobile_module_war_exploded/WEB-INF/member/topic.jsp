@@ -9,66 +9,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>中心主题</title>
     <link rel="stylesheet" href="/css/sm.min.css">
-    <link rel="stylesheet" href="/css/swiper-3.4.2.min.css">
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/gym.css">
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="http://cdn.bootcss.com/video.js/6.0.0-RC.6/video-js.min.css">
-
-    <style>
-        .gym-card-title {
-            background: url('/images/member/card-bg.png');
-            color: #fff;
-        }
-
-        .gym-card-title a {
-            color: #fff;
-        }
-
-        .gym-topic a {
-            color: #999;
-        }
-
-        .gym-topic {
-            background: url('/images/member/classThemeBanner.jpg') no-repeat;
-            background-size: 100% 100%;
-            min-height: 7.5rem;
-            /*padding-top: 3.5em;*/
-        }
-
-        .gym-topic .gym-topic-title {
-            position: absolute;
-            font-size: 2.2rem;
-            color: #fff;
-            text-align: center;
-            width: 100%;
-        }
-
-        .gym-table {
-            display: table;
-        }
-
-        .gym-table div {
-            display: table-row;
-        }
-
-        .gym-table div div {
-            display: table-cell;
-        }
-
-        .gym-table div :first-child {
-            color: #13227a;
-            width: 27%;
-            font-size: 90%;
-            font-weight: 600;
-        }
-
-        .gym-table div :last-child {
-            font-size: smaller;
-        }
-
-        .vjs-poster {
-            background-size: 100% 100%;
-        }
-    </style>
 </head>
 
 <body>
@@ -83,8 +26,7 @@
 
     <div class="card">
         <div class="card-header gym-card-title">
-            <i class="fa fa-th"></i>
-
+            <i></i>
             <small>亲子班|小鸟班</small>
             <small>24周</small>
         </div>
@@ -116,7 +58,7 @@
     </div>
 
     <div class="card">
-        <div class="card-header gym-card-title"><i class="fa fa-file-text-o"></i><small>作业 HomeWork</small><i></i></div>
+        <div class="card-header gym-card-title"><i></i><small>作业 HomeWork</small><i></i></div>
         <div class="">
             <video id="example_video_1" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto" style="max-width:100%"
                    height="200px" poster="http://vjs.zencdn.net/v/oceans.png" data-setup="{}" />
