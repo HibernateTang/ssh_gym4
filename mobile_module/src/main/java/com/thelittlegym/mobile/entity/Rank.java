@@ -8,6 +8,15 @@ public class Rank {
     private String mins;
     private String ranking;
     private String times;
+    private String last3;
+
+    public String getLast3() {
+        return last3;
+    }
+
+    public void setLast3(String last3) {
+        this.last3 = last3;
+    }
 
     public String getOutpass() {
         return outpass;

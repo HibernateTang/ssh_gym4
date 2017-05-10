@@ -25,11 +25,11 @@
 
 <body>
 <div class="page-group">
-    <div class="page">
+    <div class="page" id="page_myinfo">
         <div class="content">
             <div class="card">
                 <div class="card-content gym-myinfo">
-                    <a href="/index" class="back myinfo-row"><i class="fa fa-angle-double-left fa-3x"></i></a>
+                    <a href="/index" class="myinfo-row external" ><i class="fa fa-angle-double-left fa-4x"></i></a>
                     <div class="gym-myinfo-title">我的信息</div>
                 </div>
             </div>
@@ -56,11 +56,9 @@
                         <div class="facebook-title">${childObj['name']}</div>
                         <div class="facebook-text">年龄：${childObj['age']}</div>
                     </div>
-
                 </div>
 
                 <div class="card-content">
-
                     <c:choose>
                         <c:when test="${not empty infoObj}">
                             <div class="card-conntent-inner">
@@ -79,7 +77,7 @@
                                                 <div class="item-title">剩余课时数：${infoObj['剩余课时数']}节</div>
                                             </div>
                                             <div class="item-inner">
-                                                <div class="item-title">报名课时数：${infoObj['报名课时数	']}节</div>
+                                                <div class="item-title">报名课时数：${infoObj['报名课时数']}节</div>
                                             </div>
                                         </li>
                                         <li class="item-content">
@@ -113,10 +111,7 @@
                         </c:when>
                         <c:otherwise>
                             <div class="card-conntent-inner text-center">
-                                <h3>没有合同信息！</h3>
-                                <br/>
-                                <br/>
-                                <br/>
+                                <p class="color-danger">没有合同信息！</p>
                             </div>
                         </c:otherwise>
                     </c:choose>
@@ -155,11 +150,10 @@
 <script type='text/javascript' src='/js/sm.min.js' charset='utf-8'></script>
 
 <script>
-
     $(".open-avatar").on('click', function () {
         $.popup('.popup-avatar');
-
     });
+
     $("#cancelUpdate").on('click', function () {
         $("#pre_avatar").attr("src", $("#avatar").attr("src"));
         $("#avatarFile").val("");

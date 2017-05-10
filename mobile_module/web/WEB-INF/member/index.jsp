@@ -18,7 +18,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>会员主页</title>
+    <%--<title>会员主页</title>--%>
     <link rel="stylesheet" href="/css/sm.min.css">
     <link rel="stylesheet" href="/css/gym.css">
     <link rel="stylesheet" href="/css/animate.css">
@@ -28,7 +28,7 @@
 </head>
 <body>
 <div class="page-group">
-    <div class="page  page-current" child-index="0" child-id="${listChild[0]['idhz']}" id="child1">
+    <div class="page  page-current" child-index="0" child-name=${listChild[0]['name']}  child-id="${listChild[0]['idhz']}" id="child1">
         <div class="content">
             <div class="card">
                 <div class="card-header no-border gym-card-title">
@@ -74,8 +74,8 @@
             </div>
 
             <div class="card">
-                <div class="card-header">
-                    <div class="item-title">我的旅行</div>
+                <div class="card-header gym-card-title">
+                    <label>我的运动</label>
                     <i></i>
                 </div>
                 <div class="card-content">
@@ -98,7 +98,7 @@
                                 </div>
                                 <div class="exercise-text">
                                     <p><label class="big">219</label>天您已加入小小运动馆</p>
-                                    <p><label class="big">${listRank[0]['times']}</label>次您孩子共锻炼次数</p>
+                                    <p><label class="big"><fmt:formatNumber value="${listRank[0]['last3']}" pattern="0.0"/></label>次您孩子平均每周锻炼次数（建议每周锻炼x次）</p>
                                 </div>
 
                             </div>
@@ -114,7 +114,7 @@
             </div>
 
             <div class="card">
-                <div class="card-header">
+                <div class="card-header gym-card-title">
                     <a class="gym-select" id="gymSelected_1"
                        gym-id="${listGymSelectedSession[0].gym['gymId']}">${listGymSelectedSession[0].gym['gymName']}</a>
                 </div>
@@ -158,7 +158,8 @@
                                                                                            pattern="yyyy.MM.dd"/></span>
                                                         <span class="col-20  time">${gymClass['time']}</span>
                                                         <span class="col-20  class">${gymClass['course']}</span>
-                                                        <span class="col-20  state">${gymClass['kq']}</span>
+                                                        <span class="col-20  state <c:if test="${gymClass['kq'] == '尚未开课'}"> text-danger</c:if>">
+                                                        ${gymClass['kq']}</span>
                                                         <a href="/index/topic"><span
                                                                 class="col-20 details">课程亮点</span></a>
                                                     </li>
@@ -179,7 +180,7 @@
         </div>
     </div>
 
-    <div class="page" child-index="1" child-id="${listChild[1]['idhz']}" id="child2">
+    <div class="page" child-index="1" child-name=${listChild[1]['name']} child-id="${listChild[1]['idhz']}" id="child2">
         <div class="content">
             <div class="card">
                 <div class="card-header no-border gym-card-title">
@@ -224,8 +225,8 @@
             </div>
 
             <div class="card">
-                <div class="card-header">
-                    <div class="item-title">我的旅行</div>
+                <div class="card-header gym-card-title">
+                    <label>我的运动</label>
                     <i></i>
                 </div>
                 <div class="card-content">
@@ -264,7 +265,7 @@
             </div>
 
             <div class="card">
-                <div class="card-header">
+                <div class="card-header gym-card-title">
                     <a class="gym-select"  id="gymSelected_2"
                        gym-id="${listGymSelectedSession[1].gym['gymId']}">${listGymSelectedSession[1].gym['gymName']}</a>
                 </div>
@@ -345,6 +346,7 @@
         CHILD_ID = $page.attr("child-id");
         PAGE_ID = pageId;
         CHILD_INDEX =  $page.attr("child-index");
+        document.title=$page.attr("child-name") + "的主页";
     });
 
     //手动处理
@@ -375,7 +377,10 @@
 
     $(".toMyInfo").on('click', function () {
         $.showIndicator();
-        location.href = '/index/myinfo?idhz=' + CHILD_ID;
+        setTimeout(function () {
+            $.hideIndicator();
+            location.href = '/index/myinfo?idhz=' + CHILD_ID;
+        }, 500);
     })
 
     $(".beginDate,.endDate").on('change', function () {
@@ -424,7 +429,7 @@
 
     //    gyms绑定到actions上
     $('.gym-select').on('click', function () {
-        var selectedGymId = $("#" + PAGE_ID + " .gym-select").attr("gym-id");
+        var selectedGymId = $("#" + PAGE_ID + ".gym-select").attr("gym-id");
         var buttons1 = [
             {
                 text: '请选择中心',
@@ -466,7 +471,7 @@
         attend_ajax(gymId, gymName, CHILD_ID, $("#" + PAGE_ID + " .beginDate").val(), $("#" + PAGE_ID + " .endDate").val());
     }
 
-//    $.init();
+    $.init();
 </script>
 </body>
 

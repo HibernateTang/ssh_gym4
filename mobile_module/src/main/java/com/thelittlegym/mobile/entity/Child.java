@@ -10,6 +10,7 @@ public class Child {
     private String rest;
     private String ranking;
 
+
     public String getRanking() {
         return ranking;
     }
