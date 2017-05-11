@@ -40,10 +40,7 @@ public class UserCtrl {
     public String index(HttpServletRequest request, Model model) throws Exception {
         HttpSession session = request.getSession();
         Object objSession = session.getAttribute("user");
-        Object gymSession = session.getAttribute("gym");
-        Object gymListSession = session.getAttribute("gymList");
         Object listGymSelectedSession = session.getAttribute("listGymSelectedSession");
-//        HashMap<String, Object> gymMap = new HashMap<String, Object>();
         List<Gym> listGym = new ArrayList<Gym>();
         List<Child> listChild = new ArrayList<Child>();
         List<Rank> listRank = new ArrayList<Rank>();

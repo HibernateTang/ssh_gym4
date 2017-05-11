@@ -28,9 +28,10 @@
     <div class="page" id="page_myinfo">
         <div class="content">
             <div class="card">
-                <div class="card-content gym-myinfo">
-                    <a href="/index" class="myinfo-row external" ><i class="fa fa-angle-double-left fa-4x"></i></a>
+                <div class="card-header no-padding gym-myinfo">
+                    <a href="/index" class="external"><i class="fa fa-angle-double-left fa-4x"></i></a>
                     <div class="gym-myinfo-title">我的信息</div>
+                    <i></i>
                 </div>
             </div>
 
@@ -38,8 +39,7 @@
                 <div class="card-header">
                     <div class="facebook-avatar">
                         <a class="open-avatar" data-popup="popup popup-avatar">
-                            <div class="header-img">
-                                <img id="avatar"
+                                <img id="avatar" class="header-img"
                                         <c:choose>
                                             <c:when test="${sessionScope.user.head_src!=''}">
                                                 src="${sessionScope.user.head_src}"
@@ -49,12 +49,14 @@
                                             </c:otherwise>
                                         </c:choose>
                                 />
-                            </div>
                         </a>
                     </div>
-                    <div>
-                        <div class="facebook-title">${childObj['name']}</div>
-                        <div class="facebook-text">年龄：${childObj['age']}</div>
+                    <div class="gym-myinfo-info">
+                        <p class="facebook-title">${childObj['name']}</p>
+                        <p class="facebook-text">年龄：${childObj['age']}</p>
+                    </div>
+                    <div class="gym-exist pull-right">
+                        <a href="/exist" class="button">退出登录</a>
                     </div>
                 </div>
 
@@ -102,7 +104,7 @@
                                             </div>
                                             <div class="item-inner">
                                                 <a class="item-title">所有合同<i class="fa fa-angle-double-right"
-                                                                               aria-hidden="true"></i></a>
+                                                                             aria-hidden="true"></i></a>
                                             </div>
                                         </li>
                                     </ul>
@@ -119,16 +121,18 @@
             </div>
 
             <div class="card" id="activity">
-                <div class="card-header no-border gym-card-title"><i></i>上海环球中心本月通知<i></i></div>
-                <div class="card-content card-content-cover">
-                    <img  src="/images/member/inform.jpg"/></div>
+                <div class="card-header  no-padding gym-month-activity">
+                    <i></i>
+                        <p class="gym-month-activity-title">环球中心本月活动</p>
+                    <i class="fa fa-angle-double-right fa-4x"></i>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
 
-<!-- About Popup -->
+<!-- Avatar Popup -->
 <div class="popup popup-avatar">
     <form id="uploadForm" enctype="multipart/form-data">
         <div class="card facebook-card no-border">
