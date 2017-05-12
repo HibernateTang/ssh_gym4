@@ -28,20 +28,31 @@
 <body>
 <div class="page-group">
     <c:forEach items="${listChild}" var="child" varStatus="status">
-        <div class="page <c:if test="${status.index==0}">page-current</c:if>" child-index="${status.index}" child-name=${listChild[status.index]['name']}  child-id="${listChild[status.index]['idhz']}" id="child${status.index}">
+        <div class="page <c:if test="${status.index==0}">page-current</c:if>" child-index="${status.index}"
+             child-name=${child['name']}  child-id="${child['idhz']}"
+             id="child${status.index}">
             <div class="content">
                 <div class="card">
                     <div class="card-header no-border gym-card-title">
-                        <label>${listChild[status.index]['name']}</label>
-                        <c:if test="${listChild.size()>1}">
-                            <a href="#child${status.index==0?1:0}">
-                                <small>查询另一位宝宝</small>
-                                <i class="fa fa-angle-double-right"></i></a>
-                        </c:if>
+                        <c:choose>
+                            <c:when test="${status.index==0}">
+                                <label>${child['name']} </label>
+                                <a href="#child${status.index==0?1:0}">
+                                    <small>查询另一位宝宝</small>
+                                    <i class="fa fa-angle-double-right"></i></a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="#child${status.index==0?1:0}">
+                                    <i class="fa fa-angle-double-left"></i>
+                                    <small>查询另一位宝宝</small>
+                                    </a>
+                                <label>${child['name']} </label>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                 </div>
-                <div  class="card toMyInfo">
-                    <div class="card-header no-padding card-backinfo">
+                <div class="card">
+                    <div class="card-header no-padding no-border card-backinfo">
                         <i></i>
                         <div class="gym-header">
                             <div class="header-img">
@@ -54,15 +65,15 @@
                                     </c:otherwise>
                                 </c:choose>
                             </div>
-                            <div class="header-text">
+                            <a class="header-text external" href="/index/myinfo?idhz=${child['idhz']}">
                                 <div class="header-p">
-                                    <p>年龄：${listChild[status.index]['age']}</p>
-                                    <p>剩余课时：${listChild[status.index]['rest']}节课</p>
+                                    <p>年龄：${child['age']}</p>
+                                    <p>剩余课时：${child['rest']}节课</p>
                                 </div>
                                 <div class="header-row-right">
                                     <i class="fa fa-angle-right fa-3x "></i>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                         <div class="inform">
                             <div class="inform-title">活动通知：</div>
@@ -97,7 +108,9 @@
                                     </div>
                                     <div class="exercise-text">
                                         <p><label class="big">219</label>天您已加入小小运动馆</p>
-                                        <p><label class="big"><fmt:formatNumber value="${listRank[status.index]['last3']}" pattern="0.0"/></label>次您孩子平均每周锻炼次数（建议每周锻炼x次）</p>
+                                        <p><label class="big"><fmt:formatNumber
+                                                value="${listRank[status.index]['last3']}" pattern="0.0"/></label>次您孩子平均每周锻炼次数（建议每周锻炼x次）
+                                        </p>
                                     </div>
 
                                 </div>
@@ -114,18 +127,20 @@
 
                 <div class="card">
                     <div class="card-header gym-card-title">
-                        <a class="gym-select" id="gymSelected_1"
+                        <a class="gym-select"
                            gym-id="${listGymSelectedSession[status.index].gym['gymId']}">${listGymSelectedSession[status.index].gym['gymName']}</a>
                     </div>
                     <div class="card-content-inner">
                         <div>
                             <div class="gym-datepicker">
-                                <i class="fa fa-angle-double-left beginDate-i" ></i>
-                                <input type="text" readonly id="beginDate_0" class="beginDate" value="${listGymSelectedSession[status.index]['beginDate']}"
+                                <i class="fa fa-angle-double-left beginDate-i"></i>
+                                <input type="text" readonly class="beginDate"
+                                       value="${listGymSelectedSession[status.index]['beginDate']}"
                                        data-toggle="date"/> -
-                                <input type="text" readonly id="endDate_0" class="endDate" value="${listGymSelectedSession[status.index]['endDate']}"
+                                <input type="text" readonly  class="endDate"
+                                       value="${listGymSelectedSession[status.index]['endDate']}"
                                        data-toggle="date"/>
-                                <i class="fa fa-angle-double-right endDate-i" ></i>
+                                <i class="fa fa-angle-double-right endDate-i"></i>
                             </div>
                             <div class="row no-gutter gym-icon-list">
                                 <div class="col-20  text-center"><i class="fa fa-calendar fa-lg"></i>
@@ -188,19 +203,23 @@
 <script>
 
     /*全局孩子标识*/
-    var PAGE_ID = $(".page-current").attr("id")?$(".page-current").attr("id"):'child1';
+    var PAGE_ID = $(".page-current").attr("id") ? $(".page-current").attr("id") : 'child1';
     var CHILD_ID = $("#" + PAGE_ID).attr("child-id");
     var CHILD_INDEX = $("#" + PAGE_ID).attr("child-index");
-    $(document).on("pageInit", function(e, pageId, $page) {
+    $(document).on("pageInit", function (e, pageId, $page) {
         CHILD_ID = $page.attr("child-id");
         PAGE_ID = pageId;
-        CHILD_INDEX =  $page.attr("child-index");
-        document.title=$page.attr("child-name") + "的主页";
+        CHILD_INDEX = $page.attr("child-index");
+        document.title = $page.attr("child-name") + "的主页";
     });
+    $(window).on('pageLoadStart', function() {
+        $.showIndicator();
 
+    });
     //手动处理
+    $(".endDate-i,.beginDate-i").on('click',function () {
 
-
+    })
     if ($('.swiper-container-dlist').size()) {
         $('.swiper-container-dlist').find('.swiper-slide').height('auto');
         var swiper_dList = new Swiper('.swiper-container-dlist', {
@@ -212,13 +231,7 @@
         })
     }
 
-    $(".toMyInfo").on('click', function () {
-        $.showIndicator();
-        setTimeout(function () {
-            $.hideIndicator();
-            location.href = '/index/myinfo?idhz=' + CHILD_ID;
-        }, 500);
-    })
+
 
     $(".beginDate,.endDate").on('change', function () {
         var gymId = $("#" + PAGE_ID + " .gym-select").attr('gym-id');
@@ -233,7 +246,14 @@
         $.ajax({
             type: "GET",
             url: "/index/attend",
-            data: {"idGym": idGym, "nameGym": nameGym, "idChild": idChild, "beginDate": beginDate, "endDate": endDate,"child_index":CHILD_INDEX},
+            data: {
+                "idGym": idGym,
+                "nameGym": nameGym,
+                "idChild": idChild,
+                "beginDate": beginDate,
+                "endDate": endDate,
+                "child_index": CHILD_INDEX
+            },
             contentType: "application/x-www-form-urlencoded",
             dataType: "json",
             beforeSend: function () {
@@ -266,7 +286,7 @@
 
     //    gyms绑定到actions上
     $('.gym-select').on('click', function () {
-        var selectedGymId = $("#" + PAGE_ID + ".gym-select").attr("gym-id");
+        var selectedGymId = $("#" + PAGE_ID + " .gym-select").attr("gym-id");
         var buttons1 = [
             {
                 text: '请选择中心',
@@ -290,7 +310,9 @@
             disabled: selectedGymId == gymId,
             id: gymId,
             onClick: function () {
-                gym_change(this.text, this.id);
+                if (!this.disabled){
+                    gym_change(this.text, this.id);
+                }
             }
         };
 

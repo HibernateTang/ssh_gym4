@@ -17,7 +17,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>My Info</title>
+    <title>宝宝信息</title>
     <link rel="stylesheet" href="/css/sm.min.css">
     <link rel="stylesheet" href="/css/gym.css">
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
@@ -29,17 +29,17 @@
         <div class="content">
             <div class="card">
                 <div class="card-header no-padding gym-myinfo">
-                    <a href="/index" class="external"><i class="fa fa-angle-double-left fa-4x"></i></a>
-                    <div class="gym-myinfo-title">我的信息</div>
+                    <a href="/index" class="gym-banner-left external"><i class="fa fa-angle-double-left fa-3x"></i></a>
+                    <div class="gym-banner-title">我的信息</div>
                     <i></i>
                 </div>
             </div>
 
-            <div class="card facebook-card">
+            <div class="card">
                 <div class="card-header">
                     <div class="facebook-avatar">
                         <a class="open-avatar" data-popup="popup popup-avatar">
-                                <img id="avatar" class="header-img"
+                                <img id="avatar"
                                         <c:choose>
                                             <c:when test="${sessionScope.user.head_src!=''}">
                                                 src="${sessionScope.user.head_src}"
@@ -50,20 +50,18 @@
                                         </c:choose>
                                 />
                         </a>
+                        <div class="gym-myinfo-info">
+                            <p class="avatar-name">${childObj['name']}</p>
+                            <p class="avatar-detail">年龄：${childObj['age']}</p>
+                        </div>
                     </div>
-                    <div class="gym-myinfo-info">
-                        <p class="facebook-title">${childObj['name']}</p>
-                        <p class="facebook-text">年龄：${childObj['age']}</p>
-                    </div>
-                    <div class="gym-exist pull-right">
                         <a href="/exist" class="button">退出登录</a>
-                    </div>
                 </div>
 
                 <div class="card-content">
                     <c:choose>
                         <c:when test="${not empty infoObj}">
-                            <div class="card-conntent-inner">
+                            <div class="card-content-inner">
                                 <div class="list-block gym-list">
                                     <ul>
                                         <li class="item-content">
@@ -103,7 +101,7 @@
                                                 <div class="item-title">积分：${infoObj['积分']}</div>
                                             </div>
                                             <div class="item-inner">
-                                                <a class="item-title">所有合同<i class="fa fa-angle-double-right"
+                                                <a class="item-title">所有合同&nbsp;<i class="fa fa-angle-double-right"
                                                                              aria-hidden="true"></i></a>
                                             </div>
                                         </li>
@@ -112,8 +110,8 @@
                             </div>
                         </c:when>
                         <c:otherwise>
-                            <div class="card-conntent-inner text-center">
-                                <p class="color-danger">没有合同信息！</p>
+                            <div class="card-content-inner">
+                                <p class="color-danger text-center">您还没有报名哦~</p>
                             </div>
                         </c:otherwise>
                     </c:choose>
@@ -121,10 +119,10 @@
             </div>
 
             <div class="card" id="activity">
-                <div class="card-header  no-padding gym-month-activity">
+                <div class="card-header no-border no-padding gym-month-activity">
                     <i></i>
-                        <p class="gym-month-activity-title">环球中心本月活动</p>
-                    <i class="fa fa-angle-double-right fa-4x"></i>
+                        <div class="gym-banner-title">中心本月活动</div>
+                    <i></i>
                 </div>
             </div>
         </div>

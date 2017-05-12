@@ -70,6 +70,17 @@
     color: #fff;
     font-weight: 500;
 }
+.gym-banner-title {
+    font-family: "幼圆", "Micsoft YaHei";
+    font-size: 2.2rem;
+    color: #eee;
+    text-align: center;
+    width: 100%;
+    text-shadow: 0px 2px 10px rgba(34, 36, 38, 0.2);
+}
+.gym-banner-left {
+    position: absolute;
+}
 .gym-card-bg {
 
 }
@@ -226,19 +237,24 @@
     min-height: 6.5rem;
 }
 .gym-myinfo .gym-myinfo-title {
-    font-family: 'Microsoft Yahei';
+    /*font-family: 'Microsoft Yahei';*/
     font-size: 2.2rem;
     color: #fff;
-    font-weight: 400;
-    text-shadow: 2px 2px 2px #333;
+    /*font-weight: 400;*/
+    /*text-shadow: 2px 2px 2px #333;*/
     text-align: center;
-    width: 100%;
+    /*width: 100%;*/
 }
 
 .gym-month-activity {
     background: url('/images/member/inform.jpg') no-repeat;
     background-size: 100% 100%;
     min-height: 7.5rem;
+}
+
+.gym-month-activity:active {
+    box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.15) inset, 0px 1px 4px 0px rgba(34, 36, 38, 0.15) inset;
+    opacity: .8;
 }
 .gym-month-activity-title {
     color: #d2d2d2;
@@ -253,7 +269,16 @@
 .gym-list {
     font-size: 0.65rem;
 }
-
+.gym-list li.item-content{
+    padding-top: 0;
+    padding-bottom:0 ;
+    min-height: 1.75rem;
+}
+.gym-list li.item-content .item-inner{
+    padding-top: 0;
+    padding-bottom:0 ;
+    min-height: 1.75rem;
+}
 .facebook-avatar img {
     float: left;
     width: 72px;
@@ -266,17 +291,17 @@
     display: inline-block;
 }
 .gym-exist {
-    padding-top: .75rem;
+
 }
-.facebook-card .facebook-title {
-    margin-top: .5rem;
-    margin-bottom: .1rem;
+.avatar-name {
+    margin: .6rem 0 .1rem 0;
+    font-size: .75rem;
+}
+.avatar-detail {
+    margin: 0;
+    font-size: .5rem;
 }
 
-.facebook-card .facebook-text {
-    margin-top: 0;
-    font-size: 0.6rem;
-}
 
 .file input {
     position: absolute;

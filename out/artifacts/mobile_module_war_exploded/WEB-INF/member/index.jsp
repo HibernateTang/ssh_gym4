@@ -28,20 +28,31 @@
 <body>
 <div class="page-group">
     <c:forEach items="${listChild}" var="child" varStatus="status">
-        <div class="page <c:if test="${status.index==0}">page-current</c:if>" child-index="${status.index}" child-name=${listChild[status.index]['name']}  child-id="${listChild[status.index]['idhz']}" id="child${status.index}">
+        <div class="page <c:if test="${status.index==0}">page-current</c:if>" child-index="${status.index}"
+             child-name=${child['name']}  child-id="${child['idhz']}"
+             id="child${status.index}">
             <div class="content">
                 <div class="card">
                     <div class="card-header no-border gym-card-title">
-                        <label>${listChild[status.index]['name']}</label>
-                        <c:if test="${listChild.size()>1}">
-                            <a href="#child${status.index==0?1:0}">
-                                <small>查询另一位宝宝</small>
-                                <i class="fa fa-angle-double-right"></i></a>
-                        </c:if>
+                        <c:choose>
+                            <c:when test="${status.index==0}">
+                                <label>${child['name']} </label>
+                                <a href="#child${status.index==0?1:0}">
+                                    <small>查询另一位宝宝</small>
+                                    <i class="fa fa-angle-double-right"></i></a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="#child${status.index==0?1:0}">
+                                    <i class="fa fa-angle-double-left"></i>
+                                    <small>查询另一位宝宝</small>
+                                    </a>
+                                <label>${child['name']} </label>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                 </div>
-                <div  class="card toMyInfo">
-                    <div class="card-header no-padding card-backinfo">
+                <div class="card">
+                    <div class="card-header no-padding no-border card-backinfo">
                         <i></i>
                         <div class="gym-header">
                             <div class="header-img">
@@ -54,15 +65,15 @@
                                     </c:otherwise>
                                 </c:choose>
                             </div>
-                            <div class="header-text">
+                            <a class="header-text external" href="/index/myinfo?idhz=${child['idhz']}">
                                 <div class="header-p">
-                                    <p>年龄：${listChild[status.index]['age']}</p>
-                                    <p>剩余课时：${listChild[status.index]['rest']}节课</p>
+                                    <p>年龄：${child['age']}</p>
+                                    <p>剩余课时：${child['rest']}节课</p>
                                 </div>
                                 <div class="header-row-right">
                                     <i class="fa fa-angle-right fa-3x "></i>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                         <div class="inform">
                             <div class="inform-title">活动通知：</div>
@@ -97,7 +108,9 @@
                                     </div>
                                     <div class="exercise-text">
                                         <p><label class="big">219</label>天您已加入小小运动馆</p>
-                                        <p><label class="big"><fmt:formatNumber value="${listRank[status.index]['last3']}" pattern="0.0"/></label>次您孩子平均每周锻炼次数（建议每周锻炼x次）</p>
+                                        <p><label class="big"><fmt:formatNumber
+                                                value="${listRank[status.index]['last3']}" pattern="0.0"/></label>次您孩子平均每周锻炼次数（建议每周锻炼x次）
+                                        </p>
                                     </div>
 
                                 </div>
@@ -114,18 +127,20 @@
 
                 <div class="card">
                     <div class="card-header gym-card-title">
-                        <a class="gym-select" id="gymSelected_1"
+                        <a class="gym-select"
                            gym-id="${listGymSelectedSession[status.index].gym['gymId']}">${listGymSelectedSession[status.index].gym['gymName']}</a>
                     </div>
                     <div class="card-content-inner">
                         <div>
                             <div class="gym-datepicker">
-                                <i class="fa fa-angle-double-left beginDate-i" ></i>
-                                <input type="text" readonly id="beginDate_0" class="beginDate" value="${listGymSelectedSession[status.index]['beginDate']}"
+                                <i class="fa fa-angle-double-left beginDate-i"></i>
+                                <input type="text" readonly class="beginDate"
+                                       value="${listGymSelectedSession[status.index]['beginDate']}"
                                        data-toggle="date"/> -
-                                <input type="text" readonly id="endDate_0" class="endDate" value="${listGymSelectedSession[status.index]['endDate']}"
+                                <input type="text" readonly  class="endDate"
+                                       value="${listGymSelectedSession[status.index]['endDate']}"
                                        data-toggle="date"/>
-                                <i class="fa fa-angle-double-right endDate-i" ></i>
+                                <i class="fa fa-angle-double-right endDate-i"></i>
                             </div>
                             <div class="row no-gutter gym-icon-list">
                                 <div class="col-20  text-center"><i class="fa fa-calendar fa-lg"></i>
@@ -179,156 +194,6 @@
             </div>
         </div>
     </c:forEach>
-
-
-    <%--<div class="page" child-index="1" child-name=${listChild[1]['name']} child-id="${listChild[1]['idhz']}" id="child2">--%>
-        <%--<div class="content">--%>
-            <%--<div class="card">--%>
-                <%--<div class="card-header no-border gym-card-title">--%>
-                        <%--<a href="#child1">--%>
-                            <%--<i class="fa fa-angle-double-left"></i><small> 查询另一个宝宝</small></a>--%>
-
-                    <%--<label>${listChild[1]['name']}</label>--%>
-                <%--</div>--%>
-            <%--</div>--%>
-            <%--<div class="card toMyInfo">--%>
-                <%--<div class="card-header no-padding card-backinfo">--%>
-                    <%--<i></i>--%>
-                    <%--<div class="gym-header">--%>
-                        <%--<div class="header-img">--%>
-                            <%--<c:choose>--%>
-                                <%--<c:when test="${sessionScope.user.head_src=''}">--%>
-                                    <%--<img src="${sessionScope.user.head_src}"/>--%>
-                                <%--</c:when>--%>
-                                <%--<c:otherwise>--%>
-                                    <%--<img src="/images/member/head.jpg"/>--%>
-                                <%--</c:otherwise>--%>
-                            <%--</c:choose>--%>
-                        <%--</div>--%>
-                        <%--<div class="header-text">--%>
-                            <%--<div class="header-p">--%>
-                                <%--<p>年龄：${listChild[1]['age']}</p>--%>
-                                <%--<p>剩余课时：${listChild[1]['rest']}节课</p>--%>
-                            <%--</div>--%>
-                            <%--<div class="header-row-right">--%>
-                                <%--<i class="fa fa-angle-right fa-3x "></i>--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
-                    <%--</div>--%>
-                    <%--<div class="inform">--%>
-                        <%--<div class="inform-title">活动通知：</div>--%>
-                        <%--<div class="activity-info">植树节活动|4月1号全面涨价</div>--%>
-                    <%--</div>--%>
-                    <%--<i></i>--%>
-                <%--</div>--%>
-            <%--</div>--%>
-
-            <%--<div class="card">--%>
-                <%--<div class="card-header gym-card-title">--%>
-                    <%--<label>我的运动</label>--%>
-                    <%--<i></i>--%>
-                <%--</div>--%>
-                <%--<div class="card-content">--%>
-                    <%--<c:choose>--%>
-                        <%--<c:when test="${not empty listRank[1]}">--%>
-                            <%--<div class="card-content-inner exercise-content">--%>
-                                <%--<div class="row no-gutter  row-box">--%>
-                                    <%--<div class="col-33 ">--%>
-                                        <%--<div class="sign-first">过去三月超过全国</div>--%>
-                                        <%--<label class="big">${listRank[1]['outpass']}</label>%会员--%>
-                                    <%--</div>--%>
-                                    <%--<div class="col-33 c">--%>
-                                        <%--<div class="sign-first">总共训练</div>--%>
-                                        <%--<label class="big">${listRank[1]['mins']}</label>分钟--%>
-                                    <%--</div>--%>
-                                    <%--<div class="col-33">--%>
-                                        <%--<div class="sign-first">全国会员中排第</div>--%>
-                                        <%--<label class="big">${listRank[1]['ranking']}</label>名<i--%>
-                                            <%--class="fa fa-angle-double-right"></i></div>--%>
-                                <%--</div>--%>
-                                <%--<div class="exercise-text">--%>
-                                    <%--<p><label class="big">219</label>天您已加入小小运动馆</p>--%>
-                                    <%--<p><label class="big">${listRank[1]['times']}</label>次您孩子锻炼次数</p>--%>
-                                <%--</div>--%>
-
-                            <%--</div>--%>
-
-                        <%--</c:when>--%>
-                        <%--<c:otherwise>--%>
-                            <%--<div class="card-content-inner">--%>
-                                <%--<p>你暂时还没有排名 数据！</p>--%>
-                            <%--</div>--%>
-                        <%--</c:otherwise>--%>
-                    <%--</c:choose>--%>
-                <%--</div>--%>
-            <%--</div>--%>
-
-            <%--<div class="card">--%>
-                <%--<div class="card-header gym-card-title">--%>
-                    <%--<a class="gym-select"  id="gymSelected_2"--%>
-                       <%--gym-id="${listGymSelectedSession[1].gym['gymId']}">${listGymSelectedSession[1].gym['gymName']}</a>--%>
-                <%--</div>--%>
-
-                <%--<div class="card-content-inner">--%>
-                    <%--<div>--%>
-                        <%--<div class="gym-datepicker">--%>
-                            <%--<i class="fa fa-angle-double-left beginDate-i" id="beginDate_1_i"></i>--%>
-                            <%--<input type="text" readonly id="beginDate_1" class="beginDate" value="${listGymSelectedSession[1]['beginDate']}"--%>
-                                   <%--data-toggle="data"/> ---%>
-                            <%--<input type="text" readonly id="endDate_1" class="endDate" value="${listGymSelectedSession[1]['endDate']}"--%>
-                                   <%--data-toggle="data"/>--%>
-                            <%--<i class="fa fa-angle-double-right endDate-i" id="endDate_1_i"></i>--%>
-                        <%--</div>--%>
-                        <%--<div class="row no-gutter gym-icon-list">--%>
-                            <%--<div class="col-20  text-center"><i class="fa fa-calendar fa-lg"></i>--%>
-                                <%--<p>日期</p>--%>
-                            <%--</div>--%>
-                            <%--<div class="col-20 text-center"><i class="fa fa-clock-o fa-lg"></i>--%>
-                                <%--<p>时间</p>--%>
-                            <%--</div>--%>
-                            <%--<div class="col-20 text-center"><i class="fa fa-users fa-lg"></i>--%>
-                                <%--<p>班级</p>--%>
-                            <%--</div>--%>
-                            <%--<div class="col-20 text-center"><i class="fa fa-check-square fa-lg"></i>--%>
-                                <%--<p>状态</p>--%>
-                            <%--</div>--%>
-                            <%--<div class="col-20 text-center"><i class="fa fa-bar-chart-o fa-lg"></i>--%>
-                                <%--<p>课程详情</p>--%>
-                            <%--</div>--%>
-                        <%--</div>--%>
-                        <%--<section--%>
-                                <%--class="swiper-container-dlist swiper-container-vertical swiper-container-free-mode">--%>
-                            <%--<div class="swiper-wrapper">--%>
-                                <%--<div class="swiper-slide swiper-slide-active">--%>
-                                    <%--<ul  class="details_list">--%>
-                                        <%--<c:choose>--%>
-                                            <%--<c:when test="${not empty listGymClassAll[1]}">--%>
-                                                <%--<c:forEach items="${listGymClassAll[1]}" var="gymClass">--%>
-                                                    <%--<li class="row no-gutter">--%>
-                                                <%--<span class="col-20  date"><fmt:formatDate value="${gymClass['date']}"--%>
-                                                                                           <%--pattern="yyyy.MM.dd"/></span>--%>
-                                                        <%--<span class="col-20  time">${gymClass['time']}</span>--%>
-                                                        <%--<span class="col-20  class">${gymClass['course']}</span>--%>
-                                                        <%--<span class="col-20  state">${gymClass['kq']}</span>--%>
-                                                        <%--<a href="/index/topic"><span--%>
-                                                                <%--class="col-20 details">课程亮点</span></a>--%>
-                                                    <%--</li>--%>
-                                                <%--</c:forEach>--%>
-                                            <%--</c:when>--%>
-                                            <%--<c:otherwise>--%>
-                                                <%--<p class="text-center">没有查询到课程</p>--%>
-                                            <%--</c:otherwise>--%>
-                                        <%--</c:choose>--%>
-                                    <%--</ul>--%>
-                                <%--</div>--%>
-                            <%--</div>--%>
-                        <%--</section>--%>
-                    <%--</div>--%>
-                <%--</div>--%>
-
-            <%--</div>--%>
-        <%--</div>--%>
-    <%--</div>--%>
 </div>
 
 <script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
@@ -338,40 +203,23 @@
 <script>
 
     /*全局孩子标识*/
-    var PAGE_ID = $(".page-current").attr("id")?$(".page-current").attr("id"):'child1';
+    var PAGE_ID = $(".page-current").attr("id") ? $(".page-current").attr("id") : 'child1';
     var CHILD_ID = $("#" + PAGE_ID).attr("child-id");
     var CHILD_INDEX = $("#" + PAGE_ID).attr("child-index");
-    $(document).on("pageInit", function(e, pageId, $page) {
+    $(document).on("pageInit", function (e, pageId, $page) {
         CHILD_ID = $page.attr("child-id");
         PAGE_ID = pageId;
-        CHILD_INDEX =  $page.attr("child-index");
-        document.title=$page.attr("child-name") + "的主页";
+        CHILD_INDEX = $page.attr("child-index");
+        document.title = $page.attr("child-name") + "的主页";
     });
+    $(window).on('pageLoadStart', function() {
+        $.showIndicator();
 
+    });
     //手动处理
+    $(".endDate-i,.beginDate-i").on('click',function () {
 
-    $(".beginDate-i").on('click',function () {
-        $("body")
-        $("#" + PAGE_ID + " .beginDate").trigger("click");
     })
-    $(".endDate-i").on('click',function () {
-        $("#" + PAGE_ID + " .endDate").trigger("click");
-    })
-
-    <%--$("#beginDate_0").calendar({--%>
-       <%--value:['${listGymSelectedSession[0]['beginDate']}']--%>
-    <%--});--%>
-    <%--$("#endDate_0").calendar({--%>
-        <%--value:['${listGymSelectedSession[0]['endDate']}']--%>
-    <%--});--%>
-    <%--;--%>
-    <%--$("#beginDate_1").calendar({--%>
-        <%--value:['${listGymSelectedSession[1]['beginDate']}']--%>
-    <%--});--%>
-    <%--$("#endDate_1").calendar({--%>
-        <%--value:['${listGymSelectedSession[1]['endDate']}']--%>
-    <%--})--%>
-
     if ($('.swiper-container-dlist').size()) {
         $('.swiper-container-dlist').find('.swiper-slide').height('auto');
         var swiper_dList = new Swiper('.swiper-container-dlist', {
@@ -383,13 +231,7 @@
         })
     }
 
-    $(".toMyInfo").on('click', function () {
-        $.showIndicator();
-        setTimeout(function () {
-            $.hideIndicator();
-            location.href = '/index/myinfo?idhz=' + CHILD_ID;
-        }, 500);
-    })
+
 
     $(".beginDate,.endDate").on('change', function () {
         var gymId = $("#" + PAGE_ID + " .gym-select").attr('gym-id');
@@ -404,7 +246,14 @@
         $.ajax({
             type: "GET",
             url: "/index/attend",
-            data: {"idGym": idGym, "nameGym": nameGym, "idChild": idChild, "beginDate": beginDate, "endDate": endDate,"child_index":CHILD_INDEX},
+            data: {
+                "idGym": idGym,
+                "nameGym": nameGym,
+                "idChild": idChild,
+                "beginDate": beginDate,
+                "endDate": endDate,
+                "child_index": CHILD_INDEX
+            },
             contentType: "application/x-www-form-urlencoded",
             dataType: "json",
             beforeSend: function () {
@@ -437,7 +286,7 @@
 
     //    gyms绑定到actions上
     $('.gym-select').on('click', function () {
-        var selectedGymId = $("#" + PAGE_ID + ".gym-select").attr("gym-id");
+        var selectedGymId = $("#" + PAGE_ID + " .gym-select").attr("gym-id");
         var buttons1 = [
             {
                 text: '请选择中心',
@@ -461,7 +310,9 @@
             disabled: selectedGymId == gymId,
             id: gymId,
             onClick: function () {
-                gym_change(this.text, this.id);
+                if (!this.disabled){
+                    gym_change(this.text, this.id);
+                }
             }
         };
 
