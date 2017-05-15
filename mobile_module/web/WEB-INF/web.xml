@@ -9,6 +9,10 @@
         <!--<welcome-file>./WEB-INF/member/index.jsp</welcome-file>&ndash;&gt;-->
     </welcome-file-list>
 
+    <!-- session为永不超时 -->
+    <session-config>
+        <session-timeout>-1</session-timeout>
+    </session-config>
     <!-- 把 Spring 容器集成到 Web 应用里面 -->
     <listener>
         <listener-class>

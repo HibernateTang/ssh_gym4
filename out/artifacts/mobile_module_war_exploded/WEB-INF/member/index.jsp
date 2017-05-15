@@ -37,9 +37,11 @@
                         <c:choose>
                             <c:when test="${status.index==0}">
                                 <label>${child['name']} </label>
-                                <a href="#child${status.index==0?1:0}">
-                                    <small>查询另一位宝宝</small>
-                                    <i class="fa fa-angle-double-right"></i></a>
+                                <c:if test="${listChild.size() > 1}">
+                                    <a href="#child${status.index==0?1:0}">
+                                        <small>查询另一位宝宝</small>
+                                        <i class="fa fa-angle-double-right"></i></a>
+                                </c:if>
                             </c:when>
                             <c:otherwise>
                                 <a href="#child${status.index==0?1:0}">
@@ -189,7 +191,14 @@
                             </section>
                         </div>
                     </div>
+                </div>
 
+                <div class="card" id="activity">
+                    <div class="card-header no-border no-padding gym-month-activity">
+                        <i></i>
+                        <div class="gym-banner-title"><small>中心本月活动</small></div>
+                        <i></i>
+                    </div>
                 </div>
             </div>
         </div>
@@ -212,10 +221,7 @@
         CHILD_INDEX = $page.attr("child-index");
         document.title = $page.attr("child-name") + "的主页";
     });
-    $(window).on('pageLoadStart', function() {
-        $.showIndicator();
 
-    });
     //手动处理
     $(".endDate-i,.beginDate-i").on('click',function () {
 

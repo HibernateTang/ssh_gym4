@@ -28,7 +28,7 @@
     <div class="page" id="page_myinfo">
         <div class="content">
             <div class="card">
-                <div class="card-header no-padding gym-myinfo">
+                <div class="card-header no-padding no-border gym-myinfo">
                     <a href="/index" class="gym-banner-left external"><i class="fa fa-angle-double-left fa-3x"></i></a>
                     <div class="gym-banner-title">我的信息</div>
                     <i></i>
@@ -118,13 +118,7 @@
                 </div>
             </div>
 
-            <div class="card" id="activity">
-                <div class="card-header no-border no-padding gym-month-activity">
-                    <i></i>
-                        <div class="gym-banner-title">中心本月活动</div>
-                    <i></i>
-                </div>
-            </div>
+
         </div>
     </div>
 </div>
