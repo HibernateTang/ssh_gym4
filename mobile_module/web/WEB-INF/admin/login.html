@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>手机会员后台</title>
+    <link rel="stylesheet" href="/ui/semantic/semantic.min.css">
+</head>
+<body>
+<div class="ui middle aligned center aligned grid">
+    <div class="column">
+        <h2 class="ui teal header">
+            <div class="content">手机会员后台登录</div>
+        </h2>
+        <form class="ui form">
+            <div class="ui segment">
+                <div class="field">
+                    <div class="ui left icon input">
+                        <i class="user icon"></i>
+                        <input type="text" name="username" placeholder="输入用户名"/>
+                    </div>
+                </div>
+                <div>
+                    <div class="ui left icon input">
+                        <i class="lock icon"></i>
+                        <input type="password" name="password" placeholder="输入密码">
+                    </div>
+                </div>
+                <div class="ui fluid submit button">登录</div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type='text/javascript' src='/js/jquery-1.11.3.min.js' charset='utf-8'></script>
+<script type='text/javascript' src='/ui/semantic/semantic.min.js' charset='utf-8'></script>
+<script>
+    $('.ui form')
+            .form({
+                fields: {
+                    username: 'empty',
+                    password: 'empty'
+                }
+            })
+    ;
+</script>
+</body>
+</html>

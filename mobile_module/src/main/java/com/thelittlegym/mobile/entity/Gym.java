@@ -1,14 +1,17 @@
 package com.thelittlegym.mobile.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * Created by hibernate on 2017/4/13.
  */
+@Entity
+@Table(name="gym")
 public class Gym {
+
     private String gymId;
     private String gymName;
-    private String defaultId;
 
     public String getGymId() {
         return gymId;
@@ -26,11 +29,4 @@ public class Gym {
         this.gymName = gymName;
     }
 
-    public String getDefaultId() {
-        return defaultId;
-    }
-
-    public void setDefaultId(String defaultId) {
-        this.defaultId = defaultId;
-    }
 }
