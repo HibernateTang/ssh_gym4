@@ -30,7 +30,7 @@ public class Activity {
     private String strength;
     private Boolean isDelete;
     private String bannerSrc;
-    private ArrayList<String> gyms;
+    private String gyms;
 
     public Integer getId() {
         return id;
@@ -128,11 +128,11 @@ public class Activity {
         this.bannerSrc = bannerSrc;
     }
 
-    public ArrayList<String> getGyms() {
+    public String getGyms() {
         return gyms;
     }
 
-    public void setGyms(ArrayList<String> gyms) {
+    public void setGyms(String gyms) {
         this.gyms = gyms;
     }
 }

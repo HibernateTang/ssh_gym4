@@ -42,9 +42,10 @@
     <div class="ui container">
         <div class="ui segments">
             <form class="ui form segment" action="/admin/activityAdd" method="POST" enctype="multipart/form-data">
+
                 <div class="field">
                     <label>活动头图</label>
-                    <input type="file" name="banner" enctype="multipart/form-data"  accept="image/*" >
+                    <input type="file" name="banner" enctype="multipart/form-data"  accept="image/jpg,image/png,image/jpeg" >
                 </div>
                 <div class="field">
                     <label>活动名称</label>

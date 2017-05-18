@@ -1,6 +1,7 @@
 package com.thelittlegym.mobile.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
@@ -9,7 +10,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="gym")
 public class Gym {
-
+    @Id
     private String gymId;
     private String gymName;
 

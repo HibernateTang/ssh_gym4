@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +16,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>后台</title>
     <link rel="stylesheet" href="/ui/semantic/semantic.min.css">
 </head>
@@ -59,58 +61,55 @@
             </div>
             <div class="ui segment right aligned">
                 <div class="ui buttons">
-                    <button class="ui left labeled icon button"><i class="left arrow icon"></i> 上一页 </button>
-                    <button class="ui blue button">1</button>
-                    <button class="ui right labeled icon button"><i class="right arrow icon"></i> 下一页 </button>
+                    <a href="/admin?pageNow=${page.current-1}"
+                       class="ui <c:if test="${page.current<= 1}">disabled</c:if> left labeled icon button"><i
+                            class="left arrow icon"></i> 上一页 </a>
+                    <a class="ui blue active button"></i> ${page.current}</a>
+                    <a href="/admin?pageNow=${page.current+1}"
+                       class="ui <c:if test="${page.current+1> page.total}">disabled</c:if> right labeled icon button"><i
+                            class="right arrow icon"></i> 下一页${page.total} </a>
                 </div>
             </div>
             <div class="ui segment">
-                <div class="ui stackable special cards">
-                    <div class="card">
-                        <div class="blurring dimmable image">
-                            <div class="ui dimmer">
+                <div class="ui four stackable  special cards">
+                    <c:if test="${not empty page.list}">
+                        <c:forEach items="${page.list}" var="activity">
+                            <div class="card">
+                                <div class="blurring dimmable image">
+                                    <div class="ui dimmer">
+                                        <div class="content">
+                                            <div class="center">
+                                                <a href="/admin/activityVeiw?id=${activity.id}"
+                                                   class="ui inverted button">查看</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <img src="${activity.bannerSrc}" onerror="this.src='/images/admin/ERROR.png'">
+                                </div>
                                 <div class="content">
-                                    <div class="center">
-                                        <a href="/admin/activityEdit?id=1" class="ui inverted button">编辑活动</a>
+                                    <a class="header">${activity.name}</a>
+                                    <div class="meta">
+                                        <span class="date"><fmt:formatDate value="${activity.createTime}"
+                                                                           pattern="yyyy-MM-dd HH:mm:ss"/></span>
+                                    </div>
+                                    <div class="description">
+                                        <c:choose>
+                                        <c:when test="${fn:length(activity.detail) > 10}">
+                                            <c:out value="${fn:substring(activity.detail, 0, 10)}……"/>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:out value="${activity.detail}"/>
+                                        </c:otherwise>
+                                    </c:choose>
                                     </div>
                                 </div>
-                            </div>
-                            <img src="/images/member/classThemeBanner.jpg">
-                        </div>
-                        <div class="content">
-                            <a class="header">植树节活动</a>
-                            <div class="meta">
-                                <span class="date">Create in 2017-01-02</span>
-                            </div>
-                        </div>
-                        <div class="extra content">
-                            <a class="right floated">删除</a>
-                            <a> 查看 </a>
-                        </div>
-                    </div>
-                    <div class="ui card">
-                        <div class="blurring dimmable image">
-                            <div class="ui inverted dimmer">
-                                <div class="content">
-                                    <div class="center">
-                                        <a class="ui primary button">编辑活动</a>
-                                    </div>
+                                <div class="extra content">
+                                    <a href="/admin/activityDel?id=${activity.id}" class="right floated">删除</a>
+                                    <a href="/admin/activityToEdit?id=${activity.id}"> 编辑 </a>
                                 </div>
                             </div>
-                            <img src="/images/member/classThemeBanner.jpg">
-                        </div>
-                        <div class="content">
-                            <a class="header">涨价活动</a>
-                            <div class="meta">
-                                <span class="date">Create in 2017-01-02</span>
-                            </div>
-                        </div>
-                        <div class="extra content">
-                            <a> 查看 </a>
-                            <a class="right floated">删除</a>
-
-                        </div>
-                    </div>
+                        </c:forEach>
+                    </c:if>
                 </div>
             </div>
 
