@@ -1,8 +1,13 @@
 package com.thelittlegym.mobile.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.thelittlegym.mobile.base.model.Page;
 import com.thelittlegym.mobile.dao.impl.ActivityDaoImpl;
 import com.thelittlegym.mobile.entity.Activity;
+import com.thelittlegym.mobile.entity.Admin;
+import com.thelittlegym.mobile.service.IAdminService;
 import net.coobird.thumbnailator.Thumbnails;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -20,10 +25,7 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by hibernate on 2017/5/15.
@@ -33,9 +35,52 @@ import java.util.List;
 public class AdminCtrl {
     @Autowired
     private ActivityDaoImpl activityDao;
+    @Autowired
+    private IAdminService adminService;
+
+    @RequestMapping(value="/login",method = RequestMethod.GET)
+    public String adminToLogin(HttpServletRequest request) throws Exception {
+        HttpSession session = request.getSession();
+        Object sessionObj = session.getAttribute("admin");
+        Admin admin = new Admin();
+        if (sessionObj != null){
+            return "/admin";
+        }else{
+            return "/admin/login";
+        }
+    }
+
+    @RequestMapping(value="/valLogin",method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> adminLogin(HttpServletRequest request,String username,String password) throws Exception {
+        Map<String,Object> returnMap = new HashMap<String,Object>();
+        try {
+            Map<String ,Object> map =  adminService.login( username, password);
+            Object object = returnMap.get("value");
+            if (object != null) {
+                Admin admin = (Admin) object;
+                HttpSession session = request.getSession();
+                session.setAttribute("admin", admin);
+            }
+            returnMap.put("value", object);
+            returnMap.put("message", map.get("message"));
+            returnMap.put("success", map.get("success"));
+        }catch (Exception e){
+            returnMap.put("message", "异常：登录失败!");
+            returnMap.put("success", false);
+            e.printStackTrace();
+        }
+
+        return returnMap;
+    }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String adminIndex(HttpServletRequest request, Model model,Integer pageNow) throws Exception {
+        HttpSession session = request.getSession();
+        Object sessionObj = session.getAttribute("admin");
+        if (sessionObj == null){
+            return "/admin/login";
+        }
         String queryHql = "from Activity where isDelete = 0 order by createTime desc ";
         String countHql = "select count(id) from Activity where isDelete = 0  ";
         String pageNowStr = request.getParameter("pageNow");
@@ -55,13 +100,22 @@ public class AdminCtrl {
 
     @RequestMapping(value = "/activityToAdd", method = RequestMethod.GET)
     public String activityToAdd(HttpServletRequest request, Model model) throws Exception {
-
+        HttpSession session = request.getSession();
+        Object sessionObj = session.getAttribute("admin");
+        if (sessionObj == null){
+            return "/admin/login";
+        }
         return "/admin/activityAdd";
     }
 
     @RequestMapping(value = "/activityAdd", method = RequestMethod.POST)
     public String activityAdd(HttpServletRequest request, MultipartFile banner, String name, String detail, Date beginDate, Date endDate, String type,
                               String chargeType, String crowd, String strength) throws Exception {
+        HttpSession session = request.getSession();
+        Object sessionObj = session.getAttribute("admin");
+        if (sessionObj == null){
+            return "/admin/login";
+        }
         Activity activity = new Activity();
         activity.setName(name);
         activity.setDetail(detail);
@@ -81,6 +135,11 @@ public class AdminCtrl {
 
     @RequestMapping(value = "/activityToEdit", method = RequestMethod.GET)
     public String activityToEdit(HttpServletRequest request, Model model, Integer id) throws Exception {
+        HttpSession session = request.getSession();
+        Object sessionObj = session.getAttribute("admin");
+        if (sessionObj == null){
+            return "/admin/login";
+        }
         Activity activity = activityDao.findOne("from Activity where isDelete = 0 and id= " + id);
         model.addAttribute("activity", activity);
         return "/admin/activityEdit";
@@ -89,6 +148,11 @@ public class AdminCtrl {
     @RequestMapping(value = "/activityEdit", method = RequestMethod.POST)
     public String activityEdit(HttpServletRequest request, MultipartFile banner, String name, String detail, String  beginDate, String endDate, String type,
                                String chargeType, String crowd, String strength) throws Exception {
+        HttpSession session = request.getSession();
+        Object sessionObj = session.getAttribute("admin");
+        if (sessionObj == null){
+            return "/admin/login";
+        }
         String id = request.getParameter("id");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-DD");
         Activity activity = new Activity();
@@ -118,6 +182,11 @@ public class AdminCtrl {
 
     @RequestMapping(value = "/activityDel", method = RequestMethod.GET)
     public String activityDel(HttpServletRequest request, String id) throws Exception {
+        HttpSession session = request.getSession();
+        Object sessionObj = session.getAttribute("admin");
+        if (sessionObj == null){
+            return "/admin/login";
+        }
         HashMap<String, Object> returnMap = new HashMap<String, Object>();
         id = request.getParameter("id");
         Activity activity  = new Activity();
@@ -131,6 +200,23 @@ public class AdminCtrl {
 
         activityDao.update(activity);
         return "redirect:/admin";
+    }
+
+    @RequestMapping(value = "/activityView", method = RequestMethod.POST)
+    @ResponseBody
+    //TODO   很多判断，懒得写了
+    public JSONArray activityView(HttpServletRequest request, String id) throws Exception {
+        Activity activity  = new Activity();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.hh HH:mm:ss");
+        activity = activityDao.findOne("from Activity where isDelete = 0 and id= " + id);
+        System.out.println(sdf.format(activity.getBeginDate()));
+        JSONObject jsonObject = (JSONObject)JSON.toJSON(activity);
+        jsonObject.put("beginDate",sdf.format(activity.getBeginDate()));
+        jsonObject.put("endDate",sdf.format(activity.getEndDate()));
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.add(jsonObject);
+
+        return jsonArray;
     }
 
     //删除指定文件
@@ -168,7 +254,7 @@ public class AdminCtrl {
         file.transferTo(new File(url));
 
         //压缩
-        Thumbnails.of(url).size(290, 120).toFile(url);
+        Thumbnails.of(url).size(960, 700).toFile(url);
         return path;
     }
 }

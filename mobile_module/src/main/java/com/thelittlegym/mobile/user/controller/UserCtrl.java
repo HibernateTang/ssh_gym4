@@ -51,7 +51,7 @@ public class UserCtrl {
         List<GymSelected> listGymSelected = new ArrayList<GymSelected>();
         User user;
         if (objSession == null) {
-            return "redirect:/login.html";
+            return "redirect:/login.jsp";
         } else {
             user = (User) objSession;
         }
@@ -150,7 +150,7 @@ public class UserCtrl {
         if (user != null) {
             return "/member/topic";
         } else {
-            return "redirect:/login.html";
+            return "redirect:/login.jsp";
         }
     }
 
@@ -163,7 +163,7 @@ public class UserCtrl {
         if (objSession != null) {
             user = (User) objSession;
         } else {
-            return "redirect:/login.html";
+            return "redirect:/login.jsp";
         }
         //我的信息
         Integer idFamily = user.getIdFamily();

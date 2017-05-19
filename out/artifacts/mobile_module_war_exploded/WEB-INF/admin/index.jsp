@@ -23,15 +23,7 @@
 </head>
 
 <body>
-<div class="ui  thin sidebar left inverted vertical menu">
-    <div class="header item">
-        <img class="logo" src="/images/member/head.jpg">
-    </div>
-    <a class="item">活动
-        <i class="browser icon"></i>
-    </a>
-    <a class="item">课程</a>
-</div>
+<%@ include file="/WEB-INF/admin/template_slider.jsp" %>
 <div class="pusher">
     <div class="ui masthead  segment">
         <div class="ui container">
@@ -74,13 +66,13 @@
                 <div class="ui four stackable  special cards">
                     <c:if test="${not empty page.list}">
                         <c:forEach items="${page.list}" var="activity">
-                            <div class="card">
+                            <div data-value="${activity.id}" class="card">
                                 <div class="blurring dimmable image">
                                     <div class="ui dimmer">
                                         <div class="content">
                                             <div class="center">
-                                                <a href="/admin/activityVeiw?id=${activity.id}"
-                                                   class="ui inverted button">查看</a>
+                                                <a  href="javascript:;"
+                                                 data-value="${activity.id}"  class="ui inverted button viewActivity">查看</a>
                                             </div>
                                         </div>
                                     </div>
@@ -116,6 +108,33 @@
         </div>
     </div>
 </div>
+<!-- modal-->
+<div class="ui modal">
+    <i class="close icon"></i>
+    <div class="header" id="modal_name">
+
+    </div>
+    <div class="image content">
+        <div class="ui medium image">
+            <img src="/images/admin/ERROR.png" onerror="this.src='/images/admin/ERROR.png'" id="modal_bannerSrc">
+        </div>
+        <div class="description">
+            <div class="ui header" >活动详情</div>
+            <p id="modal_detail"></p>
+            <div class="ui header" >活动时间</div>
+            <p id="modal_date"></p>
+            <div class="ui header" >活动细则</div>
+            <div id="modal_more" class="ui horizontal list">
+
+            </div>
+        </div>
+    </div>
+    <div class="actions">
+        <a id="modal_edit" href="/admin/activityToEdit?id=" class="ui positive right  icon button">
+            编辑
+        </a>
+    </div>
+</div>
 <script type='text/javascript' src='/js/jquery-1.11.3.min.js' charset='utf-8'></script>
 <script type='text/javascript' src='/ui/semantic/semantic.min.js' charset='utf-8'></script>
 <script>
@@ -126,11 +145,39 @@
     $('.special.cards .image').dimmer({
         on: 'hover'
     });
-    $('.clear .button').on('click', function () {
-        $('.clear.ui.dropdown').dropdown('clear');
-        alert(1)
+
+    $(".button.viewActivity").on('click',function () {
+        var id = $(this).attr("data-value");
+        $.ajax({
+            type:'POST',
+            url:'/admin/activityView',
+            data:{
+                'id':id
+            },
+            contentType:"application/x-www-form-urlencoded",
+            dataType: "json",
+            success: function (data) {
+                if (data != null){
+                    var activity = data[0];
+                    $("#modal_name").text(activity.name);
+                    $("#modal_bannerSrc").attr("src",activity.bannerSrc);
+                    $("#modal_detail").text(activity.detail);
+                    var modal_date = activity.beginDate + " ~ " + activity.endDate;
+                    $("#modal_date").text(modal_date);
+                    var modal_more = "";
+                    modal_more += '<div class="item" ><div class="header">活动类别</div>' + activity.type + '</div>' ;
+                    modal_more += '<div class="item" ><div class="header">活动收费类型</div>' + activity.chargeType + '</div>' ;
+                    modal_more += '<div class="item" ><div class="header">活动人群</div>' + activity.crowd + '</div>' ;
+                    modal_more += '<div class="item" ><div class="header">运动强度</div>' + activity.strength + '</div>' ;
+                    $("#modal_more").html(modal_more);
+                    var href = $("#modal_edit").attr("href") + id;
+                    $("#modal_edit").attr("href",href);
+                    $('.ui.modal').modal('show');
+                }
+            },
+        })
     })
-    ;
+
 </script>
 </body>
 

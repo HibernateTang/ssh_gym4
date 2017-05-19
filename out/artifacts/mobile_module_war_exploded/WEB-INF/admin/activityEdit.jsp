@@ -21,16 +21,7 @@
 </head>
 
 <body>
-<div class="ui  thin sidebar left inverted vertical menu">
-    <div class="header item">
-        <img class="logo" src="/images/member/head.jpg">
-    </div>
-    <a href="/index" class="item">活动
-        <i class="browser icon"></i>
-    </a>
-    <a class="item">2</a>
-    <a class="item">3</a>
-</div>
+<%@ include file="/WEB-INF/admin/template_slider.jsp" %>
 <div class="pusher">
     <div class="ui masthead  segment">
         <div class="ui container">
