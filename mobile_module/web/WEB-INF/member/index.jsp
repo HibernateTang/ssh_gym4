@@ -109,9 +109,9 @@
                                                 class="fa fa-angle-double-right"></i></div>
                                     </div>
                                     <div class="exercise-text">
-                                        <p><label class="big">219</label>天您已加入小小运动馆</p>
+                                        <p><label class="big">${listRank[status.index]['tian']}</label>天您已加入小小运动馆</p>
                                         <p><label class="big"><fmt:formatNumber
-                                                value="${listRank[status.index]['last3']}" pattern="0.0"/></label>次您孩子平均每周锻炼次数（建议每周锻炼x次）
+                                                value="${listRank[status.index]['times_per_week']}" pattern="0.0"/></label>次您孩子平均每周锻炼次数（建议每周锻炼x次）
                                         </p>
                                     </div>
 
@@ -335,7 +335,9 @@
         $("#" + PAGE_ID + " .gym-select").attr("gym-id", gymId);
         attend_ajax(gymId, gymName, CHILD_ID, $("#" + PAGE_ID + " .beginDate").val(), $("#" + PAGE_ID + " .endDate").val());
     }
-
+    $("#activity").on('click', function () {
+        location.href = "/activity";
+    })
     $.init();
 </script>
 </body>

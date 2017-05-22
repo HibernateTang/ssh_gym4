@@ -174,6 +174,11 @@
         .apply-title {
             color: #4a74b5;
         }
+
+        a,.card {
+            display: block;
+            color:#3d4145;
+        }
     </style>
 </head>
 
@@ -195,7 +200,7 @@
                 <div class="pull-to-refresh-arrow"></div>
             </div>
 
-            <div class="card-container ">
+            <div class="card-container">
                 <!--<div class="card">
                     <div class="card-header no-border no-padding">
                         <img class="card-cover" src="images/inform.jpg" /></div>
@@ -225,7 +230,7 @@
         </div>
     </div>
 
-    <div class="page" id="activity">
+    <div class="page" id="activity" data-value="">
         <header class="bar bar-nav">
             <a class="button button-link pull-left "><i class="fa fa-location-arrow" aria-hidden="true"></i>
                 <small>地点：<label class="mycity"></label></small>
@@ -236,9 +241,9 @@
         </header>
         <div class="content">
             <div class="card">
-                <div class="card-content gym-activity">
+                <div class="card-content gym-activity" id="activity_banner">
                     <a href="#home"><i class="fa fa-angle-double-left fa-3x"></i></a>
-                    <div class="gym-title">植树节活动</div>
+                    <div class="gym-title" id="activity_name">获取中...</div>
 
                 </div>
             </div>
@@ -283,23 +288,23 @@
                 <div class="card-content">
                     <div class="row no-gutter">
                         <div class="col-50">
-                            <div class="rule-title">活动时间：<label class="rule-text">2017.01.12</label></div>
+                            <div class="rule-title">活动时间：<label class="rule-text" id="activity_beginDate">获取中...</label></div>
                         </div>
                         <div class="col-50">
-                            <div class="rule-title">活动类别：<label class="rule-text">亲子</label></div>
-                        </div>
-                    </div>
-                    <div class="row no-gutter">
-                        <div class="col-50">
-                            <div class="rule-title">收费类型：<label class="rule-text">现金</label></div>
-                        </div>
-                        <div class="col-50">
-                            <div class="rule-title">针对人群：<label class="rule-text">3-6岁</label></div>
+                            <div class="rule-title">活动类别：<label class="rule-text" id="activity_type">获取中...</label></div>
                         </div>
                     </div>
                     <div class="row no-gutter">
                         <div class="col-50">
-                            <div class="rule-title">运动强度：<label class="rule-text">一般</label></div>
+                            <div class="rule-title">收费类型：<label class="rule-text" id="activity_chargeType">获取中...</label></div>
+                        </div>
+                        <div class="col-50">
+                            <div class="rule-title">针对人群：<label class="rule-text" id="activity_crowd">获取中...</label></div>
+                        </div>
+                    </div>
+                    <div class="row no-gutter">
+                        <div class="col-50">
+                            <div class="rule-title">运动强度：<label class="rule-text" id="activity_strength">获取中...</label></div>
                         </div>
                     </div>
                 </div>
@@ -312,8 +317,8 @@
                     <i></i>
                 </div>
                 <div class="card-content">
-                    <div class="activity-detail">
-                        在与同类组件的比较中，layer总是能轻易获胜。她尽可能地在以更少的代码展现更强健的功能，且格外注重性能的提升、易用和实用性，正因如此，越来越多的开发者将媚眼投上了layer（已被4280634人次关注）。
+                    <div class="activity-detail" id="activity_detail">
+                        获取中...
                     </div>
                 </div>
             </div>
@@ -347,13 +352,15 @@
             <a class="button button-link  fa fa-home  pull-right " href="#home"></a>
         </header>
         <div class="bar bar-header-secondary">
-            <div class="searchbar">
-                <a class="searchbar-cancel">取消</a>
-                <div class="search-input">
-                    <label class="search-fa fa fa-search" aria-hidden="true" for="search"></label>
-                    <input type="search" id='keyword' placeholder='输入关键字...'/>
+            <form name="searchForm" action="/activity/search" method="post" onsubmit="return submitSearch()">
+                <div class="searchbar">
+                    <a class="searchbar-cancel">取消</a>
+                    <div class="search-input">
+                        <label class="search-fa fa fa-search" aria-hidden="true" for="search"></label>
+                        <input type="search" id='keyword' placeholder='输入关键字...'/>
+                    </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 
@@ -473,63 +480,32 @@
 <script type='text/javascript' src='/js/sm-city-picker.min.js' charset='utf-8'></script>
 <script src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script>
 <script>
+    $(document).on("pageInit", function (e, pageId, $page) {
+
+    });
+
+    /*****************index-开始***********************************/
+
     var city = remote_ip_info['city'];
     $(".mycity").text(city);
 
     $("#home").addClass("active");
-    infiniteScroll();
-
-    function infiniteScroll() {
-        // 加载flag
         var loading = false;
         // 最多可加载的条目
         var maxItems = 100;
         // 每次加载添加多少条目
-        var itemsPerLoad = 10;
-
-        function addItems(number, lastIndex) {
-            // 生成新条目的HTML
-            var html = '';
-            for (var i = lastIndex + 1; i <= lastIndex + number; i++) {
-                html += '<div class="card animated pulse" Onclick="toActivity(2)">' +
-                        '<div class="card-header no-border no-padding">' +
-                        '<img class="card-cover" src="/images/member/inform.jpg"/>' +
-                        '</div>' +
-                        '<div class="card-content">' +
-                        '<div class="card-content-inner">' +
-                        '<div class="gym-activity-title">奇怪的植树节活动' + i +
-                        '</div>' +
-                        '<div class="gym-activity-item">' +
-                        '<div class="avitivity-text">' +
-                        '<p>日期: 2017-12-12 ~ 2017-12-22</p>' +
-                        '<p>运动: 轮滑</p>' +
-                        '</div>' +
-                        '<i class="fa fa-bicycle fa-2x color-primary" aria-hidden="true"></i>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>' +
-                        '</div>';
-            }
-            // 添加新条目
-            $('.infinite-scroll-bottom .card-container').append(html);
-
-        }
-
-        //预先加载20条
-        addItems(itemsPerLoad, 0);
+        var itemsPerLoad = 6;
+        //预先加载x条
+        ajax_getItems(itemsPerLoad, 0);
         // 上次加载的序号
-        var lastIndex = 10;
-        // 注册'infinite'事件处理函数
+        var lastIndex = 6;
         $(document).on('infinite', '.infinite-scroll-bottom', function () {
-            // 如果正在加载，则退出
             if (loading) return;
-            // 设置flag
             loading = true;
             // 模拟1s的加载过程
             setTimeout(function () {
                 // 重置加载flag
                 loading = false;
-
                 if (lastIndex >= maxItems) {
                     // 加载完毕，则注销无限加载事件，以防不必要的加载
                     $.detachInfiniteScroll($('.infinite-scroll'));
@@ -537,34 +513,19 @@
                     $('.infinite-scroll-preloader').remove();
                     return;
                 }
-
                 // 添加新条目
-                addItems(itemsPerLoad, lastIndex);
+                ajax_getItems(itemsPerLoad, lastIndex);
                 // 更新最后加载的序号
-                lastIndex = $('.list-container li').length;
+                lastIndex = $('.card-container .card').length;
                 //容器发生改变,如果是js滚动，需要刷新滚动
                 $.refreshScroller();
             }, 1000);
-        });
-    }
 
+        });
 
     $(document).on('refresh', '.pull-to-refresh-content', function (e) {
         // 模拟2s的加载过程
         setTimeout(function () {
-            // var cardNumber = $(e.target).find('.card').length + 1;
-            // var cardHTML = '<div class="card">' +
-            //     '<div class="card-header">card' + cardNumber + '</div>' +
-            //     '<div class="card-content">' +
-            //     '<div class="card-content-inner">' +
-            //     '这里是第' + cardNumber + '个card，下拉刷新会出现第' + (cardNumber + 1) + '个card。' +
-            //     '</div>' +
-            //     '</div>' +
-            //     '</div>';
-
-            // $(e.target).find('.card-container').prepend(cardHTML);
-
-
             // 加载完毕需要重置
             $.pullToRefreshDone('.pull-to-refresh-content');
             location.reload();
@@ -572,12 +533,91 @@
 
     });
 
-    function toActivity(idActivity) {
-        location.href="#activity";
-        location.reload();
+    function ajax_getItems(size,index,keyword){
+        var html = '';
+        $.ajax({
+            type:'POST',
+            url:'/activity/getItems',
+            data:{
+                'size':size,
+                'index':index,
+                'keyword':keyword
+            },
+            async:false,
+            contentType: "application/x-www-form-urlencoded",
+            dataType: "json",
+            success:function (data) {
+                if (data != null && data.length > 0){
+                    $.each(data, function (index, activity) {
+                        html += '<a class="card animated pulse" href="#activity" onclick="ajax_activity('+activity.id+')"  data-value="' + activity.id  + '" >' +
+                                '<div class="card-header no-border no-padding">' +
+                                '<img class="card-cover" src=" ' +  activity.bannerSrc  + '"/>' +
+                                '</div>' +
+                                '<div class="card-content">' +
+                                '<div class="card-content-inner">' +
+                                '<div class="gym-activity-title">' + activity.name +
+                                '</div>' +
+                                '<div class="gym-activity-item">' +
+                                '<div class="avitivity-text">' +
+                                '<p>日期: '+ activity.beginDate + '~' + activity.endDate +  '</p>' +
+                                '<p>运动: ' + activity.type +  '</p>' +
+                                '</div>' +
+                                '<i class="fa fa-bicycle fa-2x color-primary" aria-hidden="true"></i>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                                '</a>';
+                    })
+                    $('.infinite-scroll-bottom .card-container').append(html);
+                }else{
+                    $.detachInfiniteScroll($('.infinite-scroll'));
+                    $('.infinite-scroll-preloader').text("已经到底了~");
+                    return;
+                }
+            }
+        })
+
     }
 
-    /*myinfo*/
+    /*****************index-结束***********************************/
+
+    /*****************activity-开始*******************************/
+    function ajax_activity(id) {
+        $("#activity").attr("data-value",id);
+        $.router.load("#activity");
+        $.ajax({
+            type:'POST',
+            url:'/activity/view',
+            data:{
+                'id':id
+            },
+            async:false,
+            contentType: "application/x-www-form-urlencoded",
+            dataType: "json",
+            success:function (activity) {
+                $("#activity_name").text(activity.name);
+                $("#activity_type").text(activity.type);
+                $("#activity_chargeType").text(activity.chargeType);
+                $("#activity_crowd").text(activity.crowd);
+                $("#activity_strength").text(activity.strength);
+                $("#activity_beginDate").text(activity.beginDate);
+                $("#activity_detail").text(activity.detail);
+                $("#activity_banner").css("backgroundImage","url("+activity.bannerSrc+")");
+            }
+        })
+    }
+    /*****************activity-结束*******************************/
+
+
+    /*****************search-开始**********************************/
+
+
+    /*****************search-结束**********************************/
+    function submitSearch() {
+        alert(1)
+        return false;
+    }
+    /****************myinfo-开始***********************************/
     $("#info").on('click', function () {
         $.popup('.popup-about');
     });

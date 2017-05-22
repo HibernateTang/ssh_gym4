@@ -31,6 +31,7 @@ public class Activity {
     private Boolean isDelete;
     private String bannerSrc;
     private String gyms;
+    private String city;
 
     public Integer getId() {
         return id;
@@ -134,5 +135,13 @@ public class Activity {
 
     public void setGyms(String gyms) {
         this.gyms = gyms;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }

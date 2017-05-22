@@ -56,7 +56,7 @@ public class AdminCtrl {
         Map<String,Object> returnMap = new HashMap<String,Object>();
         try {
             Map<String ,Object> map =  adminService.login( username, password);
-            Object object = returnMap.get("value");
+            Object object = map.get("value");
             if (object != null) {
                 Admin admin = (Admin) object;
                 HttpSession session = request.getSession();
@@ -75,7 +75,7 @@ public class AdminCtrl {
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public String adminIndex(HttpServletRequest request, Model model,Integer pageNow) throws Exception {
+    public String adminIndex(HttpServletRequest request, Model model) throws Exception {
         HttpSession session = request.getSession();
         Object sessionObj = session.getAttribute("admin");
         if (sessionObj == null){
@@ -85,7 +85,7 @@ public class AdminCtrl {
         String countHql = "select count(id) from Activity where isDelete = 0  ";
         String pageNowStr = request.getParameter("pageNow");
         int pageSize = 9;
-        pageNow = 1;
+        int  pageNow = 1;
         if ( null != pageNowStr && !"".equals(pageNowStr) ){
             if (pageNowStr.matches("[0-9]+")){
                 pageNow = Integer.parseInt(pageNowStr);

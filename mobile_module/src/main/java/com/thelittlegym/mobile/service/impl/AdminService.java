@@ -20,7 +20,7 @@ public class AdminService implements IAdminService {
     @Override
     public Map<String, Object> login(String username, String password) throws Exception {
         HashMap<String,Object> returnMap = new HashMap<String,Object>();
-        String hql = "from Admin where username = " + username;
+        String hql = "from Admin where username = '" + username + "'";
 
         Admin   admin = adminDao.findOne(hql);
         if (null != admin){

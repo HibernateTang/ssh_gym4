@@ -8,15 +8,8 @@ public class Rank {
     private String mins;
     private String ranking;
     private String times;
-    private String last3;
-
-    public String getLast3() {
-        return last3;
-    }
-
-    public void setLast3(String last3) {
-        this.last3 = last3;
-    }
+    private String tian;
+    private String times_per_week;
 
     public String getOutpass() {
         return outpass;
@@ -48,5 +41,21 @@ public class Rank {
 
     public void setTimes(String times) {
         this.times = times;
+    }
+
+    public String getTian() {
+        return tian;
+    }
+
+    public void setTian(String tian) {
+        this.tian = tian;
+    }
+
+    public String getTimes_per_week() {
+        return times_per_week;
+    }
+
+    public void setTimes_per_week(String times_per_week) {
+        this.times_per_week = times_per_week;
     }
 }

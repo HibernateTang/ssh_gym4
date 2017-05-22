@@ -51,7 +51,7 @@ public class UserCtrl {
         List<GymSelected> listGymSelected = new ArrayList<GymSelected>();
         User user;
         if (objSession == null) {
-            return "redirect:/login.jsp";
+            return "redirect:/login.html";
         } else {
             user = (User) objSession;
         }
@@ -125,9 +125,6 @@ public class UserCtrl {
                 if (classArray != null) {
                     listGymClass = JSONObject.parseArray(classArray.toString(), GymClass.class);
                 }
-                String sqlLast3Attend = "select  *,0 xh into # from (select top 3000 bj.crmzdy_80620202_id idgym,rq.crm_name date,bj.crmzdy_80612384 time,bj.crmzdy_80612382 course,kq from(select crmzdy_81486481 kq,crmzdy_81486480_id idrq from crm_zdytable_238592_25118_238592_view bmks where bmks.crmzdy_81618215_id= " + idChild  + " /*idhz*/ and bmks.crmzdy_81636525<=dateadd(d,-90,getdate()) and crmzdy_81619234='已报名' union all select crmzdy_80652349,crmzdy_80652340_id from crm_zdytable_238592_23696_238592_view bk where crmzdy_80658051_id=195102 and bk.crmzdy_81761865<=dateadd(d,-90,getdate()))ks join crm_zdytable_238592_23870_238592_view rq on ks.idrq=rq.id join crm_zdytable_238592_23583_238592_view bj on rq.crmzdy_80650267_id=bj.id order by date desc)ks ;declare @kq varchar(100)='';declare @i int=1;update # set @i=case  when @kq='' then @i when kq=@kq then @i else @i+1 end,xh=@i,@kq=kq;select num from(select top 1 kq,xh,count(*)num from # group by kq,xh having kq='出勤' order by num desc)a/*近三个月最高连续出勤数*/ ";
-                JSONObject last3AttendObj = oasisService.getObject(sqlLast3Attend,0);
-                rank.setLast3((last3AttendObj.getFloat("num") / 12) + "");
                 listChild.add(child);
                 listRank.add(rank);
                 listGymSelected.add(gymSelected);
