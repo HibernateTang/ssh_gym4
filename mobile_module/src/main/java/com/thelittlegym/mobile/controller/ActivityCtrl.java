@@ -106,8 +106,8 @@ public class ActivityCtrl {
         String queryHql = "from Activity where isDelete = 0  order by createTime desc ";
         String countHql = "select count(id) from Activity where isDelete = 0 ";
         if (!"".equals(keyword)){
-            queryHql = "from Activity where isDelete = 0 and name like '%" + keyword  + "'%  order by createTime desc ";
-            countHql = "select count(id) from Activity where isDelete = 0 and name like '%" + keyword  + "'% ";
+            queryHql = "from Activity where isDelete = 0 and name like '%" + keyword  + "%'  order by createTime desc ";
+            countHql = "select count(id) from Activity where isDelete = 0 and name like '%" + keyword  + "%' ";
         }
         Page<Activity> page = activityDao.findPage(index, size, queryHql, countHql);
         List<Activity> activityList =  page.getList();

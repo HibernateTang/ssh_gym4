@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="/css/sm.min.css">
     <link rel="stylesheet" href="/css/gym.css">
     <link rel="stylesheet" href="/css/animate.css">
+    <link rel="icon" href="/images/admin/favicon.ico"/>
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
 
 </head>
@@ -47,7 +48,7 @@
                                 <a href="#child${status.index==0?1:0}">
                                     <i class="fa fa-angle-double-left"></i>
                                     <small>查询另一位宝宝</small>
-                                    </a>
+                                </a>
                                 <label>${child['name']} </label>
                             </c:otherwise>
                         </c:choose>
@@ -67,7 +68,8 @@
                                     </c:otherwise>
                                 </c:choose>
                             </div>
-                            <a class="header-text external" href="/index/myinfo?idhz=${child['idhz']}">
+                            <a class="header-text external"
+                               href="/index/myinfo?idhz=${child['idhz']}&name=${child['name']}&age=${child['age']}">
                                 <div class="header-p">
                                     <p>年龄：${child['age']}</p>
                                     <p>剩余课时：${child['rest']}节课</p>
@@ -111,12 +113,11 @@
                                     <div class="exercise-text">
                                         <p><label class="big">${listRank[status.index]['tian']}</label>天您已加入小小运动馆</p>
                                         <p><label class="big"><fmt:formatNumber
-                                                value="${listRank[status.index]['times_per_week']}" pattern="0.0"/></label>次您孩子平均每周锻炼次数（建议每周锻炼x次）
+                                                value="${listRank[status.index]['times_per_week']}"
+                                                pattern="0.0"/></label>次您孩子平均每周锻炼次数（建议每周锻炼x次）
                                         </p>
                                     </div>
-
                                 </div>
-
                             </c:when>
                             <c:otherwise>
                                 <div class="card-content-inner">
@@ -139,7 +140,7 @@
                                 <input type="text" readonly class="beginDate"
                                        value="${listGymSelectedSession[status.index]['beginDate']}"
                                        data-toggle="date"/> -
-                                <input type="text" readonly  class="endDate"
+                                <input type="text" readonly class="endDate"
                                        value="${listGymSelectedSession[status.index]['endDate']}"
                                        data-toggle="date"/>
                                 <i class="fa fa-angle-double-right endDate-i"></i>
@@ -176,7 +177,7 @@
                                                             <span class="col-20  class">${gymClass['course']}</span>
                                                         <span class="col-20  state <c:if test="${gymClass['kq'] == '尚未开课'}"> text-danger</c:if>">
                                                                 ${gymClass['kq']}</span>
-                                                            <a href="/index/topic"><span
+                                                            <a onclick="toTopic()"><span
                                                                     class="col-20 details">课程亮点</span></a>
                                                         </li>
                                                     </c:forEach>
@@ -193,10 +194,12 @@
                     </div>
                 </div>
 
-                <div class="card" id="activity">
+                <div class="card activity">
                     <div class="card-header no-border no-padding gym-month-activity">
                         <i></i>
-                        <div class="gym-banner-title"><small>中心本月活动</small></div>
+                        <div class="gym-banner-title">
+                            <small>中心本月活动</small>
+                        </div>
                         <i></i>
                     </div>
                 </div>
@@ -223,9 +226,33 @@
     });
 
     //手动处理
-    $(".endDate-i,.beginDate-i").on('click',function () {
-
+    $(".endDate-i").on('click', function () {
+        var next_week = getNewDay($("#" + PAGE_ID + " .endDate").val(), 7);
+        $("#" + PAGE_ID + " .endDate").val(next_week);
+        $("#" + PAGE_ID + " .endDate").trigger('change');
     })
+    $(".beginDate-i").on('click', function () {
+        var pre_week = getNewDay($("#" + PAGE_ID + " .beginDate").val(), -7);
+        $("#" + PAGE_ID + " .beginDate").val(pre_week);
+        $("#" + PAGE_ID + " .beginDate").trigger('change');
+    })
+    //日期加减
+    function getNewDay(dateTemp, days) {
+        var nDate = new Date(Date.parse(dateTemp.replace(/-/g, "/"))); //转换为MM-DD-YYYY格式
+        var millSeconds = Math.abs(nDate) + (days * 24 * 60 * 60 * 1000);
+        var rDate = new Date(millSeconds);
+        var year = rDate.getFullYear();
+        var month = rDate.getMonth() + 1;
+        if (month < 10) {
+            month = "0" + month;
+        }
+        var date = rDate.getDate();
+        if (date < 10) {
+            date = "0" + date;
+        }
+
+        return (year + "-" + month + "-" + date);
+    }
     if ($('.swiper-container-dlist').size()) {
         $('.swiper-container-dlist').find('.swiper-slide').height('auto');
         var swiper_dList = new Swiper('.swiper-container-dlist', {
@@ -236,8 +263,6 @@
             scrollbarHide: false,
         })
     }
-
-
 
     $(".beginDate,.endDate").on('change', function () {
         var gymId = $("#" + PAGE_ID + " .gym-select").attr('gym-id');
@@ -316,7 +341,7 @@
             disabled: selectedGymId == gymId,
             id: gymId,
             onClick: function () {
-                if (!this.disabled){
+                if (!this.disabled) {
                     gym_change(this.text, this.id);
                 }
             }
@@ -324,8 +349,6 @@
 
         buttons1.push(button_json);
         </c:forEach>
-
-
         var groups = [buttons1, buttons2];
         $.actions(groups);
     });
@@ -335,9 +358,14 @@
         $("#" + PAGE_ID + " .gym-select").attr("gym-id", gymId);
         attend_ajax(gymId, gymName, CHILD_ID, $("#" + PAGE_ID + " .beginDate").val(), $("#" + PAGE_ID + " .endDate").val());
     }
-    $("#activity").on('click', function () {
-        location.href = "/activity";
-    })
+    $(".activity").on('click', function () {
+        $.alert("敬请期待...");
+        return;
+    });
+    function toTopic() {
+        $.alert("敬请期待...");
+        return;
+    }
     $.init();
 </script>
 </body>

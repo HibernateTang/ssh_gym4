@@ -8,6 +8,7 @@ public class Child {
     private String name;
     private String age;
     private String rest;
+    private String gender;
     private String ranking;
 
 
@@ -49,5 +50,13 @@ public class Child {
 
     public void setRest(String rest) {
         this.rest = rest;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }

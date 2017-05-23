@@ -60,7 +60,7 @@ public class UserCtrl {
 
         //孩子
         String sqlUser = "declare @rest float;set @rest =isnull((select sum(kss)rest from(select top 6 crmzdy_81739422 kss from crm_zdytable_238592_25111_238592_view zx join crm_zdytable_238592_25115_238592_view bmksb on zx.crmzdy_81611091_id= " + idFamily + " and bmksb.crmzdy_81756836_id=zx.id and bmksb.crmzdy_81733119='销售'  and bmksb.crmzdy_81739422/*rest*/>0 join crm_zdytable_238592_23796_238592_view ht on ht.id=bmksb.crmzdy_81486464_id and datediff(d,getdate(),crmzdy_81733324/*dtDaoQi*/)>=0 order by bmksb.id desc)bmksb),0);select hz.id idhz,hz.crm_name name,hz.crmzdy_81497217 age,replace(isnull(hz.crmzdy_82017585,''),'''','\\\"')ranking,@rest rest from crm_zdytable_238592_23893_238592_view hz where crmzdy_80653840_id=" + idFamily;
-        sqlUser = "select hz.id idhz,hz.crm_name name,hz.crmzdy_81497217 age,replace(isnull(hz.crmzdy_82017585,''),'''','\\\"')ranking,0 rest from crm_zdytable_238592_23893_238592_view hz where crmzdy_80653840_id=" + idFamily;
+        sqlUser = "select hz.id idhz,hz.crm_name name,hz.crmzdy_81497217 age,crmzdy_80653844 gender,replace(isnull(hz.crmzdy_82017585,''),'''','\\\"')ranking,0 rest from crm_zdytable_238592_23893_238592_view hz where crmzdy_80653840_id=" + idFamily;
 
         JSONArray childArray = oasisService.getResultJson(sqlUser);
 
@@ -147,31 +147,35 @@ public class UserCtrl {
         if (user != null) {
             return "/member/topic";
         } else {
-            return "redirect:/login.jsp";
+            return "redirect:/login.html";
         }
     }
 
 
     @RequestMapping(value = "/myinfo", method = RequestMethod.GET)
-    public String myinfo(HttpServletRequest request, String idhz, Model model) throws Exception {
+    public String myinfo(HttpServletRequest request, String idhz,String name,String age, Model model) throws Exception {
         HttpSession session = request.getSession();
         Object objSession = session.getAttribute("user");
         User user;
         if (objSession != null) {
             user = (User) objSession;
         } else {
-            return "redirect:/login.jsp";
+            return "redirect:/login.html";
         }
         //我的信息
         Integer idFamily = user.getIdFamily();
         String sqlMyInfo = "select top 6 convert(varchar(10),ht.crmzdy_80646021,111) 报名日期,ht.crmzdy_80646031  报名课时数,ht.crmzdy_81636090 合同金额,convert(varchar(10),crmzdy_81733324,111)   有效期,bmksb.crmzdy_81739422 剩余课时数,bmksb.crmzdy_81739425 累计请假数,isnull(bjap.kc,'暂未排课') 课程,ht.crmzdy_81733120 赠课,zx.crmzdy_81802626 积分 from crm_zdytable_238592_25111_238592_view zx join crm_zdytable_238592_25115_238592_view bmksb on zx.crmzdy_81611091_id=" + idFamily + " and bmksb.crmzdy_81756836_id=zx.id  join crm_zdytable_238592_23796_238592_view ht on ht.id=bmksb.crmzdy_81486464_id  outer apply(select top 1 bj.crmzdy_80612382 kc from crm_zdytable_238592_25117_238592_view bjap join crm_zdytable_238592_23583_238592_view bj on bj.id=bjap.crmzdy_81486476_id where ht.id=bjap.crmzdy_81598938_id)bjap where bmksb.crmzdy_81733119='销售'  and bmksb.crmzdy_81739422/*rest*/>0 and datediff(d,getdate(),ht.crmzdy_81733324/*dtDaoQi*/)>=0";
-        JSONObject infoObj = oasisService.getObject(sqlMyInfo,0);
+        JSONArray contractArr = oasisService.getResultJson(sqlMyInfo);
 
         //孩子id查询信息
-        String sqlChild = "select  crm_name name,crmzdy_81497217 age from crm_zdytable_238592_23893_238592_view where id = " + idhz;
-        JSONObject childObj = oasisService.getObject(sqlChild,0);
+//        String sqlChild = "select  crm_name name,crmzdy_81497217 age from crm_zdytable_238592_23893_238592_view where id = " + idhz;
+//        JSONObject childObj = oasisService.getObject(sqlChild,0);
+        JSONObject childObj = new JSONObject();
 
-        model.addAttribute("infoObj", infoObj);
+        childObj.put("idhz",idhz);
+        childObj.put("name",name);
+        childObj.put("age",age);
+        model.addAttribute("listContract", contractArr);
         model.addAttribute("childObj", childObj);
 
         return "/member/myinfo";

@@ -20,6 +20,7 @@
     <title>宝宝信息</title>
     <link rel="stylesheet" href="/css/sm.min.css">
     <link rel="stylesheet" href="/css/gym.css">
+    <link rel="icon" href="/images/admin/favicon.ico" />
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
 </head>
 
@@ -60,48 +61,48 @@
 
                 <div class="card-content">
                     <c:choose>
-                        <c:when test="${not empty infoObj}">
-                            <div class="card-content-inner">
+                        <c:when test="${not empty listContract}">
+                            <div class="card-content-inner" id="contract" data-value="0">
                                 <div class="list-block gym-list">
                                     <ul>
                                         <li class="item-content">
                                             <div class="item-inner">
-                                                <div class="item-title">报名日期：${infoObj['报名日期']}</div>
+                                                <div class="item-title" >报名日期：<label id="c_regDate">${listContract[0]['报名日期']}</label></div>
                                             </div>
                                             <div class="item-inner">
-                                                <div class="item-title">有效期：${infoObj['有效期']}</div>
-                                            </div>
-                                        </li>
-                                        <li class="item-content">
-                                            <div class="item-inner">
-                                                <div class="item-title">剩余课时数：${infoObj['剩余课时数']}节</div>
-                                            </div>
-                                            <div class="item-inner">
-                                                <div class="item-title">报名课时数：${infoObj['报名课时数']}节</div>
+                                                <div class="item-title" >有效期：<label id="c_validity">${listContract[0]['有效期']}</label></div>
                                             </div>
                                         </li>
                                         <li class="item-content">
                                             <div class="item-inner">
-                                                <div class="item-title">累计请假：${infoObj['累计请假数']}节</div>
+                                                <div class="item-title" >剩余课时数：<label id="c_residuePeriods">${listContract[0]['剩余课时数']}</label>节</div>
                                             </div>
                                             <div class="item-inner">
-                                                <div class="item-title">报名金额：${infoObj['合同金额']}</div>
-                                            </div>
-                                        </li>
-                                        <li class="item-content">
-                                            <div class="item-inner">
-                                                <div class="item-title">班级：${infoObj['课程']}</div>
-                                            </div>
-                                            <div class="item-inner">
-                                                <div class="item-title">赠课：${infoObj['赠课']}</div>
+                                                <div class="item-title" >报名课时数：<label id="c_regPeriods">${listContract[0]['报名课时数']}</label>节</div>
                                             </div>
                                         </li>
                                         <li class="item-content">
                                             <div class="item-inner">
-                                                <div class="item-title">积分：${infoObj['积分']}</div>
+                                                <div class="item-title" >累计请假：<label id="c_totalLeave">${listContract[0]['累计请假数']}</label>节</div>
                                             </div>
                                             <div class="item-inner">
-                                                <a class="item-title">所有合同&nbsp;<i class="fa fa-angle-double-right"
+                                                <div class="item-title" >报名金额：<label id="c_regSum">${listContract[0]['合同金额']}</label></div>
+                                            </div>
+                                        </li>
+                                        <li class="item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title" >班级：<label id="c_class">${listContract[0]['课程']}</label></div>
+                                            </div>
+                                            <div class="item-inner">
+                                                <div class="item-title">赠课：<label id="c_give">${listContract[0]['赠课']}</label></div>
+                                            </div>
+                                        </li>
+                                        <li class="item-content">
+                                            <div class="item-inner">
+                                                <div class="item-title" >积分：<label id="c_score">${listContract[0]['积分']}</label></div>
+                                            </div>
+                                            <div class="item-inner">
+                                                <a id="view" class="item-title">所有合同&nbsp;<i class="fa fa-angle-double-right"
                                                                              aria-hidden="true"></i></a>
                                             </div>
                                         </li>
@@ -117,8 +118,6 @@
                     </c:choose>
                 </div>
             </div>
-
-
         </div>
     </div>
 </div>
@@ -224,9 +223,56 @@
         return url;
     }
 
-    $("#activity").on('click', function () {
-        location.href = "/activity";
-    })
+    //全局
+    var jsonArrayContract = ${listContract};
+    $('#view').on('click', function () {
+        var selectedContractId = $("#contract").attr("data-value");
+        var buttons1 = [
+            {
+                text: '请选择合同',
+                label: true
+            }
+        ];
+        var buttons2 = [
+            {
+                text: '取消',
+                bg: 'danger'
+            }
+        ];
+        var contractName = "";
+        var contractIndex = "";
+
+        $.each(jsonArrayContract, function (index, contract) {
+            contractName = contract['报名日期']+ '报名合同';
+            contractIndex = index;
+            var button_json = {
+                text: contractName,
+                id: contractIndex,
+                disabled:selectedContractId == contractIndex,
+                onClick: function () {
+                    if (!this.disabled) {
+                        contract_change(this.id);
+                    }
+                }
+            };
+            buttons1.push(button_json);
+        })
+        var groups = [buttons1, buttons2];
+        $.actions(groups);
+    });
+    function contract_change(index) {
+        $("#contract").attr('data-value',index);
+        $("#c_regDate").text(jsonArrayContract[index]['报名日期']);
+        $("#c_validity").text(jsonArrayContract[index]['有效期']);
+        $("#c_residuePeriods").text(jsonArrayContract[index]['剩余课时数']);
+        $("#c_regPeriods").text(jsonArrayContract[index]['报名课时数']);
+        $("#c_totalLeave").text(jsonArrayContract[index]['累计请假数']);
+        $("#c_regSum").text(jsonArrayContract[index]['合同金额']);
+        $("#c_class").text(jsonArrayContract[index]['课程']);
+        $("#c_give").text(jsonArrayContract[index]['赠课']);
+        $("#c_score").text(jsonArrayContract[index]['积分']);
+    }
+
     $.init();
 </script>
 </body>
