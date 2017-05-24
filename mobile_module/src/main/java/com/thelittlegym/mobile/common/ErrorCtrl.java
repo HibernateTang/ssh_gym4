@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ErrorCtrl {
     @RequestMapping("/")
     public String errorPage(){
-        //如果你的spring mvc配置文件中配置了跳转后缀则不需要加.jsp后缀
-        //即直接return "demo/pagefile";
-        return "demo/pagefile.jsp";
+
+        return "redirect:error.html";
     }
 }

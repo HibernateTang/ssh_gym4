@@ -59,7 +59,7 @@
                     <a class="ui blue active button"></i> ${page.current}</a>
                     <a href="/admin?pageNow=${page.current+1}"
                        class="ui <c:if test="${page.current+1> page.total}">disabled</c:if> right labeled icon button"><i
-                            class="right arrow icon"></i> 下一页${page.total} </a>
+                            class="right arrow icon"></i> 下一页 </a>
                 </div>
             </div>
             <div class="ui segment">

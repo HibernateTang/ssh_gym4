@@ -109,8 +109,10 @@ public class ActivityCtrl {
             queryHql = "from Activity where isDelete = 0 and name like '%" + keyword  + "%'  order by createTime desc ";
             countHql = "select count(id) from Activity where isDelete = 0 and name like '%" + keyword  + "%' ";
         }
+        System.out.println(queryHql);
         Page<Activity> page = activityDao.findPage(index, size, queryHql, countHql);
         List<Activity> activityList =  page.getList();
+        System.out.println(activityList);
         if (null != activityList && activityList.size() > 0 ){
             for(Activity a:activityList){
                 JSONObject jsonObj = (JSONObject) JSON.toJSON(a);

@@ -112,7 +112,7 @@
                         </c:when>
                         <c:otherwise>
                             <div class="card-content-inner">
-                                <p class="color-danger text-center">您还没有报名哦~</p>
+                                <p class="color-danger text-center">没有找到有效期内的合同~</p>
                             </div>
                         </c:otherwise>
                     </c:choose>

@@ -8,6 +8,7 @@ import com.thelittlegym.mobile.user.model.User;
 import com.thelittlegym.mobile.user.service.IUserService;
 import net.coobird.thumbnailator.Thumbnails;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,7 +35,6 @@ public class UserCtrl {
     private IUserService userService;
     @Autowired
     private OasisService oasisService;
-
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String index(HttpServletRequest request, Model model) throws Exception {
@@ -264,7 +264,6 @@ public class UserCtrl {
             returnMap.put("message", path);
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("上传失败");
             returnMap.put("success", false);
             returnMap.put("message", "请重新登录后再试");
         }

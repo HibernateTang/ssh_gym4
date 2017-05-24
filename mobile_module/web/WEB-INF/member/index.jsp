@@ -22,7 +22,6 @@
     <link rel="stylesheet" href="/css/sm.min.css">
     <link rel="stylesheet" href="/css/gym.css">
     <link rel="stylesheet" href="/css/animate.css">
-    <link rel="icon" href="/images/admin/favicon.ico"/>
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
 
 </head>
@@ -304,7 +303,7 @@
                             divGymClass += "<span class='col-20  state'>";
                         }
                         divGymClass += content.kq + "</span>";
-                        divGymClass += "<a href='/index/topic'><span class='col-20 details'>课程亮点</span></a>";
+                        divGymClass += "<a onclick='toTopic()'><span class='col-20 details'>课程亮点</span></a>";
                         divGymClass += "</li>";
                     });
                 } else {
