@@ -9,6 +9,8 @@ import com.thelittlegym.mobile.dao.impl.ParticipatorImpl;
 import com.thelittlegym.mobile.entity.Activity;
 import com.thelittlegym.mobile.entity.Participator;
 import com.thelittlegym.mobile.user.model.User;
+import com.thelittlegym.mobile.utils.msg.lib.MESSAGEXsend;
+import com.thelittlegym.mobile.utils.msg.send.ValNum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +23,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by hibernate on 2017/5/3.
@@ -158,4 +162,22 @@ public class ActivityCtrl {
         JSONObject jsonObject = (JSONObject)JSON.toJSON(p);
         return jsonObject;
     }
+
+    @RequestMapping(value = "/val", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> validateNum(HttpServletRequest request, String tel) {
+        ValNum valNum = new ValNum();
+        HttpSession session = request.getSession();
+        //发送验证码
+//        Map<String,Object> returnMap = valNum.sendVal(tel);
+        Map<String,Object> returnMap = new HashMap<String, Object>();
+        returnMap.put("success",true);
+        returnMap.put("message","2121");
+        if( returnMap!=null && (Boolean) returnMap.get("success")){
+            session.setAttribute("addValMap",returnMap);
+        }
+        return returnMap;
+    }
+
 }
+

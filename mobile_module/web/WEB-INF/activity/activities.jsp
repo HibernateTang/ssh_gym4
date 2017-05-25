@@ -442,10 +442,10 @@
                         <div class="item-media"><i class="fa fa-commenting-o fa-2x"></i></div>
                         <div class="item-inner">
                             <div class="item-input">
-                                <input type="number" id="add_num" placeholder="验证码">
+                                <input type="text" id="add_num" placeholder="验证码">
                             </div>
                             <div class="item-after">
-                                <a id="add_val" class="button button-fill button-success">获取验证码</a>
+                                <button type="button" id="add_val" class="button button-fill button-success">获取验证码</button>
                             </div>
                         </div>
 
@@ -746,17 +746,17 @@
         ajax_val(tel);
     })
 
-
-
     var waitTime = 60;
 
     function time(o) {
         if (waitTime == 0) {
-            o.removeAttr("disabled");
+            o.attr("disabled","");
+            o.removeClass("disabled");
             o.text("发送验证码");
             waitTime = 60;
         } else {
-            o.addClass("disabled");//倒计时过程中禁止点击按钮
+            o.addClass("disabled");
+            o.attr("disabled",true);
             o.text(waitTime + "s重新获取");
             waitTime--;
             setTimeout(function () {
@@ -775,6 +775,7 @@
             $.alert("请输入正确的名字");
             return false;
         }
+        return true;
     }
 
     function ajax_val(tel) {
@@ -786,6 +787,7 @@
             dataType: "json",
             success: function (data) {
                 if (data.success == true) {
+                    console.info(data.message);
                     time($("#add_val"));
                 } else {
                     $.alert("发送失败，稍后再试");
@@ -793,6 +795,27 @@
             }
         });
     }
+
+    function ajax_add(tel, name) {
+        $.ajax({
+            type: "POST",
+            url: "/activity/add",
+            data: {"tel": tel,"name":name},
+            contentType: "application/x-www-form-urlencoded",
+            dataType: "json",
+            success: function (data) {
+                if (data.success == true) {
+                    console.info(data.message);
+                }
+            }
+        });
+    }
+
+    $("#add_submit").on('click',function () {
+        if(checkAdd()){
+
+        }
+    })
     $.init()
 </script>
 </body>
