@@ -5,7 +5,9 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.thelittlegym.mobile.base.model.Page;
 import com.thelittlegym.mobile.dao.impl.ActivityDaoImpl;
+import com.thelittlegym.mobile.dao.impl.ParticipatorImpl;
 import com.thelittlegym.mobile.entity.Activity;
+import com.thelittlegym.mobile.entity.Participator;
 import com.thelittlegym.mobile.user.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,6 +32,8 @@ public class ActivityCtrl {
 
     @Autowired
     private  ActivityDaoImpl activityDao;
+    @Autowired
+    private ParticipatorImpl participatorDao;
 
     @RequestMapping(value = "",method = RequestMethod.GET)
     public String activities(HttpServletRequest request, Model model) throws Exception {
@@ -109,10 +114,8 @@ public class ActivityCtrl {
             queryHql = "from Activity where isDelete = 0 and name like '%" + keyword  + "%'  order by createTime desc ";
             countHql = "select count(id) from Activity where isDelete = 0 and name like '%" + keyword  + "%' ";
         }
-        System.out.println(queryHql);
         Page<Activity> page = activityDao.findPage(index, size, queryHql, countHql);
         List<Activity> activityList =  page.getList();
-        System.out.println(activityList);
         if (null != activityList && activityList.size() > 0 ){
             for(Activity a:activityList){
                 JSONObject jsonObj = (JSONObject) JSON.toJSON(a);
@@ -140,6 +143,19 @@ public class ActivityCtrl {
         JSONObject jsonObject = (JSONObject)JSON.toJSON(activity);
         jsonObject.put("beginDate",sdf.format(activity.getBeginDate()));
         jsonObject.put("endDate",sdf.format(activity.getEndDate()));
+        return jsonObject;
+    }
+
+    @RequestMapping(value = "add",method = RequestMethod.POST)
+    @ResponseBody
+    public JSONObject add(HttpServletRequest request,String actId,String name,String phone,String num) throws Exception {
+        Participator p = new Participator();
+        p.setName(name);
+        p.setPhone(phone);
+        p.setCreateTime(new Date());
+        p.setActid(actId);
+        participatorDao.save(p);
+        JSONObject jsonObject = (JSONObject)JSON.toJSON(p);
         return jsonObject;
     }
 }

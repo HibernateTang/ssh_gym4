@@ -187,7 +187,7 @@
             url: '/index/upload',
             type: 'POST',
             data: formData,
-//            async: false,
+            async: false,
 //            cache: false,
             contentType: false,
             processData: false,

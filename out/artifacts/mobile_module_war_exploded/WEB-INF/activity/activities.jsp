@@ -340,7 +340,7 @@
                     <div class="gym-checkbox"><label><input id="agree" type="checkbox" checked>我已同意小小运动馆相关条约和规定</label>
                     </div>
 
-                    <a class="button button-fill popup-about" id="pickerActivity" href="javascript:;">选择场次</a>
+                    <a class="button button-fill popup-about" id="pickerActivity" href="javascript:;">报名</a>
                 </div>
             </div>
 
@@ -422,7 +422,7 @@
                         <div class="item-media"><i class="fa fa-user fa-2x"></i></div>
                         <div class="item-inner">
                             <div class="item-input">
-                                <input type="text" placeholder="姓名">
+                                <input type="text" id="add_name" placeholder="姓名">
                             </div>
                         </div>
                     </div>
@@ -432,7 +432,7 @@
                         <div class="item-media"><i class="fa fa-phone fa-2x"></i></div>
                         <div class="item-inner">
                             <div class="item-input">
-                                <input type="email" placeholder="手机">
+                                <input type="text" id="add_phone" placeholder="手机">
                             </div>
                         </div>
                     </div>
@@ -442,10 +442,10 @@
                         <div class="item-media"><i class="fa fa-commenting-o fa-2x"></i></div>
                         <div class="item-inner">
                             <div class="item-input">
-                                <input type="email" placeholder="验证码">
+                                <input type="number" id="add_num" placeholder="验证码">
                             </div>
                             <div class="item-after">
-                                <a class="button button-fill button-success">获取验证码</a>
+                                <a id="add_val" class="button button-fill button-success">获取验证码</a>
                             </div>
                         </div>
 
@@ -457,7 +457,8 @@
             <div class="row">
                 <div class="col-50"><a href="javascript:;"
                                        class="button button-big button-fill button-danger close-popup">取消</a></div>
-                <div class="col-50"><a href="javascript:;" class="button button-big button-fill button-success">提交</a>
+                <div class="col-50"><a id="add_submit" href="javascript:;"
+                                       class="button button-big button-fill button-success">提交</a>
                 </div>
             </div>
         </div>
@@ -519,7 +520,7 @@
                 return;
             }
             // 添加新条目
-            ajax_getItems(itemsPerLoad, lastIndex,$('#keyword').val());
+            ajax_getItems(itemsPerLoad, lastIndex, $('#keyword').val());
             // 更新最后加载的序号
             lastIndex = $('.card-container .card').length;
             //容器发生改变,如果是js滚动，需要刷新滚动
@@ -574,8 +575,9 @@
                                 '</a>';
                     })
                     $('.infinite-scroll-bottom .card-container').append(html);
+                    $.refreshScroller();
                 } else {
-                    $.detachInfiniteScroll($('.infinite-scroll'));
+//                    $.detachInfiniteScroll($('.infinite-scroll'));
                     $('.infinite-scroll-preloader').text("没有了~");
                     return;
                 }
@@ -617,7 +619,9 @@
     /*****************search-开始**********************************/
     function submitSearch() {
         $('.card-container .card').remove();
-        ajax_getItems(itemsPerLoad,0,$('#keyword').val());
+        ajax_getItems(itemsPerLoad, 0, $('#keyword').val());
+        $('#keyword').blur()
+        $(".content").scrollTop(0);
         $.router.load("#home");
         return false;
     }
@@ -692,9 +696,37 @@
     });
 
     function ajax_getlike(avtivity_name) {
-        var sql = "select is_like from activity where userid = " + 3 + "avtivity_name = " + avtivity_name;
-        return true;
+
     }
+
+    $("#add_submit").on('click', function () {
+        var add_name = $("#add_name").val();
+        var add_phone = $("#add_phone").val();
+        var add_num = $("#add_num").val();
+        $.ajax({
+            type: 'POST',
+            url: '/activity/add',
+            data: {
+                "name": add_name,
+                "phone": add_phone,
+                "num": add_num,
+            },
+            contentType: "application/x-www-form-urlencoded",
+            dataType: "json",
+            success: function (data) {
+                if (data.length > 0) {
+                    var html = '';
+                    html += '<div class="gym-main"><i class="fa fa-user"></i>报名人：' + data.name + '</div>' +
+                            '<div class="gym-text">点击修改或者增加报名信息</div>';
+                    $(".gym-apply").append(html);
+                }
+            },
+            error: function () {
+                $.alert("异常错误")
+            }
+        })
+        return true;
+    })
 
     function toggleLike() {
         var iconLike = $("#icon-like i");
@@ -709,6 +741,58 @@
         }
     }
 
+    $("#add_val").on('click',function () {
+        var tel = $("#add_phone").val();
+        ajax_val(tel);
+    })
+
+
+
+    var waitTime = 60;
+
+    function time(o) {
+        if (waitTime == 0) {
+            o.removeAttr("disabled");
+            o.text("发送验证码");
+            waitTime = 60;
+        } else {
+            o.addClass("disabled");//倒计时过程中禁止点击按钮
+            o.text(waitTime + "s重新获取");
+            waitTime--;
+            setTimeout(function () {
+                        time(o);//循环调用
+                    },
+                    1000)
+        }
+    }
+
+    function checkAdd() {
+        if (!/^1[34578]\d{9}$/.test($.trim($("#add_phone").val()))) {
+            $.alert("请输入正确手机");
+            return false;
+        }
+        if ($.trim($("#add_name").val()).length > 16 || $.trim($("#add_name").val()) == '') {
+            $.alert("请输入正确的名字");
+            return false;
+        }
+    }
+
+    function ajax_val(tel) {
+        $.ajax({
+            type: "POST",
+            url: "/activity/val",
+            data: {"tel": tel},
+            contentType: "application/x-www-form-urlencoded",
+            dataType: "json",
+            success: function (data) {
+                if (data.success == true) {
+                    time($("#add_val"));
+                } else {
+                    $.alert("发送失败，稍后再试");
+                }
+            }
+        });
+    }
     $.init()
 </script>
 </body>

@@ -210,7 +210,6 @@
 <script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
 <script type='text/javascript' src='/js/sm.min.js' charset='utf-8'></script>
 <script src="/js/swiper-3.4.2.jquery.min.js"></script>
-
 <script>
 
     /*全局孩子标识*/
@@ -228,6 +227,7 @@
     $(".endDate-i").on('click', function () {
         var next_week = getNewDay($("#" + PAGE_ID + " .endDate").val(), 7);
         $("#" + PAGE_ID + " .endDate").val(next_week);
+        updateCalendar(next_week);
         $("#" + PAGE_ID + " .endDate").trigger('change');
     })
     $(".beginDate-i").on('click', function () {
@@ -235,9 +235,15 @@
         $("#" + PAGE_ID + " .beginDate").val(pre_week);
         $("#" + PAGE_ID + " .beginDate").trigger('change');
     })
+    function updateCalendar(date){
+        var dateValue = date.replace(/-0/g,"-");//格式化
+        $("#"+PAGE_ID+".picker-calendar").find(".picker-calendar-day-selected").remove(".picker-calendar-day-selected");
+        $("#"+PAGE_ID+".picker-calendar").find('.picker-calendar-day[data-date="' + dateValue + '"]').addClass('picker-calendar-day-selected');
+
+    }
     //日期加减
     function getNewDay(dateTemp, days) {
-        var nDate = new Date(Date.parse(dateTemp.replace(/-/g, "/"))); //转换为MM-DD-YYYY格式
+        var nDate = new Date(Date.parse(dateTemp.replace(/-/g, "/"))); //转换格式
         var millSeconds = Math.abs(nDate) + (days * 24 * 60 * 60 * 1000);
         var rDate = new Date(millSeconds);
         var year = rDate.getFullYear();
@@ -249,7 +255,6 @@
         if (date < 10) {
             date = "0" + date;
         }
-
         return (year + "-" + month + "-" + date);
     }
     if ($('.swiper-container-dlist').size()) {
@@ -291,7 +296,7 @@
             },
             success: function (data) {
                 var divGymClass = "";
-                if (data != null) {
+                if (data != null && data.length > 0) {
                     $.each(data, function (index, content) {
                         divGymClass += "<li class='row no-gutter'>"
                         divGymClass += "<span class='col-20  date'>" + content.date + "</span>";
