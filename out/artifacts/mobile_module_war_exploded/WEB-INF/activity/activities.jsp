@@ -340,7 +340,7 @@
                     <div class="gym-checkbox"><label><input id="agree" type="checkbox" checked>我已同意小小运动馆相关条约和规定</label>
                     </div>
 
-                    <a class="button button-fill popup-about" id="pickerActivity" href="javascript:;">报名</a>
+                    <a class="button button-fill " id="pickerActivity" href="javascript:;">报名</a>
                 </div>
             </div>
 
@@ -699,34 +699,6 @@
 
     }
 
-    $("#add_submit").on('click', function () {
-        var add_name = $("#add_name").val();
-        var add_phone = $("#add_phone").val();
-        var add_num = $("#add_num").val();
-        $.ajax({
-            type: 'POST',
-            url: '/activity/add',
-            data: {
-                "name": add_name,
-                "phone": add_phone,
-                "num": add_num,
-            },
-            contentType: "application/x-www-form-urlencoded",
-            dataType: "json",
-            success: function (data) {
-                if (data.length > 0) {
-                    var html = '';
-                    html += '<div class="gym-main"><i class="fa fa-user"></i>报名人：' + data.name + '</div>' +
-                            '<div class="gym-text">点击修改或者增加报名信息</div>';
-                    $(".gym-apply").append(html);
-                }
-            },
-            error: function () {
-                $.alert("异常错误")
-            }
-        })
-        return true;
-    })
 
     function toggleLike() {
         var iconLike = $("#icon-like i");
@@ -743,14 +715,18 @@
 
     $("#add_val").on('click',function () {
         var tel = $("#add_phone").val();
+        if (!checkTel(tel)){
+            $.alert("请输入正确的手机号");
+            return;
+        }
         ajax_val(tel);
     })
 
     var waitTime = 60;
-
+    var valTimer;
     function time(o) {
         if (waitTime == 0) {
-            o.attr("disabled","");
+            o.removeAttr("disabled");
             o.removeClass("disabled");
             o.text("发送验证码");
             waitTime = 60;
@@ -759,7 +735,7 @@
             o.attr("disabled",true);
             o.text(waitTime + "s重新获取");
             waitTime--;
-            setTimeout(function () {
+            valTimer = setTimeout(function () {
                         time(o);//循环调用
                     },
                     1000)
@@ -767,17 +743,24 @@
     }
 
     function checkAdd() {
-        if (!/^1[34578]\d{9}$/.test($.trim($("#add_phone").val()))) {
-            $.alert("请输入正确手机");
+        if (!checkTel($("#add_phone").val())) {
+            $.alert("请输入正确的手机");
             return false;
         }
         if ($.trim($("#add_name").val()).length > 16 || $.trim($("#add_name").val()) == '') {
             $.alert("请输入正确的名字");
             return false;
         }
+        if (!/^\d{4}$/.test(($.trim($("#add_num").val())))){
+            $.alert("验证码为4位数字");
+            return false;
+        }
         return true;
     }
 
+    function checkTel(tel){
+        return /^1[34578]\d{9}$/.test($.trim(tel));
+    }
     function ajax_val(tel) {
         $.ajax({
             type: "POST",
@@ -796,11 +779,43 @@
         });
     }
 
+    function ajax_add(tel, name,actid,num) {
+        $.ajax({
+            type: "POST",
+            url: "/activity/add",
+            data: {"tel": tel,"name":name,"actId":actid,"num":num},
+            contentType: "application/x-www-form-urlencoded",
+            dataType: "json",
+            success: function (data) {
+                if ( data != null && data.success == true) {
+                    $.alert(data.message);
+                }else{
+                    $.alert(data.message);
+                }
+                $.closeModal(".popup-about");
+                resetPopup($(".popup-about"));
+            }
+        });
+    }
+
     $("#add_submit").on('click',function () {
         if(checkAdd()){
-            
+            var tel = $("#add_phone").val();
+            var name = $("#add_name").val();
+            var actid = $("#activity").attr("data-value");
+            var num = $("#add_num").val();
+            ajax_add(tel,name,actid,num);
         }
     })
+
+    function resetPopup($popup){
+        $popup.find('input').val('');//清空表单
+        var val = $popup.find('button');
+        val.removeAttr('disabled');
+        val.removeClass('disabled');
+        val.text('获取验证码');
+        clearTimeout(valTimer);//移除定时器
+    }
     $.init()
 </script>
 </body>

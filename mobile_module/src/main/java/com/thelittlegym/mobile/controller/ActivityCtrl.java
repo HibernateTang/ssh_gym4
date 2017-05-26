@@ -8,6 +8,7 @@ import com.thelittlegym.mobile.dao.impl.ActivityDaoImpl;
 import com.thelittlegym.mobile.dao.impl.ParticipatorImpl;
 import com.thelittlegym.mobile.entity.Activity;
 import com.thelittlegym.mobile.entity.Participator;
+import com.thelittlegym.mobile.service.IParticipatorService;
 import com.thelittlegym.mobile.user.model.User;
 import com.thelittlegym.mobile.utils.msg.lib.MESSAGEXsend;
 import com.thelittlegym.mobile.utils.msg.send.ValNum;
@@ -35,11 +36,13 @@ import java.util.Map;
 public class ActivityCtrl {
 
     @Autowired
-    private  ActivityDaoImpl activityDao;
+    private ActivityDaoImpl activityDao;
     @Autowired
     private ParticipatorImpl participatorDao;
+    @Autowired
+    private IParticipatorService participatorService;
 
-    @RequestMapping(value = "",method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public String activities(HttpServletRequest request, Model model) throws Exception {
         HttpSession session = request.getSession();
         Object objSession = session.getAttribute("user");
@@ -50,12 +53,12 @@ public class ActivityCtrl {
             user = (User) objSession;
         }
 
-         return "/activity/activities";
+        return "/activity/activities";
     }
 
-    @RequestMapping(value = "search",method = RequestMethod.POST)
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
     @ResponseBody
-    public JSONArray search(HttpServletRequest request,Integer index,Integer size,String keyword) throws Exception {
+    public JSONArray search(HttpServletRequest request, Integer index, Integer size, String keyword) throws Exception {
         HttpSession session = request.getSession();
         Object objSession = session.getAttribute("user");
         User user;
@@ -64,26 +67,26 @@ public class ActivityCtrl {
         } else {
             user = (User) objSession;
         }
-        JSONArray jsonArray = getItems(request,index,size,keyword);
+        JSONArray jsonArray = getItems(request, index, size, keyword);
         return jsonArray;
     }
 
-    @RequestMapping(value = "activity",method = RequestMethod.GET)
-    public String activity(HttpServletRequest request,Model model) throws Exception {
+    @RequestMapping(value = "/activity", method = RequestMethod.GET)
+    public String activity(HttpServletRequest request, Model model) throws Exception {
         HttpSession session = request.getSession();
         Object objSession = session.getAttribute("user");
         User user;
         if (objSession != null) {
-            model.addAttribute("isMember",true);
+            model.addAttribute("isMember", true);
         } else {
             user = (User) objSession;
-            model.addAttribute("isMember",false);
+            model.addAttribute("isMember", false);
         }
 
         return "/activity/activity";
     }
 
-    @RequestMapping(value = "myinfo",method = RequestMethod.GET)
+    @RequestMapping(value = "/myinfo", method = RequestMethod.GET)
     public String info(HttpServletRequest request) throws Exception {
         HttpSession session = request.getSession();
         Object objSession = session.getAttribute("user");
@@ -97,9 +100,9 @@ public class ActivityCtrl {
         return "/activity/myinfo";
     }
 
-    @RequestMapping(value = "getItems",method = RequestMethod.POST)
+    @RequestMapping(value = "/getItems", method = RequestMethod.POST)
     @ResponseBody
-    public JSONArray getItems(HttpServletRequest request,Integer size,Integer index,String keyword) throws Exception {
+    public JSONArray getItems(HttpServletRequest request, Integer size, Integer index, String keyword) throws Exception {
         HttpSession session = request.getSession();
         Object objSession = session.getAttribute("user");
         User user;
@@ -109,31 +112,31 @@ public class ActivityCtrl {
         } else {
             user = (User) objSession;
         }
-        index = index%size >0?index/size + 2:index/size + 1;
+        index = index % size > 0 ? index / size + 2 : index / size + 1;
         JSONArray jsonArray = new JSONArray();
 
         String queryHql = "from Activity where isDelete = 0  order by createTime desc ";
         String countHql = "select count(id) from Activity where isDelete = 0 ";
-        if (!"".equals(keyword)){
-            queryHql = "from Activity where isDelete = 0 and name like '%" + keyword  + "%'  order by createTime desc ";
-            countHql = "select count(id) from Activity where isDelete = 0 and name like '%" + keyword  + "%' ";
+        if (!"".equals(keyword)) {
+            queryHql = "from Activity where isDelete = 0 and name like '%" + keyword + "%'  order by createTime desc ";
+            countHql = "select count(id) from Activity where isDelete = 0 and name like '%" + keyword + "%' ";
         }
         Page<Activity> page = activityDao.findPage(index, size, queryHql, countHql);
-        List<Activity> activityList =  page.getList();
-        if (null != activityList && activityList.size() > 0 ){
-            for(Activity a:activityList){
+        List<Activity> activityList = page.getList();
+        if (null != activityList && activityList.size() > 0) {
+            for (Activity a : activityList) {
                 JSONObject jsonObj = (JSONObject) JSON.toJSON(a);
-                jsonObj.put("beginDate",sdf.format(a.getBeginDate()));
-                jsonObj.put("endDate",sdf.format(a.getEndDate()));
+                jsonObj.put("beginDate", sdf.format(a.getBeginDate()));
+                jsonObj.put("endDate", sdf.format(a.getEndDate()));
                 jsonArray.add(jsonObj);
             }
         }
         return jsonArray;
     }
 
-    @RequestMapping(value = "view",method = RequestMethod.POST)
+    @RequestMapping(value = "/view", method = RequestMethod.POST)
     @ResponseBody
-    public JSONObject activityView(HttpServletRequest request,Integer id) throws Exception {
+    public JSONObject activityView(HttpServletRequest request, Integer id) throws Exception {
         HttpSession session = request.getSession();
         Object objSession = session.getAttribute("user");
         User user;
@@ -144,23 +147,33 @@ public class ActivityCtrl {
             user = (User) objSession;
         }
         Activity activity = activityDao.getOne(id);
-        JSONObject jsonObject = (JSONObject)JSON.toJSON(activity);
-        jsonObject.put("beginDate",sdf.format(activity.getBeginDate()));
-        jsonObject.put("endDate",sdf.format(activity.getEndDate()));
+        JSONObject jsonObject = (JSONObject) JSON.toJSON(activity);
+        jsonObject.put("beginDate", sdf.format(activity.getBeginDate()));
+        jsonObject.put("endDate", sdf.format(activity.getEndDate()));
         return jsonObject;
     }
 
-    @RequestMapping(value = "add",method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public JSONObject add(HttpServletRequest request,String actId,String name,String phone,String num) throws Exception {
+    public Map<String,Object> add(HttpServletRequest request, String actId, String name, String tel, String num) throws Exception {
         Participator p = new Participator();
-        p.setName(name);
-        p.setPhone(phone);
-        p.setCreateTime(new Date());
-        p.setActid(actId);
-        participatorDao.save(p);
-        JSONObject jsonObject = (JSONObject)JSON.toJSON(p);
-        return jsonObject;
+        HttpSession session = request.getSession();
+        Object objValMap = session.getAttribute("addValMap");
+        Map<String,Object> returnMap = new HashMap<String, Object>();
+        if (null != objValMap){
+            Map<String,Object> valMap = (HashMap<String, Object>)objValMap;
+            if (participatorService.valPar(valMap,num)){
+                returnMap = participatorService.addPar(tel,name,actId);
+                session.removeAttribute("addValMap");
+            }else{
+                returnMap.put("success",false);
+                returnMap.put("message","报名失败:验证码错误或者失效");
+            }
+        }else{
+            returnMap.put("success",false);
+            returnMap.put("message","报名失败:验证码过期");
+        }
+        return returnMap;
     }
 
     @RequestMapping(value = "/val", method = RequestMethod.POST)
@@ -170,14 +183,14 @@ public class ActivityCtrl {
         HttpSession session = request.getSession();
         //发送验证码
 //        Map<String,Object> returnMap = valNum.sendVal(tel);
-        Map<String,Object> returnMap = new HashMap<String, Object>();
-        returnMap.put("success",true);
-        returnMap.put("message","2121");
-        if( returnMap!=null && (Boolean) returnMap.get("success")){
-            session.setAttribute("addValMap",returnMap);
-        }
+        Map<String, Object> returnMap = new HashMap<String, Object>();
+        returnMap.put("success", true);
+        returnMap.put("message", "2121");
+        returnMap.put("timestamp", new Date());
+        session.setAttribute("addValMap", returnMap);
         return returnMap;
     }
+
 
 }
 

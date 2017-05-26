@@ -15,7 +15,7 @@ import java.util.Map;
  */
 
 public class ValNum {
-    private static AppConfig config = ConfigLoader.load(ConfigLoader.ConfigType.Message);
+    private static final AppConfig config = ConfigLoader.load(ConfigLoader.ConfigType.Message);
 
     public Map<String,Object> sendVal(String tel){
         Map<String, Object> returnMap = new HashMap<String, Object>();
@@ -27,7 +27,7 @@ public class ValNum {
         submail.addVar("code", valNum);
         submail.xsend();
         try {
-            returnMap.put("timeStamp",new Date());
+            returnMap.put("timestamp",new Date());
             returnMap.put("message", valNum);
             returnMap.put("success", true);
         } catch (Exception e) {
