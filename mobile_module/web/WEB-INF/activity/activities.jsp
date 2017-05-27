@@ -179,11 +179,15 @@
             display: block;
             color: #3d4145;
         }
+        .gym-person-name {
+            font-weight: 100;
+            font-size: 14px;
+        }
     </style>
 </head>
 
 <body>
-<div class="page-group">
+<div class="page-group" data-value="">
 
     <div class="page page-current" id="home">
         <header class="bar bar-nav">
@@ -331,15 +335,15 @@
             <div class="card" id="apply">
                 <div class="card-content">
                     <div class="gym-apply">
-                        <div class="gym-main"><i class="fa fa-user"></i>报名人：刘翔</div>
+                        <div class="gym-toApply">
+                            <div class="gym-main"><i class="fa fa-user"></i>报名人：<label class="gym-person-name">刘翔</label></div>
+                        </div>
                         <div class="gym-text">点击修改或者增加报名信息</div>
                     </div>
-
                 </div>
                 <div class="card-footer">
                     <div class="gym-checkbox"><label><input id="agree" type="checkbox" checked>我已同意小小运动馆相关条约和规定</label>
                     </div>
-
                     <a class="button button-fill " id="pickerActivity" href="javascript:;">报名</a>
                 </div>
             </div>
@@ -412,7 +416,7 @@
         </div>
     </div>
 </div>
-<div class="popup popup-about">
+<div class="popup popup-add">
     <div class="content">
         <h3 class="apply-title text-center">报名信息</h3>
         <div class="list-block">
@@ -448,7 +452,6 @@
                                 <button type="button" id="add_val" class="button button-fill button-success">获取验证码</button>
                             </div>
                         </div>
-
                     </div>
                 </li>
             </ul>
@@ -458,6 +461,34 @@
                 <div class="col-50"><a href="javascript:;"
                                        class="button button-big button-fill button-danger close-popup">取消</a></div>
                 <div class="col-50"><a id="add_submit" href="javascript:;"
+                                       class="button button-big button-fill button-success">提交</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="popup popup-update">
+    <div class="content">
+        <h3 class="apply-title text-center">报名信息</h3>
+        <div class="list-block">
+            <ul>
+                <li>
+                    <div class="item-content">
+                        <div class="item-media"><i class="fa fa-user fa-2x"></i></div>
+                        <div class="item-inner">
+                            <div class="item-input">
+                                <input type="text" id="update_name" placeholder="姓名">
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="content-block">
+            <div class="row">
+                <div class="col-50"><a href="javascript:;"
+                                       class="button button-big button-fill button-danger close-popup">取消</a></div>
+                <div class="col-50"><a id="update_submit" href="javascript:;"
                                        class="button button-big button-fill button-success">提交</a>
                 </div>
             </div>
@@ -487,6 +518,11 @@
 <script src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script>
 <script>
     $(document).on("pageInit", function (e, pageId, $page) {
+        if(pageId == 'activity'){
+            var actid = $("#activity").attr("data-value");
+            ajax_activity(actid);
+        }
+
 
     });
 
@@ -590,8 +626,7 @@
 
     /*****************activity-开始*******************************/
     function ajax_activity(id) {
-        $("#activity").attr("data-value", id);
-        $.router.load("#activity");
+        //loading 活动
         $.ajax({
             type: 'POST',
             url: '/activity/view',
@@ -611,7 +646,7 @@
                 $("#activity_detail").text(activity.detail);
                 $("#activity_banner").css("backgroundImage", "url(" + activity.bannerSrc + ")");
             }
-        })
+        });
     }
     /*****************activity-结束*******************************/
 
@@ -629,7 +664,7 @@
 
     /****************myinfo-开始***********************************/
     $("#info").on('click', function () {
-        $.popup('.popup-about');
+        $.popup('.popup-add');
     });
 
     $("#city-picker").cityPicker({});
@@ -666,7 +701,7 @@
                 bold: true,
                 color: 'danger',
                 onClick: function () {
-                    $.alert("你选择了“增加报名“");
+                    addApply();
                 }
             },
             {
@@ -688,7 +723,7 @@
 
     $("#pickerActivity").on('click', function () {
         if (!$(this).hasClass("disabled")) {
-            $.popup('.popup-about');
+            $.popup('.popup-add');
         } else {
             $.alert("您必须同意小小运动馆相关条约和规定！")
         }
@@ -779,6 +814,34 @@
         });
     }
 
+
+
+    $("#update_submit").on('click',function () {
+        if (checkUpdatePar()){
+            var $up_name = $('.up-name');
+            var up_name = '';
+            for(name in $up_name){
+                up_name = name.val() +'、';
+            }
+            //TODO
+            var actId = ;
+            ajax_update_par(id,actId,up_name);
+        }
+        ajax_update_par();
+        $.alert("修改成功");
+    })
+
+    function resetPopup(popup){
+        var $popup = $(popup);
+        $popup.find('input').val('');//清空表单
+        var val = $popup.find('button');
+        val.removeAttr('disabled');
+        val.removeClass('disabled');
+        val.text('获取验证码');
+        clearTimeout(valTimer);//移除定时器
+    }
+
+
     function ajax_add(tel, name,actid,num) {
         $.ajax({
             type: "POST",
@@ -791,31 +854,28 @@
                     $.alert(data.message);
                 }else{
                     $.alert(data.message);
+                    var html = '<lable class="gym-person-name">、' + data.message + '</label>';
+                    $('.gym-main').append(html);
                 }
-                $.closeModal(".popup-about");
-                resetPopup($(".popup-about"));
+                $.closeModal(".popup-add");
+                resetPopup(".popup-add");
             }
         });
     }
 
-    $("#add_submit").on('click',function () {
-        if(checkAdd()){
-            var tel = $("#add_phone").val();
-            var name = $("#add_name").val();
-            var actid = $("#activity").attr("data-value");
-            var num = $("#add_num").val();
-            ajax_add(tel,name,actid,num);
-        }
-    })
-
-    function resetPopup($popup){
-        $popup.find('input').val('');//清空表单
-        var val = $popup.find('button');
-        val.removeAttr('disabled');
-        val.removeClass('disabled');
-        val.text('获取验证码');
-        clearTimeout(valTimer);//移除定时器
+    function ajax_update_par(id, actid,extraname) {
+        $.ajax({
+            type: "POST",
+            url: "/activity/update_par",
+            data: {"id": id,"actId":actid,"extraname":extraname},
+            contentType: "application/x-www-form-urlencoded",
+            dataType: "json",
+            success: function (data) {
+                $.alert('修改成功');
+            }
+        });
     }
+
     $.init()
 </script>
 </body>

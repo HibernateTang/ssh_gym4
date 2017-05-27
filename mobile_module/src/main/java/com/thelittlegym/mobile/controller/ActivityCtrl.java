@@ -165,6 +165,7 @@ public class ActivityCtrl {
             if (participatorService.valPar(valMap,num)){
                 returnMap = participatorService.addPar(tel,name,actId);
                 session.removeAttribute("addValMap");
+                session.setAttribute("participator",p);
             }else{
                 returnMap.put("success",false);
                 returnMap.put("message","报名失败:验证码错误或者失效");
