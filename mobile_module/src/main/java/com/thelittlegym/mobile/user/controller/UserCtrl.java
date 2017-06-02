@@ -3,6 +3,7 @@ package com.thelittlegym.mobile.user.controller;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.thelittlegym.mobile.common.OasisService;
+import com.thelittlegym.mobile.common.WeixinService;
 import com.thelittlegym.mobile.entity.*;
 import com.thelittlegym.mobile.user.model.User;
 import com.thelittlegym.mobile.user.service.IUserService;
@@ -35,7 +36,8 @@ public class UserCtrl {
     private IUserService userService;
     @Autowired
     private OasisService oasisService;
-
+    @Autowired
+    private WeixinService weixinService;
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String index(HttpServletRequest request, Model model) throws Exception {
         HttpSession session = request.getSession();
@@ -44,7 +46,7 @@ public class UserCtrl {
         List<Gym> listGym = new ArrayList<Gym>();
         List<Child> listChild = new ArrayList<Child>();
         List<Rank> listRank = new ArrayList<Rank>();
-
+        Map<String,String> weixinMap = weixinService.getSign();
 
         //存储两个不同孩子的list的list
         List listGymClassAll = new ArrayList<ArrayList<GymClass>>();
@@ -135,7 +137,7 @@ public class UserCtrl {
         model.addAttribute("listRank", listRank);
         model.addAttribute("listChild", listChild);
         model.addAttribute("listGymClassAll", listGymClassAll);
-
+        model.addAttribute("weixinMap",weixinMap);
         return "/member/index";
     }
 

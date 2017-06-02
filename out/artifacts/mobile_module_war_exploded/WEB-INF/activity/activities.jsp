@@ -416,7 +416,7 @@
         </div>
     </div>
 </div>
-<div class="popup popup-about">
+<div class="popup popup-add">
     <div class="content">
         <h3 class="apply-title text-center">报名信息</h3>
         <div class="list-block">
@@ -461,6 +461,34 @@
                 <div class="col-50"><a href="javascript:;"
                                        class="button button-big button-fill button-danger close-popup">取消</a></div>
                 <div class="col-50"><a id="add_submit" href="javascript:;"
+                                       class="button button-big button-fill button-success">提交</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="popup popup-update">
+    <div class="content">
+        <h3 class="apply-title text-center">报名信息</h3>
+        <div class="list-block">
+            <ul>
+                <li>
+                    <div class="item-content">
+                        <div class="item-media"><i class="fa fa-user fa-2x"></i></div>
+                        <div class="item-inner">
+                            <div class="item-input">
+                                <input type="text" id="update_name" placeholder="姓名">
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="content-block">
+            <div class="row">
+                <div class="col-50"><a href="javascript:;"
+                                       class="button button-big button-fill button-danger close-popup">取消</a></div>
+                <div class="col-50"><a id="update_submit" href="javascript:;"
                                        class="button button-big button-fill button-success">提交</a>
                 </div>
             </div>
@@ -636,7 +664,7 @@
 
     /****************myinfo-开始***********************************/
     $("#info").on('click', function () {
-        $.popup('.popup-about');
+        $.popup('.popup-add');
     });
 
     $("#city-picker").cityPicker({});
@@ -695,7 +723,7 @@
 
     $("#pickerActivity").on('click', function () {
         if (!$(this).hasClass("disabled")) {
-            $.popup('.popup-about');
+            $.popup('.popup-add');
         } else {
             $.alert("您必须同意小小运动馆相关条约和规定！")
         }
@@ -786,6 +814,34 @@
         });
     }
 
+
+
+    $("#update_submit").on('click',function () {
+        if (checkUpdatePar()){
+            var $up_name = $('.up-name');
+            var up_name = '';
+            for(name in $up_name){
+                up_name = name.val() +'、';
+            }
+            //TODO
+            var actId = ;
+            ajax_update_par(id,actId,up_name);
+        }
+        ajax_update_par();
+        $.alert("修改成功");
+    })
+
+    function resetPopup(popup){
+        var $popup = $(popup);
+        $popup.find('input').val('');//清空表单
+        var val = $popup.find('button');
+        val.removeAttr('disabled');
+        val.removeClass('disabled');
+        val.text('获取验证码');
+        clearTimeout(valTimer);//移除定时器
+    }
+
+
     function ajax_add(tel, name,actid,num) {
         $.ajax({
             type: "POST",
@@ -801,39 +857,25 @@
                     var html = '<lable class="gym-person-name">、' + data.message + '</label>';
                     $('.gym-main').append(html);
                 }
-                $.closeModal(".popup-about");
-                resetPopup(".popup-about");
+                $.closeModal(".popup-add");
+                resetPopup(".popup-add");
             }
         });
     }
 
-    $("#add_submit").on('click',function () {
-        if(checkAdd()){
-            var tel = $("#add_phone").val();
-            var name = $("#add_name").val();
-            var actid = $("#activity").attr("data-value");
-            var num = $("#add_num").val();
-            ajax_add(tel,name,actid,num);
-        }
-    })
+    function ajax_update_par(id, actid,extraname) {
+        $.ajax({
+            type: "POST",
+            url: "/activity/update_par",
+            data: {"id": id,"actId":actid,"extraname":extraname},
+            contentType: "application/x-www-form-urlencoded",
+            dataType: "json",
+            success: function (data) {
+                $.alert('修改成功');
+            }
+        });
+    }
 
-    function resetPopup(popup){
-        var $popup = $(popup);
-        $popup.find('input').val('');//清空表单
-        var val = $popup.find('button');
-        val.removeAttr('disabled');
-        val.removeClass('disabled');
-        val.text('获取验证码');
-        clearTimeout(valTimer);//移除定时器
-    }
-    //增加报名
-    function addApply(){
-        $.popup(".popup-about");
-        var $tel = $("#add_phone");
-        $tel.val('15949190026');
-        $tel.attr("disabled",true);
-        $tel.addClass("disabled");
-    }
     $.init()
 </script>
 </body>

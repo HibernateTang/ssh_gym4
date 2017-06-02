@@ -89,7 +89,7 @@
                 <div class="card">
                     <div class="card-header gym-card-title">
                         <label>我的运动</label>
-                        <i></i>
+                        <i class='fa fa-send-o share'></i>
                     </div>
                     <div class="card-content">
                         <c:choose>
@@ -114,6 +114,7 @@
                                         <p><label class="big"><fmt:formatNumber
                                                 value="${listRank[status.index]['times_per_week']}"
                                                 pattern="0.0"/></label>次您孩子平均每周锻炼次数（建议每周锻炼x次）
+                                                ${weixinMap['signature']}
                                         </p>
                                     </div>
                                 </div>
@@ -210,7 +211,35 @@
 <script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
 <script type='text/javascript' src='/js/sm.min.js' charset='utf-8'></script>
 <script src="/js/swiper-3.4.2.jquery.min.js"></script>
+<script type='text/javascript' src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script>
+    wx.config({
+        debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        appId: 'wxc82d50af409223ad', // 必填，公众号的唯一标识
+        timestamp: ${weixinMap['timestamp']}, // 必填，生成签名的时间戳
+        nonceStr: '${weixinMap['nonceStr']}', // 必填，生成签名的随机串
+        signature: '${weixinMap['signature']}',// 必填，签名，见附录1
+        jsApiList: ['onMenuShareTimeline'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+    });
+    wx.ready(function(){
+        $.alert("可以分享了")
+        // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
+    });
+    $('.share').on('click',function () {
+        wx.onMenuShareTimeline({
+            title: '测试标题', // 分享标题
+            link: '测试链接', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            imgUrl: '', // 分享图标
+            success: function () {
+                $.alert("分享成功")
+            },
+            cancel: function () {
+                $.alert("分享失败")
+                // 用户取消分享后执行的回调函数
+            }
+        });
+    })
+
 
     /*全局孩子标识*/
     var PAGE_ID = $(".page-current").attr("id") ? $(".page-current").attr("id") : 'child1';

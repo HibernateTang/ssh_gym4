@@ -104,7 +104,7 @@ public class Sender implements ISender {
 
 	/**
 	 * When the {@link AppConfig#setSignType(String)} is not normal,create a
-	 * signature with sign type.
+	 * signature with main type.
 	 * 
 	 * @param data
 	 *            is the request data
