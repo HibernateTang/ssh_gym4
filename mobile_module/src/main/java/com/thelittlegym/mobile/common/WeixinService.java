@@ -16,7 +16,7 @@ public class WeixinService {
         String jsapi_ticket = WeixinUtil.getJsApiTicket().getTicket();
 
         // 注意 URL 一定要动态获取，不能 hardcode
-        String url = "http://test.thelittlegym.com.cn:8080/index";
+        String url = "http://test.thelittlegym.com.cn/index";
         Map<String, String> ret = sign.sign(jsapi_ticket, url);
         for (Map.Entry entry : ret.entrySet()) {
             System.out.println(entry.getKey() + ", " + entry.getValue());

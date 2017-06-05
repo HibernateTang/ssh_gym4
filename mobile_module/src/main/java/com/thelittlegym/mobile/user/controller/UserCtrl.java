@@ -46,7 +46,7 @@ public class UserCtrl {
         List<Gym> listGym = new ArrayList<Gym>();
         List<Child> listChild = new ArrayList<Child>();
         List<Rank> listRank = new ArrayList<Rank>();
-        Map<String,String> weixinMap = weixinService.getSign();
+//        Map<String,String> weixinMap = weixinService.getSign();
 
         //存储两个不同孩子的list的list
         List listGymClassAll = new ArrayList<ArrayList<GymClass>>();
@@ -137,7 +137,7 @@ public class UserCtrl {
         model.addAttribute("listRank", listRank);
         model.addAttribute("listChild", listChild);
         model.addAttribute("listGymClassAll", listGymClassAll);
-        model.addAttribute("weixinMap",weixinMap);
+//        model.addAttribute("weixinMap",weixinMap);
         return "/member/index";
     }
 
