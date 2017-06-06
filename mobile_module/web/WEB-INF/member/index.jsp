@@ -222,7 +222,7 @@
         timestamp: ${weixinMap['timestamp']}, // 必填，生成签名的时间戳
         nonceStr: '${weixinMap['nonceStr']}', // 必填，生成签名的随机串
         signature: '${weixinMap['signature']}',// 必填，签名，见附录1
-        jsApiList: ['onMenuShareTimeline'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
     });
     wx.ready(function(){
         var outpass = $('#'+PAGE_ID + ' .outpass').text();
@@ -242,11 +242,11 @@
             desc: '测试描述', // 分享描述
             link: 'http://test.thelittlegym.com.cn', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
             imgUrl: 'http://test.thelittlegym.com.cn/images/member/head.jpg', // 分享图标
-            type: 'lin', // 分享类型,music、video或link，不填默认为link
+            type: 'link', // 分享类型,music、video或link，不填默认为link
             dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
         });
         wx.onMenuShareQQ({
-            title: '', // 分享标题
+            title: '测试看一下', // 分享标题
             desc: '', // 分享描述
             link: '', // 分享链接
             imgUrl: '', // 分享图标
