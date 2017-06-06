@@ -58,14 +58,7 @@
                         <i></i>
                         <div class="gym-header">
                             <div class="header-img">
-                                <c:choose>
-                                    <c:when test="${sessionScope.user.head_src=''}">
-                                        <img src="${sessionScope.user.head_src}"/>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <img src="/images/member/head.jpg"/>
-                                    </c:otherwise>
-                                </c:choose>
+                                        <img src="${sessionScope.user.head_src}" onerror="this.src='/images/member/head.png'"/>
                             </div>
                             <a class="header-text external"
                                href="/index/myinfo?idhz=${child['idhz']}&name=${child['name']}&age=${child['age']}">
@@ -98,28 +91,23 @@
                                     <div class="row no-gutter  row-box">
                                         <div class="col-33 ">
                                             <div class="sign-first">过去三月超过全国</div>
-                                            <label class="big">${listRank[status.index]['outpass']}</label>%会员
+                                            <label class="big outpass">${listRank[status.index]['outpass']}</label>%会员
                                         </div>
                                         <div class="col-33 c">
                                             <div class="sign-first">总共训练</div>
-                                            <label class="big">${listRank[status.index]['mins']}</label>分钟
+                                            <label class="big mins">${listRank[status.index]['mins']}</label>分钟
                                         </div>
                                         <div class="col-33">
                                             <div class="sign-first">全国会员中排第</div>
-                                            <label class="big">${listRank[status.index]['ranking']}</label>名<i
+                                            <label class="big ranking">${listRank[status.index]['ranking']}</label>名<i
                                                 class="fa fa-angle-double-right"></i></div>
                                     </div>
                                     <div class="exercise-text">
-                                        <p><label class="big">${listRank[status.index]['tian']}</label>天您已加入小小运动馆</p>
-                                        <p><label class="big"><fmt:formatNumber
+                                        <p><label class="big tian">${listRank[status.index]['tian']}</label>天您已加入小小运动馆</p>
+                                        <p><label class="big time_per_week"><fmt:formatNumber
                                                 value="${listRank[status.index]['times_per_week']}"
                                                 pattern="0.0"/></label>次您孩子平均每周锻炼次数（建议每周锻炼x次）
-
                                         </p>
-                                        <p>timestamp: ${weixinMap['timestamp']}</p>
-                                        <p>nonceStr: '${weixinMap['nonceStr']}</p>
-                                        <p>signature: '${weixinMap['signature']}'</p>
-                                        <p>signature:'${weixinMap['signature']}'</p>
                                     </div>
                                 </div>
                             </c:when>
@@ -217,28 +205,6 @@
 <script src="/js/swiper-3.4.2.jquery.min.js"></script>
 <script type='text/javascript' src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script>
-    wx.config({
-        debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-        appId: 'wxc82d50af409223ad', // 必填，公众号的唯一标识
-        timestamp: ${weixinMap['timestamp']}, // 必填，生成签名的时间戳
-        nonceStr: '${weixinMap['nonceStr']}', // 必填，生成签名的随机串
-        signature: '${weixinMap['signature']}',// 必填，签名，见附录1
-        jsApiList: ['onMenuShareTimeline'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-    });
-    wx.ready(function(){
-        // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready函数中。
-        wx.onMenuShareTimeline({
-            title: '我在小小运动馆过去三月超过全国${listRank[0]['outpass']}%会员，你也来看一下吧！', // 分享标题
-            link: 'http://test.thelittlegym.com.cn', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-            imgUrl: 'http://test.thelittlegym.com.cn/images/member/head.jpg', // 分享图标
-            success: function () {
-                $.toast("分享成功");
-            },
-            cancel: function () {
-            }
-        });
-    });
-
     /*全局孩子标识*/
     var PAGE_ID = $(".page-current").attr("id") ? $(".page-current").attr("id") : 'child1';
     var CHILD_ID = $("#" + PAGE_ID).attr("child-id");
@@ -249,6 +215,51 @@
         CHILD_INDEX = $page.attr("child-index");
         document.title = $page.attr("child-name") + "的主页";
     });
+
+    wx.config({
+        debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        appId: 'wxc82d50af409223ad', // 必填，公众号的唯一标识
+        timestamp: ${weixinMap['timestamp']}, // 必填，生成签名的时间戳
+        nonceStr: '${weixinMap['nonceStr']}', // 必填，生成签名的随机串
+        signature: '${weixinMap['signature']}',// 必填，签名，见附录1
+        jsApiList: ['onMenuShareTimeline'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+    });
+    wx.ready(function(){
+        var outpass = $('#'+PAGE_ID + ' .outpass').text();
+        var title = '我在小小运动馆过去三月超过全国' + outpass + '%会员，你也来看一下吧！';
+        wx.onMenuShareTimeline({
+            title: title, // 分享标题
+            link: 'http://test.thelittlegym.com.cn', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            imgUrl: 'http://test.thelittlegym.com.cn/images/member/head.jpg', // 分享图标
+            success: function () {
+                $.toast("分享成功");
+            },
+            cancel: function () {
+            }
+        });
+        wx.onMenuShareAppMessage({
+            title: title, // 分享标题
+            desc: '测试描述', // 分享描述
+            link: 'http://test.thelittlegym.com.cn', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            imgUrl: 'http://test.thelittlegym.com.cn/images/member/head.jpg', // 分享图标
+            type: 'lin', // 分享类型,music、video或link，不填默认为link
+            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+        });
+        wx.onMenuShareQQ({
+            title: '', // 分享标题
+            desc: '', // 分享描述
+            link: '', // 分享链接
+            imgUrl: '', // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+    });
+
+
 
     //手动处理
     $(".endDate-i").on('click', function () {

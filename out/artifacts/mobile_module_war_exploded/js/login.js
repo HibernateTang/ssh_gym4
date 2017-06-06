@@ -133,8 +133,6 @@ function login_ajax(telephone, password) {
         success: function (data) {
             console.log(data);
             if (data.success == true && data.message == "登录成功") {
-
-
                 window.location.href = "/index";
             } else if (data.success == false && data.message == "密码错误") {
                 layer.open({
@@ -145,6 +143,12 @@ function login_ajax(telephone, password) {
             } else if (data.success == false && data.message == "该用户不存在!") {
                 layer.open({
                     content: '该用户不存在'
+                    , skin: 'msg'
+                    , time: 2 //2秒后自动关闭
+                });
+            }else{
+                layer.open({
+                    content: '登录异常，请重试'
                     , skin: 'msg'
                     , time: 2 //2秒后自动关闭
                 });

@@ -6,7 +6,7 @@ package com.thelittlegym.mobile.utils.weixin.entity;
 public class JsApiTicket {
 
     private String ticket;  //票据
-    private int expiresIn;  // 凭证有效时间，单位：秒</span>
+    private int expiresIn;  // 凭证有效时间，单位：秒
 
     public String getTicket() {
         return ticket;

@@ -40,16 +40,7 @@
                 <div class="card-header">
                     <div class="facebook-avatar">
                         <a class="open-avatar" data-popup="popup popup-avatar">
-                                <img id="avatar"
-                                        <c:choose>
-                                            <c:when test="${sessionScope.user.head_src!=''}">
-                                                src="${sessionScope.user.head_src}"
-                                            </c:when>
-                                            <c:otherwise>
-                                                src="/images/member/head.jpg"
-                                            </c:otherwise>
-                                        </c:choose>
-                                />
+                                <img id="avatar" src="${sessionScope.user.head_src}" onerror="this.src='/images/member/head.png'"/>
                         </a>
                         <div class="gym-myinfo-info">
                             <p class="avatar-name">${childObj['name']}</p>
@@ -133,7 +124,7 @@
         </div>
         <div class="content-block">
             <p><a href="javascript:;" class="button  button-big file"><input type="file" name="file" id="avatarFile"
-                                                                             accept="image/*">更换头像</a></p>
+                                                                             accept="image/jpg,image/png,image/jpeg">更换头像</a></p>
             <p><a href="javascript:;" class="button  button-big" id="updateAvatar">确定</a></p>
             <p><a href="javascript:;" class="button  button-danger button-big close-popup" id="cancelUpdate">取消</a></p>
         </div>
@@ -170,7 +161,7 @@
             return false;
         }
         var fileExtension = uploadFile.val().substring(uploadFile.val().lastIndexOf("."), uploadFile.val().length);
-        var extensions = ".jpg,.JPG,.jpeg,.JPEG,.gif,.GIF,.png,.PNG";
+        var extensions = ".jpg,.JPG,.jpeg,.JPEG,.png,.PNG";
         if (extensions.indexOf(fileExtension) < 0) {
             $.alert("请选择正确的图片格式!");
             return false;

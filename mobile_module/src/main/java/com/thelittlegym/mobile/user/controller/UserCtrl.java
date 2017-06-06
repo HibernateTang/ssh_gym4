@@ -46,7 +46,7 @@ public class UserCtrl {
         List<Gym> listGym = new ArrayList<Gym>();
         List<Child> listChild = new ArrayList<Child>();
         List<Rank> listRank = new ArrayList<Rank>();
-//        Map<String,String> weixinMap = weixinService.getSign();
+        Map<String,String> weixinMap = weixinService.getSignature();
 
         //存储两个不同孩子的list的list
         List listGymClassAll = new ArrayList<ArrayList<GymClass>>();
@@ -137,7 +137,7 @@ public class UserCtrl {
         model.addAttribute("listRank", listRank);
         model.addAttribute("listChild", listChild);
         model.addAttribute("listGymClassAll", listGymClassAll);
-//        model.addAttribute("weixinMap",weixinMap);
+        model.addAttribute("weixinMap",weixinMap);
         return "/member/index";
     }
 
@@ -250,6 +250,8 @@ public class UserCtrl {
             // 图片上传的绝对路径
             String url = request.getSession().getServletContext().getRealPath("") + path;
             String originalUrl = request.getSession().getServletContext().getRealPath("") + originalPath;
+            String urlNoExtension = request.getSession().getServletContext().getRealPath("") + "/upload/avatar/" + tel + "/" + name;
+            String urlHttp = "/upload/avatar/" + tel + "/" + name + "." + "JPG";
             File dir = new File(originalUrl);
             if (!dir.exists()) {
                 dir.mkdirs();
@@ -258,8 +260,8 @@ public class UserCtrl {
             // 上传图片
             file.transferTo(new File(originalUrl));
             //压缩
-            Thumbnails.of(originalUrl).size(200, 200).outputFormat("jpg").toFile(url);
-            user.setHead_src(path);
+            Thumbnails.of(originalUrl).size(200, 200).outputFormat("jpg").toFile(urlNoExtension);
+            user.setHead_src(urlHttp);
             userService.updateUser(user);
             session.setAttribute("user", user);
             returnMap.put("success", true);
@@ -269,7 +271,6 @@ public class UserCtrl {
             returnMap.put("success", false);
             returnMap.put("message", "请重新登录后再试");
         }
-
         return returnMap;
     }
 

@@ -26,8 +26,8 @@ public class WeixinUtil {
     // 获取access_token的接口地址（GET） 限200（次/天）
     private final static String APPID = "wxc82d50af409223ad";
     private final static String APPSECRET = "c9266629597ac761929765ef994244d9";
-    public final static String access_token_url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
-    public final static String ticket_url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&type=jsapi";
+    private final static String access_token_url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
+    private final static String ticket_url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&type=jsapi";
     /**
      * 发起https请求并获取结果
      *

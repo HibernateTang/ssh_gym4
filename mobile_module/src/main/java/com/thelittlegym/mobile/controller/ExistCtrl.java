@@ -20,6 +20,6 @@ public class ExistCtrl {
         HttpSession session = request.getSession();
         Object objSession = session.getAttribute("user");
         session.invalidate();
-        return "redirect:/login.jsp";
+        return "redirect:/login.html";
     }
 }

@@ -32,6 +32,28 @@
         <property name="url" value="${jdbc.url}"></property>
         <property name="username" value="${jdbc.username}"></property>
         <property name="password" value="${jdbc.password}"></property>
+        <!-- 用于验证数据库连接是否可用的SQL语句。MySQL,SQLServer用select 1，Oracle数据库用select 1 from dual。 -->
+        <property name="validationQuery" value="${jdbc.validationQuery}" />
+        <!-- 是否测试空闲的数据库连接 -->
+        <property name="testWhileIdle" value="${jdbc.testWhileIdle}" />
+        <!-- 从连接池获取连接时，测试连接是否可用。对性能有一定影响，一般不用开启。 -->
+        <!-- <property name="testOnBorrow" value="true" /> -->
+        <!-- 将连接还给连接池时，测试连接是否可用。对性能有一定影响，一般不用开启。 -->
+        <!-- <property name="testOnReturn" value="true" /> -->
+        <!-- 最大连接数量 -->
+        <property name="maxActive" value="100" />
+        <!-- 最大空闲连接数量 -->
+        <property name="maxIdle" value="100" />
+        <!-- 初始化连接数量 -->
+        <property name="initialSize" value="10" />
+        <!-- 最小空闲连接数量 -->
+        <property name="minIdle" value="10" />
+        <!-- 是否自动提交。通常需设置为false -->
+        <property name="defaultAutoCommit" value="false" />
+        <!-- 检查连接是否可用的间隔时间。单位毫秒。默认5秒 -->
+        <property name="timeBetweenEvictionRunsMillis" value="5000" />
+        <!-- 连接最少保存时间。单位毫秒。默认60秒 -->
+        <property name="minEvictableIdleTimeMillis" value="60000" />
     </bean>
 
     <!-- 配置sessionFactory-->

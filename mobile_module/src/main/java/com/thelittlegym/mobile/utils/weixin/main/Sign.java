@@ -27,7 +27,6 @@ public class Sign {
                 "&noncestr=" + nonce_str +
                 "&timestamp=" + timestamp +
                 "&url=" + url;
-        System.out.println(string1);
 
         try {
             MessageDigest crypt = MessageDigest.getInstance("SHA-1");
