@@ -81,7 +81,7 @@ public class LoginCtrl {
 //            JSONObject obj = JSONObject.parseObject(httpResult.getData());
             JSONArray jsonArray = oasisService.getResultJson(sqlExist);
             //是否是会员校验
-            if (jsonArray != null){
+            if (jsonArray == null){
                     returnMap.put("message", "手机号非会员!");
                     returnMap.put("success", false);
                     return returnMap;

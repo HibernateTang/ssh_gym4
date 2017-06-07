@@ -36,7 +36,7 @@
                     <div class="card-header no-border gym-card-title">
                         <c:choose>
                             <c:when test="${status.index==0}">
-                                <label>${child['name']} </label>
+                                <label class="child-name">${child['name']} </label>
                                 <c:if test="${listChild.size() > 1}">
                                     <a href="#child${status.index==0?1:0}">
                                         <small>查询另一位宝宝</small>
@@ -104,7 +104,7 @@
                                     </div>
                                     <div class="exercise-text">
                                         <p><label class="big tian">${listRank[status.index]['tian']}</label>天您已加入小小运动馆</p>
-                                        <p><label class="big time_per_week"><fmt:formatNumber
+                                        <p><label class="big times_per_week"><fmt:formatNumber
                                                 value="${listRank[status.index]['times_per_week']}"
                                                 pattern="0.0"/></label>次您孩子平均每周锻炼次数（建议每周锻炼x次）
                                         </p>
@@ -217,9 +217,9 @@
     });
 
     wx.config({
-        debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
         appId: 'wxc82d50af409223ad', // 必填，公众号的唯一标识
-        timestamp: ${weixinMap['timestamp']}, // 必填，生成签名的时间戳
+        timestamp: '${weixinMap['timestamp']}', // 必填，生成签名的时间戳
         nonceStr: '${weixinMap['nonceStr']}', // 必填，生成签名的随机串
         signature: '${weixinMap['signature']}',// 必填，签名，见附录1
         jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
@@ -227,9 +227,11 @@
     wx.ready(function(){
         var outpass = $('#'+PAGE_ID + ' .outpass').text();
         var title = '我在小小运动馆过去三月超过全国' + outpass + '%会员，你也来看一下吧！';
+
+        var link = shareLink();
         wx.onMenuShareTimeline({
             title: title, // 分享标题
-            link: 'http://test.thelittlegym.com.cn', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            link: link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
             imgUrl: 'http://test.thelittlegym.com.cn/images/member/head.jpg', // 分享图标
             success: function () {
                 $.toast("分享成功");
@@ -240,7 +242,7 @@
         wx.onMenuShareAppMessage({
             title: title, // 分享标题
             desc: '测试描述', // 分享描述
-            link: 'http://test.thelittlegym.com.cn', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            link:link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
             imgUrl: 'http://test.thelittlegym.com.cn/images/member/head.jpg', // 分享图标
             type: 'link', // 分享类型,music、video或link，不填默认为link
             dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
@@ -248,7 +250,7 @@
         wx.onMenuShareQQ({
             title: '测试看一下', // 分享标题
             desc: '', // 分享描述
-            link: '', // 分享链接
+            link: link, // 分享链接
             imgUrl: '', // 分享图标
             success: function () {
                 // 用户确认分享后执行的回调函数
@@ -407,6 +409,19 @@
     function toTopic() {
         $.alert("敬请期待...");
         return;
+    }
+
+    function shareLink(){
+        var link =location.href + '/share';
+        var mins = $('#'+PAGE_ID + ' .mins').text();
+        var outpass = $('#'+PAGE_ID + ' .outpass').text();
+        var tian = $('#'+PAGE_ID + ' .tian').text();
+        var ranking = $('#'+PAGE_ID + ' .ranking').text();
+        var name = $('#'+PAGE_ID).attr("child-name");
+        var avatar = $('#'+PAGE_ID + ' .header-img img').attr("src");
+        var times_per_weenk = $('#'+PAGE_ID + ' .times_per_week').text();
+        var params = link + '?mins=' + mins + '&outpass=' + outpass + '&times_per_week=' + times_per_weenk + '&tian=' + tian + '&ranking=' + ranking + '&name=' + name + '&avatar=' + avatar;
+        return params;
     }
     $.init();
 </script>

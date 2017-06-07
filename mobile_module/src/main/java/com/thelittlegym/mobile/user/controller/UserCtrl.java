@@ -46,8 +46,8 @@ public class UserCtrl {
         List<Gym> listGym = new ArrayList<Gym>();
         List<Child> listChild = new ArrayList<Child>();
         List<Rank> listRank = new ArrayList<Rank>();
-        Map<String,String> weixinMap = weixinService.getSignature();
-
+        Map<String,String> weixinMap = new HashMap<String,String>();
+        weixinMap = weixinService.getSignature();
         //存储两个不同孩子的list的list
         List listGymClassAll = new ArrayList<ArrayList<GymClass>>();
         List<GymSelected> listGymSelected = new ArrayList<GymSelected>();
@@ -151,6 +151,31 @@ public class UserCtrl {
         } else {
             return "redirect:/login.html";
         }
+    }
+
+    @RequestMapping(value = "/share", method = RequestMethod.GET)
+    public String share(HttpServletRequest request,Model model) throws Exception {
+        Map<String ,String> returnMap = new HashMap<String,String>();
+        String tian = request.getParameter("tian");
+        String mins = request.getParameter("mins");
+        String ranking = request.getParameter("ranking");
+        String outpass = request.getParameter("outpass");
+        String times_per_week = request.getParameter("times_per_week");
+        String name = request.getParameter("name");
+        String avatar = request.getParameter("avatar");
+
+        returnMap.put("tian",tian);
+        returnMap.put("mins",mins);
+        returnMap.put("ranking",ranking);
+        returnMap.put("outpass",outpass);
+        returnMap.put("times_per_week",times_per_week);
+        returnMap.put("name",name);
+        returnMap.put("avatar",avatar);
+//        for (Map.Entry entry : returnMap.entrySet()) {
+//            System.out.println(entry.getKey() + ", " + entry.getValue());
+//        }
+        model.addAttribute("shareMap",returnMap);
+        return "/member/share";
     }
 
 

@@ -70,6 +70,11 @@
     color: #fff;
     font-weight: 500;
 }
+.gym-card-share {
+    background: url('/images/member/share_banner.jpg');
+    color: #fff;
+    font-weight: 500;
+}
 .gym-banner-title {
     margin-left: -30px;
     font-family: "幼圆", "Micsoft YaHei";
@@ -291,6 +296,7 @@
     border: 2px solid #fff;
     margin-right: 12px;
 }
+
 .gym-myinfo-info {
     display: inline-block;
 }
@@ -380,4 +386,78 @@
 }
 .vjs-poster {
     background-size: 100% 100%;
+}
+
+.share-img img {
+    width:80px;
+}
+.share-avatar{
+    margin-top: 0;
+}
+.share-avatar img {
+    float: left;
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    margin-right: 12px;
+}
+.gym-share-info {
+    display: inline-block;
+}
+.share-name {
+    margin: .2rem 0 .1rem 0;
+    font-size: .75rem;
+}
+.share-detail {
+    margin: 0;
+    font-size: .5rem;
+}
+.share-main {
+    /*width:5rem;*/
+    /*height: 5rem;*/
+    /*border: 3px solid #330099;*/
+    /*border-radius: 50%;*/
+    background:url(/images/member/share_circle_purple.png) 100% 100% no-repeat;
+}
+.justify {
+    min-height: 2.2rem;
+    position: relative;
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+.share-circle-big {
+    line-height: 32px;
+    text-align: center;
+    padding: 1.5rem .5rem 1.75rem .5rem;
+    font-size: 20px;
+    background: url("/images/member/share_circle_purple.png") no-repeat;
+    background-size:7rem;
+    width: 7rem;
+    height: 7rem;
+    /*border:5px solid #3300CC;*/
+    /*border-radius: 50%;*/
+}
+.share-circle {
+    line-height: 22px;
+    text-align: center;
+    padding: 1.5rem .5rem 1.75rem .5rem;
+    font-size: 10px;
+    background: url("/images/member/share_circle_blue.png") no-repeat;
+    background-size:5.5rem;
+    width: 5.5rem;
+    height: 5.5rem;
+    /*border:4px solid #33CCCC;*/
+    /*border-radius: 50%;*/
+}
+.text-right {
+    text-align: right;
 }
