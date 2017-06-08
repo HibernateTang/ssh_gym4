@@ -1,5 +1,6 @@
 package com.thelittlegym.mobile.common;
 
+import com.sun.xml.internal.bind.v2.runtime.output.SAXOutput;
 import com.thelittlegym.mobile.utils.weixin.main.Sign;
 import com.thelittlegym.mobile.utils.weixin.utils.WeixinUtil;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,10 @@ public class WeixinService {
             //获取签名的时间戳
             String signTimeStamp = signatureMap.get("timestamp");
             Long nowTime = System.currentTimeMillis() / 1000;
+            System.out.println("nowTime:" + Long.toString(nowTime) );
+            System.out.println("signTimeStamp" + signTimeStamp);
+            System.out.println("Expiresin" + Expiresin);
+
             if(nowTime - Long.parseLong(signTimeStamp) <= Expiresin){
                 return signatureMap;
             }else{

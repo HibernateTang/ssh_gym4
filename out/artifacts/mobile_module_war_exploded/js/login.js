@@ -69,6 +69,9 @@ $("#btn-valnum").click(function () {
             data: {"tel": tel},
             contentType: "application/x-www-form-urlencoded",
             dataType: "json",
+            beforeSend: function () {
+
+            },
             success: function (data) {
                 // console.log(data);
                 if (data.success == true) {
@@ -103,9 +106,12 @@ function time(o) {
     }
 }
 
-$("#reg_tel").on('change', function () {
+$("#reg_tel").on('input', function () {
+
     var reg_tel = $("#reg_tel").val();
     if (/^1[34578]\d{9}$/.test($.trim(reg_tel))) {
+        this.focus();
+        this.blur();
         exist_ajax(reg_tel);
     }
 
@@ -201,10 +207,10 @@ function exist_ajax(telephone) {
         dataType: "json",
         success: function (data) {
             console.log(data);
-            if (data.success != true) {
+            if (data.success == false) {
                 layer.open({
-                    content: '您不是我们的会员，不能注册'
-                    , btn: ['我是', '取消']
+                    content: '系统中没有显示此手机号码,点击是与我们联系'
+                    , btn: ['是', '否']
                     , yes: function (index) {
                         layer.open({
                             type: 1
@@ -214,6 +220,12 @@ function exist_ajax(telephone) {
                         $("#contactTel").val($("#reg_tel").val());
                         layer.close(index);
                     }
+                });
+            }else{
+                layer.open({
+                    content: '该号码是会员帐号,可以注册√'
+                    , skin: 'msg'
+                    , time: 2 //2秒后自动关闭
                 });
             }
         }

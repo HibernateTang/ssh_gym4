@@ -21,8 +21,8 @@ public class OasisService {
     public JSONArray getResultJson(String sql) {
         HashMap<String, String> hashMap = new HashMap<String, String>();
         hashMap.put("sql1", sql);
-        JSONArray jsonArray = new JSONArray();
-        HttpResult httpResultUser ;
+        JSONArray jsonArray = null;
+        HttpResult httpResultUser = null ;
         try {
             httpResultUser = httpService.doPost(POST_URL, hashMap);
             JSONObject jsonResult = JSONObject.parseObject(httpResultUser.getData());
