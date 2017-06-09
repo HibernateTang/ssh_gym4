@@ -126,7 +126,7 @@ public class WeixinUtil {
         //获取token
 
         AccessToken acess_token= getAccessToken(APPID,APPSECRET);
-
+        log.info("acess_token：" + acess_token.getToken());
         String requestUrl = ticket_url.replace("ACCESS_TOKEN", acess_token.getToken());
         JSONObject jsonObject = WeixinUtil.httpRequest(requestUrl, "GET", null);
         // 如果请求成功

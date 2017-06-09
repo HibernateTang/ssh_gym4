@@ -106,14 +106,14 @@
                                         <p><label class="big tian">${listRank[status.index]['tian']}</label>天您已加入小小运动馆</p>
                                         <p><label class="big times_per_week"><fmt:formatNumber
                                                 value="${listRank[status.index]['times_per_week']}"
-                                                pattern="0.0"/></label>次您孩子平均每周锻炼次数（建议每周锻炼x次）
+                                                pattern="0.0"/></label>次您孩子平均每周锻炼次数（全国会员每周平均锻炼x次）
                                         </p>
                                     </div>
                                 </div>
                             </c:when>
                             <c:otherwise>
                                 <div class="card-content-inner">
-                                    <p>暂时还没有排名数据！</p>
+                                    <p class="text-center">暂时还没有排名</p>
                                 </div>
                             </c:otherwise>
                         </c:choose>
@@ -417,7 +417,7 @@
         var outpass = $('#'+PAGE_ID + ' .outpass').text();
         var tian = $('#'+PAGE_ID + ' .tian').text();
         var ranking = $('#'+PAGE_ID + ' .ranking').text();
-        var name = $('#'+PAGE_ID).attr("child-name");
+        var name = encodeURI($('#'+PAGE_ID).attr("child-name"));
         var avatar = $('#'+PAGE_ID + ' .header-img img').attr("src");
         var times_per_weenk = $('#'+PAGE_ID + ' .times_per_week').text();
         var params = link + '?mins=' + mins + '&outpass=' + outpass + '&times_per_week=' + times_per_weenk + '&tian=' + tian + '&ranking=' + ranking + '&name=' + name + '&avatar=' + avatar;

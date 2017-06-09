@@ -61,7 +61,7 @@ public class UserCtrl {
 
         //孩子
         String sqlUser = "declare @rest float;set @rest =isnull((select sum(kss)rest from(select top 6 crmzdy_81739422 kss from crm_zdytable_238592_25111_238592_view zx join crm_zdytable_238592_25115_238592_view bmksb on zx.crmzdy_81611091_id= " + idFamily + " and bmksb.crmzdy_81756836_id=zx.id and bmksb.crmzdy_81733119='销售'  and bmksb.crmzdy_81739422/*rest*/>0 join crm_zdytable_238592_23796_238592_view ht on ht.id=bmksb.crmzdy_81486464_id and datediff(d,getdate(),crmzdy_81733324/*dtDaoQi*/)>=0 order by bmksb.id desc)bmksb),0);select hz.id idhz,hz.crm_name name,hz.crmzdy_81497217 age,replace(isnull(hz.crmzdy_82017585,''),'''','\\\"')ranking,@rest rest from crm_zdytable_238592_23893_238592_view hz where crmzdy_80653840_id=" + idFamily;
-        sqlUser = "select hz.id idhz,hz.crm_name name,hz.crmzdy_81497217 age,crmzdy_80653844 gender,replace(isnull(hz.crmzdy_82017585,''),'''','\\\"')ranking,0 rest from crm_zdytable_238592_23893_238592_view hz where crmzdy_80653840_id=" + idFamily;
+//        sqlUser = "select hz.id idhz,hz.crm_name name,hz.crmzdy_81497217 age,crmzdy_80653844 gender,replace(isnull(hz.crmzdy_82017585,''),'''','\\\"')ranking,0 rest from crm_zdytable_238592_23893_238592_view hz where crmzdy_80653840_id=" + idFamily;
 
         JSONArray childArray = oasisService.getResultJson(sqlUser);
 
@@ -70,9 +70,16 @@ public class UserCtrl {
                 List<GymClass> listGymClass = new ArrayList<GymClass>();
 
                 JSONObject childObj = JSONObject.parseObject(childItem.toString());
-                JSONObject rankObj = rankUtil(childObj.getString("ranking"), "last3");
+                JSONObject rankAllObj = rankUtil(childObj.getString("ranking"), "all");
+                JSONObject rankLast3Obj = rankUtil(childObj.getString("ranking"), "last3");
                 Child child = JSONObject.parseObject(childItem.toString(), Child.class);
-                Rank rank = JSONObject.parseObject(rankObj.toString(), Rank.class);
+                Rank rank = null;
+                if (rankAllObj != null && rankLast3Obj != null ){
+                    rank = JSONObject.parseObject(rankAllObj.toString(), Rank.class);
+                    //outpass为3月，其他为全部
+                    rank.setOutpass(rankLast3Obj.getString("outpass"));
+                }
+
                 Gym gym = new Gym();
                 GymSelected gymSelected = new GymSelected();
 

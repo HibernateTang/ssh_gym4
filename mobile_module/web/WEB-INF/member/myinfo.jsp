@@ -215,7 +215,11 @@
     }
 
     //全局
-    var jsonArrayContract = ${listContract};
+    var jsonArrayContract = '';
+    <c:if test="${not empty listContract}">
+    jsonArrayContract = ${listContract};
+    </c:if>
+
     $('#view').on('click', function () {
         var selectedContractId = $("#contract").attr("data-value");
         var buttons1 = [

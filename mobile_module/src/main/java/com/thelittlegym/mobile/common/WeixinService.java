@@ -44,14 +44,18 @@ public class WeixinService {
             }else{
                 String jsapi_ticket = WeixinUtil.getJsApiTicket().getTicket();
                 String url = "http://test.thelittlegym.com.cn/index";
+                System.out.println("超出操作开始");
                 Sign sign = new Sign();
                 signatureMap = sign.sign(jsapi_ticket,url);
+                System.out.println("超出操作结束");
             }
         }else{
             String jsapi_ticket = WeixinUtil.getJsApiTicket().getTicket();
             String url = "http://test.thelittlegym.com.cn/index";
+            System.out.println("超出操作开始");
             Sign sign = new Sign();
             signatureMap = sign.sign(jsapi_ticket,url);
+            System.out.println("超出操作结束");
         }
         for (Map.Entry entry : signatureMap.entrySet()) {
             System.out.println(entry.getKey() + ", " + entry.getValue());

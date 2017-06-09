@@ -404,6 +404,7 @@
 }
 .gym-share-info {
     display: inline-block;
+    overflow: hidden;
 }
 .share-name {
     margin: .2rem 0 .1rem 0;
