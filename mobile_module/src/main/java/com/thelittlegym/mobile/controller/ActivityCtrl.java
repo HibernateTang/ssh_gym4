@@ -71,20 +71,7 @@ public class ActivityCtrl {
         return jsonArray;
     }
 
-    @RequestMapping(value = "/activity", method = RequestMethod.GET)
-    public String activity(HttpServletRequest request, Model model) throws Exception {
-        HttpSession session = request.getSession();
-        Object objSession = session.getAttribute("user");
-        User user;
-        if (objSession != null) {
-            model.addAttribute("isMember", true);
-        } else {
-            user = (User) objSession;
-            model.addAttribute("isMember", false);
-        }
 
-        return "/activity/activity";
-    }
 
     @RequestMapping(value = "/myinfo", method = RequestMethod.GET)
     public String info(HttpServletRequest request) throws Exception {

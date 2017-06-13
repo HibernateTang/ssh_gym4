@@ -46,7 +46,7 @@ public class UserCtrl {
         List<Child> listChild = new ArrayList<Child>();
         List<Rank> listRank = new ArrayList<Rank>();
         Map<String,String> weixinMap = new HashMap<String,String>();
-        weixinMap = weixinService.getSignature();
+
         //存储两个不同孩子的list的list
         List listGymClassAll = new ArrayList<ArrayList<GymClass>>();
         List<GymSelected> listGymSelected = new ArrayList<GymSelected>();
@@ -56,7 +56,7 @@ public class UserCtrl {
         } else {
             user = (User) objSession;
         }
-
+        weixinMap = weixinService.getSignature(request.getRequestURL().toString());
         Integer idFamily = user.getIdFamily();
 
         //孩子

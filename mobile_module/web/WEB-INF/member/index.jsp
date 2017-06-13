@@ -9,19 +9,24 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+%>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+    <base href="<%=basePath%>">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <%--<title>会员主页</title>--%>
-    <link rel="stylesheet" href="/css/sm.min.css">
-    <link rel="stylesheet" href="/css/gym.css">
-    <link rel="stylesheet" href="/css/animate.css">
+    <link rel="stylesheet" href="css/sm.min.css">
+    <link rel="stylesheet" href="css/gym.css">
+    <link rel="stylesheet" href="css/animate.css">
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
 
 </head>
@@ -55,7 +60,7 @@
                 </div>
                 <div class="card">
                     <div class="card-header no-padding no-border card-backinfo">
-                        <i></i>
+                        <i><a href="login.html">撒旦</a></i>
                         <div class="gym-header">
                             <div class="header-img">
                                         <img src="${sessionScope.user.head_src}" onerror="this.src='/images/member/head.png'"/>
@@ -82,7 +87,7 @@
                 <div class="card">
                     <div class="card-header gym-card-title">
                         <label>我的运动</label>
-                        <i class='fa fa-send-o share'></i>
+                        <i class='fa fa-question-circle'></i>
                     </div>
                     <div class="card-content">
                         <c:choose>
@@ -203,7 +208,7 @@
 <script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
 <script type='text/javascript' src='/js/sm.min.js' charset='utf-8'></script>
 <script src="/js/swiper-3.4.2.jquery.min.js"></script>
-<script type='text/javascript' src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+<script type='text/javascript' src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script>
     /*全局孩子标识*/
     var PAGE_ID = $(".page-current").attr("id") ? $(".page-current").attr("id") : 'child1';
@@ -396,6 +401,10 @@
         var groups = [buttons1, buttons2];
         $.actions(groups);
     });
+
+    $('.fa-question-circle').on('click',function () {
+        $.alert('数据有误？您可以把问题发送至wang.fei@thelittlegym.com.cn');
+    })
 
     function gym_change(gymName, gymId) {
         $("#" + PAGE_ID + " .gym-select").text(gymName);

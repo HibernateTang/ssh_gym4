@@ -29,37 +29,28 @@ public class WeixinService {
 //        return ret;
 //    }
 
-    public static   Map<String,String> getSignature(){
+    public static   Map<String,String> getSignature(String url){
         String signature = signatureMap.get("signature");
         if( signature != null && !"".equals(signature)){
             //获取签名的时间戳
             String signTimeStamp = signatureMap.get("timestamp");
             Long nowTime = System.currentTimeMillis() / 1000;
-            System.out.println("nowTime:" + Long.toString(nowTime) );
-            System.out.println("signTimeStamp" + signTimeStamp);
-            System.out.println("Expiresin" + Expiresin);
 
             if(nowTime - Long.parseLong(signTimeStamp) <= Expiresin){
                 return signatureMap;
             }else{
                 String jsapi_ticket = WeixinUtil.getJsApiTicket().getTicket();
-                String url = "http://test.thelittlegym.com.cn/index";
-                System.out.println("超出操作开始");
                 Sign sign = new Sign();
                 signatureMap = sign.sign(jsapi_ticket,url);
-                System.out.println("超出操作结束");
             }
         }else{
             String jsapi_ticket = WeixinUtil.getJsApiTicket().getTicket();
-            String url = "http://test.thelittlegym.com.cn/index";
-            System.out.println("超出操作开始");
             Sign sign = new Sign();
             signatureMap = sign.sign(jsapi_ticket,url);
-            System.out.println("超出操作结束");
         }
-        for (Map.Entry entry : signatureMap.entrySet()) {
-            System.out.println(entry.getKey() + ", " + entry.getValue());
-        }
+//        for (Map.Entry entry : signatureMap.entrySet()) {
+//            System.out.println(entry.getKey() + ", " + entry.getValue());
+//        }
         return signatureMap;
     }
 

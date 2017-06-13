@@ -515,15 +515,13 @@
 <script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
 <script type='text/javascript' src='/js/sm.min.js' charset='utf-8'></script>
 <script type='text/javascript' src='/js/sm-city-picker.min.js' charset='utf-8'></script>
-<script src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script>
+<script src="https://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script>
 <script>
     $(document).on("pageInit", function (e, pageId, $page) {
         if(pageId == 'activity'){
             var actid = $("#activity").attr("data-value");
             ajax_activity(actid);
         }
-
-
     });
 
     /*****************index-开始***********************************/
