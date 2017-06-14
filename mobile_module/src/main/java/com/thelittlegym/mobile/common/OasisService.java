@@ -13,7 +13,7 @@ import java.util.HashMap;
  */
 @Service
 public class OasisService {
-    private static String POST_URL = "https://bbk.800app.com/uploadfile/staticresource/238592/279832/MobileApiPost.aspx";
+    private static final String  POST_URL = "https://bbk.800app.com/uploadfile/staticresource/238592/279832/MobileApiPost.aspx";
 
     @Autowired
     private HttpService httpService;

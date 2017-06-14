@@ -15,9 +15,6 @@ $.ajaxSetup({
 });
 
 var mySwiper = new Swiper('.swiper-container', {})
-// $(function () {
-//     FastClick.attach(document.body);
-// });
 
 mySwiper.lockSwipes();
 $("#goSignIn").click(function () {
@@ -73,7 +70,6 @@ $("#btn-valnum").click(function () {
 
             },
             success: function (data) {
-                // console.log(data);
                 if (data.success == true) {
                     time($("#btn-valnum"));
                 } else {
@@ -137,7 +133,6 @@ function login_ajax(telephone, password) {
         contentType: "application/x-www-form-urlencoded",
         dataType: "json",
         success: function (data) {
-            console.log(data);
             if (data.success == true && data.message == "登录成功") {
                 window.location.href = "/index";
             } else if (data.success == false && data.message == "密码错误") {
