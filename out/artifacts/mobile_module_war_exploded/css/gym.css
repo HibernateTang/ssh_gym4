@@ -462,3 +462,27 @@
 .text-right {
     text-align: right;
 }
+
+.no-coupon img{
+    width:100px;
+}
+
+.coupon img{
+    width:100%;
+}
+
+.fixed-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    color: #337ab7;
+    z-index: 999;
+    box-shadow: 0 4px 12px 0 rgba(7, 17, 27, .1);
+}
+
+.coupon-rule {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    color: #666;
+}

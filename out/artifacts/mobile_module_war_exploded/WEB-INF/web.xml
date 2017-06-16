@@ -9,9 +9,9 @@
         <!--<welcome-file>./WEB-INF/member/index.jsp</welcome-file>&ndash;&gt;-->
     </welcome-file-list>
 
-    <!--<error-page>-->
-        <!--<location>/error.html</location>-->
-    <!--</error-page>-->
+    <error-page>
+        <location>/error.html</location>
+    </error-page>
     <!-- session为永不超时 -->
     <session-config>
         <session-timeout>-1</session-timeout>

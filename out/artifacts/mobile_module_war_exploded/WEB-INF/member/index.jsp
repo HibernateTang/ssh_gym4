@@ -71,10 +71,10 @@
                                 </div>
                             </a>
                         </div>
-                        <div class="inform">
-                            <div class="inform-title">活动通知：</div>
-                            <div class="activity-info">植树节活动|4月1号全面涨价</div>
-                        </div>
+                        <%--<div class="inform">--%>
+                            <%--<div class="inform-title">活动通知：</div>--%>
+                            <%--<div class="activity-info">植树节活动|4月1号全面涨价</div>--%>
+                        <%--</div>--%>
                         <i></i>
                     </div>
                 </div>
@@ -82,7 +82,7 @@
                 <div class="card">
                     <div class="card-header gym-card-title">
                         <label>我的运动</label>
-                        <i class='fa fa-question-circle'></i>
+                        <i></i>
                     </div>
                     <div class="card-content">
                         <c:choose>
@@ -94,7 +94,7 @@
                                             <label class="big outpass">${listRank[status.index]['outpass']}</label>%会员
                                         </div>
                                         <div class="col-33 c">
-                                            <div class="sign-first">总共训练</div>
+                                            <div class="sign-first">总共运动</div>
                                             <label class="big mins">${listRank[status.index]['mins']}</label>分钟
                                         </div>
                                         <div class="col-33">
@@ -106,7 +106,7 @@
                                         <p><label class="big tian">${listRank[status.index]['tian']}</label>天您已加入小小运动馆</p>
                                         <p><label class="big times_per_week"><fmt:formatNumber
                                                 value="${listRank[status.index]['times_per_week']}"
-                                                pattern="0.0"/></label>次您孩子平均每周锻炼次数（全国会员每周平均锻炼x次）
+                                                pattern="0.0"/></label>次您孩子平均每周锻炼次数<br/>（全国运动量前100名会员每周平均运动<label class="big">3.2</label>次）
                                         </p>
                                     </div>
                                 </div>
@@ -186,15 +186,7 @@
                     </div>
                 </div>
 
-                <div class="card activity">
-                    <div class="card-header no-border no-padding gym-month-activity">
-                        <i></i>
-                        <div class="gym-banner-title">
-                            <small>中心本月活动</small>
-                        </div>
-                        <i></i>
-                    </div>
-                </div>
+
             </div>
         </div>
     </c:forEach>
@@ -397,19 +389,14 @@
         $.actions(groups);
     });
 
-    $('.fa-question-circle').on('click',function () {
-        $.alert('数据有误？您可以把问题发送至wang.fei@thelittlegym.com.cn');
-    })
+
 
     function gym_change(gymName, gymId) {
         $("#" + PAGE_ID + " .gym-select").text(gymName);
         $("#" + PAGE_ID + " .gym-select").attr("gym-id", gymId);
         attend_ajax(gymId, gymName, CHILD_ID, $("#" + PAGE_ID + " .beginDate").val(), $("#" + PAGE_ID + " .endDate").val());
     }
-    $(".activity").on('click', function () {
-        $.alert("敬请期待...");
-        return;
-    });
+
     function toTopic() {
         $.alert("敬请期待...");
         return;
