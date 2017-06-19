@@ -159,6 +159,7 @@ public class LoginCtrl {
         submail.setProject("IkkGR1");
         submail.addVar("time", "30分钟");
         submail.addVar("code", valnum);
+        System.out.println(valnum);
         submail.xsend();
 
 
@@ -233,13 +234,14 @@ public class LoginCtrl {
 
     @RequestMapping(value = "/feedback", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> feedback(String Franchisee,String details,String contactTel) {
+    public Map<String, Object> feedback(String Franchisee,String name,String details,String contactTel) {
         Map<String, Object> returnMap = new HashMap<String, Object>();
         Feedback feedback = new Feedback();
         try {
             feedback.setFranchisee(Franchisee);
             feedback.setCreateTime(new Date());
             feedback.setContactTel(contactTel);
+            feedback.setName(name);
             feedback.setDetails(details);
             feedbackService.save(feedback);
             returnMap.put("success",true);

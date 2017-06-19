@@ -15,10 +15,19 @@ public class Feedback {
     @Id
     @GeneratedValue
     private Integer id;
+    private String name;
     private String franchisee;
     private String contactTel;
     private String details;
     private Date createTime;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public Integer getId() {
         return id;

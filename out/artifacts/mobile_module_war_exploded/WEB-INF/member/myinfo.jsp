@@ -20,7 +20,6 @@
     <title>宝宝信息</title>
     <link rel="stylesheet" href="/css/sm.min.css">
     <link rel="stylesheet" href="/css/gym.css">
-    <link rel="icon" href="/images/admin/favicon.ico"/>
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
 </head>
 
@@ -109,6 +108,7 @@
                                                 <a id="view" class="item-title">所有合同&nbsp;<i
                                                         class="fa fa-angle-double-right"
                                                         aria-hidden="true"></i></a>
+                                                <a class="item-after open-popup" data-popup=".popup-feedback"><i class="fa fa-question" aria-hidden="true"></i></a>
                                             </div>
                                         </li>
                                     </ul>
@@ -139,12 +139,13 @@
                                                     <c:when test="${couponMap['value']['used']==false}">
                                                         <a href="#" class="coupon" data-value="1"><img
                                                                 src="/images/member/coupon_unused.png">
-                                                            <span class="fa fa-question-circle fa-2x coupon-rule"></span>
+
                                                         </a>
+                                                        <span class="fa fa-question-circle fa-2x coupon-rule  open-popup" data-popup=".popup-coupon-rule"></span>
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <a href="#" class="coupon"  data-value="0"><img
-                                                                src="/images/member/coupon_used.png"> <span class="fa fa-question-circle fa-2x coupon-rule"></span> </a>
+                                                        <a href="#" class="coupon open-popup"  data-value="0"><img
+                                                                src="/images/member/coupon_used.png"> <span class="fa fa-question-circle fa-2x coupon-rule open-popup" data-popup=".popup-coupon-rule"></span> </a>
                                                     </c:otherwise>
                                                 </c:choose>
                                             </div>
@@ -201,14 +202,93 @@
         </div>
     </form>
 </div>
+<div class="popup popup-coupon-rule">
+    <header class="bar bar-nav">
 
+        <h1 class="title">活动规则</h1>
+    </header>
+    <div class="content">
+        <div class="content-block">
+            <p>1、获得优惠券之日起，有限期为一年，用于会员本人续报课程</p>
+            <p>2、此券不与其他优惠共享</p>
+            <p>3、不支持兑换现金</p>
+            <p><a href="#" class="close-popup">关闭</a></p>
+        </div>
+    </div>
+</div>
+
+<div class="popup popup-feedback">
+    <header class="bar bar-nav">
+
+        <h1 class="title">提交反馈</h1>
+    </header>
+    <div class="content">
+        <div class="list-block">
+            <ul>
+                <!-- Text inputs -->
+                <li>
+                    <div class="item-content">
+                        <div class="item-inner">
+                            <div class="item-title label">姓名</div>
+                            <div class="item-input">
+                                <input type="text" id="feedback_name" >
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-content">
+                        <div class="item-inner">
+                            <div class="item-title label">中心</div>
+                            <div class="item-input">
+                                <input type="text" id="feedback_fs"  value="${listGymSelectedSession[0].gym['gymName']}">
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="item-content">
+                        <div class="item-inner">
+                            <div class="item-title label">手机</div>
+                            <div class="item-input">
+                                <input type="text" id="feedback_tel" placeholder="手机" value="${sessionScope.user.tel}">
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="align-top">
+                    <div class="item-content">
+                        <div class="item-inner">
+                            <div class="item-title label">问题详情</div>
+                            <div class="item-input">
+                                <textarea id="feedback_details"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="content-block">
+            <div class="row">
+                <div class="col-50"><a href="#" class="button button-big button-fill button-danger close-popup">取消</a></div>
+                <div class="col-50"><a href="#" id="feedback_sub" class="button button-big button-fill button-success">提交</a></div>
+            </div>
+        </div>
+    </div>
+
+</div>
 
 <script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
 <script type='text/javascript' src='/js/sm.min.js' charset='utf-8'></script>
 
 <script>
-    $('.fa-question-circle').on('click',function () {
-        $.alert('数据有误？您可以把问题发送至quality@thelittlegym.com.cn');
+    $("#feedback_sub").on('click',function () {
+        var feedbackName = $('#feedback_name').val();
+        var feedFs = $('#feedback_fs').val();
+        var feedTel  =$('#feedback_tel').val();
+        var feedDetails = $('#feedback_details').val();
+
+        ajax_feedback(feedFs,feedbackName,feedDetails,feedTel);
     })
     $(".open-avatar").on('click', function () {
         $.popup('.popup-avatar');
@@ -389,6 +469,20 @@
                 $.alert("异常错误,稍后再试");
             }
         });
+    }
+
+    function ajax_feedback(Franchisee,feedbackName, details, contactTel) {
+        $.ajax({
+            type: "POST",
+            url: "/login/feedback",
+            data: {"Franchisee": Franchisee,"name":feedbackName, "details": details, "contactTel": contactTel},
+            contentType: "application/x-www-form-urlencoded",
+            dataType: "json",
+            success: function (data) {
+                $.toast('已提交，谢谢你的反馈');
+                $.closeModal('.popup-feedback');
+            }
+        })
     }
     $.init();
 </script>

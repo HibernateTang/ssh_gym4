@@ -55,7 +55,7 @@
                 </div>
                 <div class="card">
                     <div class="card-header no-padding no-border card-backinfo">
-                        <i><a href="login.html">撒旦</a></i>
+                        <i></i>
                         <div class="gym-header">
                             <div class="header-img">
                                         <img src="${sessionScope.user.head_src}" onerror="this.src='/images/member/head.png'"/>

@@ -117,7 +117,8 @@ function toFeedback() {
     var Franchisee = $("#franchisee").val();
     var details = $("#details").val();
     var contactTel = $("#contactTel").val();
-    feedback_ajax(Franchisee, details, contactTel);
+    var feedbackName = $("#feedback_name").val();
+    feedback_ajax(Franchisee, feedbackName,details, contactTel);
 }
 
 /*
@@ -227,11 +228,11 @@ function exist_ajax(telephone) {
     });
 }
 
-function feedback_ajax(Franchisee, details, contactTel) {
+function feedback_ajax(Franchisee,feedbackName, details, contactTel) {
     $.ajax({
         type: "POST",
         url: "/login/feedback",
-        data: {"Franchisee": Franchisee, "details": details, "contactTel": contactTel},
+        data: {"Franchisee": Franchisee,"name":feedbackName, "details": details, "contactTel": contactTel},
         contentType: "application/x-www-form-urlencoded",
         dataType: "json",
         success: function (data) {
