@@ -6,6 +6,7 @@ import com.thelittlegym.mobile.common.HttpService;
 import com.thelittlegym.mobile.dao.ICouponDao;
 import com.thelittlegym.mobile.entity.Coupon;
 import com.thelittlegym.mobile.service.ICouponService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +38,7 @@ public class CouponService implements ICouponService{
                 returnMap.put("message","存在");
                 return returnMap;
             }
-
+            tel = StringUtils.trim(tel);
             String queryUrl = url + tel;
             String result  = httpService.doGet(queryUrl);
             System.out.println(result);
@@ -81,10 +82,17 @@ public class CouponService implements ICouponService{
         Map<String,Object> returnMap = new HashMap<String,Object>();
         if (useCode.equals(code)){
             Coupon coupon = couponDao.findOne("from Coupon where tel ='" + tel + "' and used = false");
-            coupon.setUsed(true);
-            couponDao.update(coupon);
-            returnMap.put("success",true);
-            returnMap.put("message","使用成功");
+
+            if (null != coupon){
+                coupon.setUsed(true);
+                couponDao.update(coupon);
+                returnMap.put("success",true);
+                returnMap.put("message","使用成功");
+            }else{
+                returnMap.put("success",false);
+                returnMap.put("message","该用户没有优惠券");
+            }
+
         }else{
             returnMap.put("success",false);
             returnMap.put("message","核销码错误");

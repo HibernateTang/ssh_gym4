@@ -106,7 +106,7 @@
                                         <p><label class="big tian">${listRank[status.index]['tian']}</label>天您已加入小小运动馆</p>
                                         <p><label class="big times_per_week"><fmt:formatNumber
                                                 value="${listRank[status.index]['times_per_week']}"
-                                                pattern="0.0"/></label>次您孩子平均每周锻炼次数<br/>（全国运动量前100名会员每周平均运动<label class="big">3.2</label>次）
+                                                pattern="0.0"/></label>次您孩子平均每周锻炼次数<br/>（全国运动量前100名会员每周平均运动<label class="big">1.94</label>次）
                                         </p>
                                     </div>
                                 </div>

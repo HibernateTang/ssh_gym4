@@ -51,6 +51,10 @@ public class LoginCtrl {
             if (object != null) {
                 User user = (User) object;
                 HttpSession session = request.getSession();
+                Object objSession = session.getAttribute("user");
+                if ( null != objSession ){
+                    session.invalidate();
+                }
                 session.setAttribute("user", user);
             }
             returnMap.put("value", object);
@@ -234,15 +238,19 @@ public class LoginCtrl {
 
     @RequestMapping(value = "/feedback", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> feedback(String Franchisee,String name,String details,String contactTel) {
+    public Map<String, Object> feedback(String Franchisee,String name,String details,String contactTel,String type) {
         Map<String, Object> returnMap = new HashMap<String, Object>();
         Feedback feedback = new Feedback();
         try {
+            if( null == type || "".equals(type)){
+                type="手机号码不存在";
+            }
             feedback.setFranchisee(Franchisee);
             feedback.setCreateTime(new Date());
             feedback.setContactTel(contactTel);
             feedback.setName(name);
             feedback.setDetails(details);
+            feedback.setType(type);
             feedbackService.save(feedback);
             returnMap.put("success",true);
             returnMap.put("message","反馈成功");

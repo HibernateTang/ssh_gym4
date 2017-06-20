@@ -20,6 +20,15 @@ public class Feedback {
     private String contactTel;
     private String details;
     private Date createTime;
+    private String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public String getName() {
         return name;
