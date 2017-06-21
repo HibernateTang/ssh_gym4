@@ -53,7 +53,9 @@ public class LoginCtrl {
                 HttpSession session = request.getSession();
                 Object objSession = session.getAttribute("user");
                 if ( null != objSession ){
-                    session.invalidate();
+//                    session.removeAttribute("user");
+//                    session.removeAttribute("listGymSelectedSession");
+//                    session.removeAttribute("listGym");
                 }
                 session.setAttribute("user", user);
             }

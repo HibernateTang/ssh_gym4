@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.thelittlegym.mobile.common.OasisService;
 import com.thelittlegym.mobile.common.WeixinService;
 import com.thelittlegym.mobile.entity.*;
+import com.thelittlegym.mobile.service.IPointsService;
 import com.thelittlegym.mobile.service.impl.CouponService;
 import com.thelittlegym.mobile.user.model.User;
 import com.thelittlegym.mobile.user.service.IUserService;
@@ -25,6 +26,7 @@ import java.io.File;
 import java.net.SocketException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
 import static com.alibaba.fastjson.JSON.parseObject;
 
 /**
@@ -41,15 +43,28 @@ public class UserCtrl {
     private WeixinService weixinService;
     @Autowired
     private CouponService couponService;
+    @Autowired
+    private IPointsService pointsService;
+
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String index(HttpServletRequest request, Model model) throws Exception {
         HttpSession session = request.getSession();
+//        String linkId = request.getParameter("linkId");
+//        if (null != linkId && "1225".equals(linkId)) {
+//            session.setAttribute("hide", System.currentTimeMillis() / 1000);
+//            return "redirect:/";
+//        }
+//        Object hideSession = session.getAttribute("hide");
+//        if (null == hideSession){
+//            return "redirect:/404.html";
+//        }
+
         Object objSession = session.getAttribute("user");
         Object listGymSelectedSession = session.getAttribute("listGymSelectedSession");
         List<Gym> listGym = new ArrayList<Gym>();
         List<Child> listChild = new ArrayList<Child>();
         List<Rank> listRank = new ArrayList<Rank>();
-        Map<String,String> weixinMap = new HashMap<String,String>();
+        Map<String, String> weixinMap = new HashMap<String, String>();
 
         //存储两个不同孩子的list的list
         List listGymClassAll = new ArrayList<ArrayList<GymClass>>();
@@ -60,7 +75,7 @@ public class UserCtrl {
         } else {
             user = (User) objSession;
         }
-//        weixinMap = weixinService.getSignature(request.getRequestURL().toString());
+        weixinMap = weixinService.getSignature(request.getRequestURL().toString());
         Integer idFamily = user.getIdFamily();
 
         //孩子
@@ -79,7 +94,7 @@ public class UserCtrl {
                     JSONObject rankLast3Obj = rankUtil(childObj.getString("ranking"), "last3");
                     Child child = JSONObject.parseObject(childItem.toString(), Child.class);
                     Rank rank = null;
-                    if (rankAllObj != null && rankLast3Obj != null ){
+                    if (rankAllObj != null && rankLast3Obj != null) {
                         rank = JSONObject.parseObject(rankAllObj.toString(), Rank.class);
                         //outpass为3月，其他为全部
                         rank.setOutpass(rankLast3Obj.getString("outpass"));
@@ -94,15 +109,15 @@ public class UserCtrl {
                     String gymName;
                     String idChild = child.getIdhz();
                     //孩子考勤
-                    if (listGymSelectedSession != null ) {
+                    if (listGymSelectedSession != null) {
                         listGymSelected = (List<GymSelected>) listGymSelectedSession;
-                        if (listGymSelected.size() > 0){
+                        if (listGymSelected.size() > 0) {
                             gymSelected = listGymSelected.get(0);
                             beginDate = gymSelected.getBeginDate();
                             endDate = gymSelected.getEndDate();
                             gymId = gymSelected.getGym().getGymId();
                             gymName = gymSelected.getGym().getGymName();
-                        }else{
+                        } else {
                             return "redirect:/timeout.html";
                         }
                     } else {
@@ -110,7 +125,7 @@ public class UserCtrl {
                         endDate = getInitDate().get(1);
                         String sqlGym = "select crmzdy_81620171 gymName,crmzdy_81620171_id gymId from crm_zdytable_238592_25111_238592_view where crmzdy_81611091_id =" + idFamily;
 
-                        if ( null == session.getAttribute("listGym")){
+                        if (null == session.getAttribute("listGym")) {
                             JSONArray gymArray = oasisService.getResultJson(sqlGym);
                             listGym = JSONObject.parseArray(gymArray.toString(), Gym.class);
                             gymId = gymArray.getJSONObject(0).getString("gymId");
@@ -122,8 +137,8 @@ public class UserCtrl {
                             gymSelected.setGym(gym);
                             //内循限制只查询一次
                             session.setAttribute("listGym", listGym);
-                        }else{
-                            listGym= (List<Gym>)session.getAttribute("listGym");
+                        } else {
+                            listGym = (List<Gym>) session.getAttribute("listGym");
                             gymId = listGym.get(0).getGymId();
                             gymName = listGym.get(0).getGymName();
                             gymSelected.setBeginDate(beginDate);
@@ -148,7 +163,7 @@ public class UserCtrl {
                     listGymClassAll.add(listGymClass);
                 }
             }
-        }catch (SocketException e){
+        } catch (SocketException e) {
             System.out.println("请求超时");
             return "redirect:/timeout.html";
         }
@@ -157,7 +172,7 @@ public class UserCtrl {
         model.addAttribute("listRank", listRank);
         model.addAttribute("listChild", listChild);
         model.addAttribute("listGymClassAll", listGymClassAll);
-        model.addAttribute("weixinMap",weixinMap);
+        model.addAttribute("weixinMap", weixinMap);
         return "/member/index";
     }
 
@@ -174,8 +189,8 @@ public class UserCtrl {
     }
 
     @RequestMapping(value = "/share", method = RequestMethod.GET)
-    public String share(HttpServletRequest request,Model model) throws Exception {
-        Map<String ,String> returnMap = new HashMap<String,String>();
+    public String share(HttpServletRequest request, Model model) throws Exception {
+        Map<String, String> returnMap = new HashMap<String, String>();
         String tian = request.getParameter("tian");
         String mins = request.getParameter("mins");
         String ranking = request.getParameter("ranking");
@@ -184,23 +199,23 @@ public class UserCtrl {
         String name = request.getParameter("name");
         String avatar = request.getParameter("avatar");
 
-        returnMap.put("tian",tian);
-        returnMap.put("mins",mins);
-        returnMap.put("ranking",ranking);
-        returnMap.put("outpass",outpass);
-        returnMap.put("times_per_week",times_per_week);
-        returnMap.put("name",name);
-        returnMap.put("avatar",avatar);
+        returnMap.put("tian", tian);
+        returnMap.put("mins", mins);
+        returnMap.put("ranking", ranking);
+        returnMap.put("outpass", outpass);
+        returnMap.put("times_per_week", times_per_week);
+        returnMap.put("name", name);
+        returnMap.put("avatar", avatar);
 //        for (Map.Entry entry : returnMap.entrySet()) {
 //            System.out.println(entry.getKey() + ", " + entry.getValue());
 //        }
-        model.addAttribute("shareMap",returnMap);
+        model.addAttribute("shareMap", returnMap);
         return "/member/share";
     }
 
 
     @RequestMapping(value = "/myinfo", method = RequestMethod.GET)
-    public String myinfo(HttpServletRequest request, String idhz,String name,String age, Model model) throws Exception {
+    public String myinfo(HttpServletRequest request, String idhz, String name, String age, Model model) throws Exception {
         HttpSession session = request.getSession();
         Object objSession = session.getAttribute("user");
         User user;
@@ -214,40 +229,41 @@ public class UserCtrl {
         String tel = user.getTel();
         String sqlMyInfo = "select top 6 convert(varchar(10),ht.crmzdy_80646021,111) 报名日期,ht.crmzdy_80646031  报名课时数,ht.crmzdy_81636090 合同金额,convert(varchar(10),crmzdy_81733324,111)   有效期,bmksb.crmzdy_81739422 剩余课时数,bmksb.crmzdy_81739425 累计请假数,isnull(bjap.kc,'暂未排课') 课程,ht.crmzdy_81733120 赠课,zx.crmzdy_81802626 积分 from crm_zdytable_238592_25111_238592_view zx join crm_zdytable_238592_25115_238592_view bmksb on zx.crmzdy_81611091_id=" + idFamily + " and bmksb.crmzdy_81756836_id=zx.id  join crm_zdytable_238592_23796_238592_view ht on ht.id=bmksb.crmzdy_81486464_id  outer apply(select top 1 bj.crmzdy_80612382 kc from crm_zdytable_238592_25117_238592_view bjap join crm_zdytable_238592_23583_238592_view bj on bj.id=bjap.crmzdy_81486476_id where ht.id=bjap.crmzdy_81598938_id)bjap where bmksb.crmzdy_81733119='销售'  and bmksb.crmzdy_81739422/*rest*/>0 and datediff(d,getdate(),ht.crmzdy_81733324/*dtDaoQi*/)>=0";
         JSONArray contractArr = oasisService.getResultJson(sqlMyInfo);
-        Map<String,Object> couponMap = couponService.getCoupon_http(tel);
-
+        Map<String, Object> couponMap = couponService.getCoupon_http(tel);
+        //18751609081
+        pointsService.updatePoints_http(tel);
         //孩子id查询信息
 //        String sqlChild = "select  crm_name name,crmzdy_81497217 age from crm_zdytable_238592_23893_238592_view where id = " + idhz;
 //        JSONObject childObj = oasisService.getObject(sqlChild,0);
         JSONObject childObj = new JSONObject();
 
-        childObj.put("idhz",idhz);
-        childObj.put("name",name);
-        childObj.put("age",age);
+        childObj.put("idhz", idhz);
+        childObj.put("name", name);
+        childObj.put("age", age);
         model.addAttribute("listContract", contractArr);
         model.addAttribute("childObj", childObj);
-        model.addAttribute("couponMap",couponMap);
+        model.addAttribute("couponMap", couponMap);
 
         return "/member/myinfo";
     }
 
     @RequestMapping(value = "/coupon", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String,Object> useCoupon(HttpServletRequest request,String code) throws Exception{
+    public Map<String, Object> useCoupon(HttpServletRequest request, String code) throws Exception {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         JSONObject jsonObject = new JSONObject();
         JSONArray classArray = new JSONArray();
-        Map<String,Object> returnMap = null;
+        Map<String, Object> returnMap = null;
         String tel = "";
         if (user == null) {
-            returnMap.put("success",false);
-            returnMap.put("message","session丢失,退出重试");
-        }else{
+            returnMap.put("success", false);
+            returnMap.put("message", "session丢失,退出重试");
+        } else {
             tel = user.getTel();
         }
 //        tel = "15505152635";
-        returnMap = couponService.useCoupon(tel,code);
+        returnMap = couponService.useCoupon(tel, code);
 
         return returnMap;
     }
@@ -256,20 +272,20 @@ public class UserCtrl {
     //考勤查询
     @RequestMapping(value = "/attend", method = RequestMethod.GET)
     @ResponseBody
-    public JSONArray getAttend(HttpServletRequest request, String idGym, String nameGym, Integer idChild, String beginDate, String endDate,Integer child_index) {
+    public JSONArray getAttend(HttpServletRequest request, String idGym, String nameGym, Integer idChild, String beginDate, String endDate, Integer child_index) {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         JSONObject jsonObject = new JSONObject();
         JSONArray classArray = new JSONArray();
         List<GymSelected> listGymSelected = new ArrayList<GymSelected>();
         if (user == null) {
-            jsonObject.put("success",false);
+            jsonObject.put("success", false);
             classArray.add(jsonObject);
             return classArray;
         }
         Object listGymSelectedSession = session.getAttribute("listGymSelectedSession");
-        if (listGymSelectedSession != null){
-            listGymSelected = (List<GymSelected>)listGymSelectedSession;
+        if (listGymSelectedSession != null) {
+            listGymSelected = (List<GymSelected>) listGymSelectedSession;
             GymSelected gymSelected = new GymSelected();
             Gym gym = new Gym();
             gym.setGymId(idGym);
@@ -277,7 +293,7 @@ public class UserCtrl {
             gymSelected.setGym(gym);
             gymSelected.setBeginDate(beginDate);
             gymSelected.setEndDate(endDate);
-            listGymSelected.set(child_index,gymSelected);
+            listGymSelected.set(child_index, gymSelected);
         }
         String sqlClass = "select bj.crmzdy_80620202_id idgym,rq.crm_name date,bj.crmzdy_80612384 time,bj.crmzdy_80612382 course,case when kq='未考勤' then '尚未开课' else kq  end kq from(select crmzdy_81486481 kq,crmzdy_81486480_id idrq " +
                 "from crm_zdytable_238592_25118_238592_view bmks where bmks.crmzdy_81618215_id=" + idChild + " /*idhz*/ and bmks.crmzdy_81636525>='" + beginDate + "'/*dtbegin*/ and bmks.crmzdy_81636525<='" + endDate + "'/*dtend*/ and crmzdy_81619234='已报名' union all select crmzdy_80652349,crmzdy_80652340_id from crm_zdytable_238592_23696_238592_view bk where crmzdy_80658051_id=3519 and bk.crmzdy_81761865>='" + beginDate + "'/*dtbegin*/ and bk.crmzdy_81761865<='" + endDate + "'/*dtend*/)ks join crm_zdytable_238592_23870_238592_view rq on ks.idrq=rq.id join crm_zdytable_238592_23583_238592_view bj on rq.crmzdy_80650267_id=bj.id and bj.crmzdy_80620202_id=" + idGym + "/*idgym*/order by date desc";
@@ -357,7 +373,7 @@ public class UserCtrl {
     }
 
     //获得查询开始结束日期
-    public static ArrayList<String> getInitDate(){
+    public static ArrayList<String> getInitDate() {
         ArrayList<String> list = new ArrayList<String>();
         Calendar cal = Calendar.getInstance();
         String beginDate = "";

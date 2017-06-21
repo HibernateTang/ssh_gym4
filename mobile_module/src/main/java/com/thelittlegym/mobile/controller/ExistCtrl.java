@@ -18,7 +18,6 @@ public class ExistCtrl {
     @RequestMapping(value = "",method = RequestMethod.GET)
     public String activities(HttpServletRequest request, Model model) throws Exception {
         HttpSession session = request.getSession();
-        Object objSession = session.getAttribute("user");
         session.invalidate();
         return "redirect:/login.html";
     }

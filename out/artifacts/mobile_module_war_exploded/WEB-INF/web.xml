@@ -5,8 +5,8 @@
          id="WebApp_ID" version="3.0">
     <display-name>minissh</display-name>
     <welcome-file-list>
-        <welcome-file>login.html</welcome-file>
-        <!--<welcome-file>./WEB-INF/member/index.jsp</welcome-file>&ndash;&gt;-->
+        <!--<welcome-file>login.html</welcome-file>-->
+        <welcome-file>index</welcome-file>
     </welcome-file-list>
 
     <error-page>
@@ -54,11 +54,15 @@
         <servlet-name>spring</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
+
     </servlet>
     <servlet-mapping>
         <servlet-name>spring</servlet-name>
         <url-pattern>/</url-pattern>
+        <url-pattern>/index</url-pattern>
     </servlet-mapping>
+
+
 
     <!--解决springmvc传递给后台的中文数据乱码问题-->
     <filter>
