@@ -9,6 +9,7 @@ import com.thelittlegym.mobile.service.IPointsService;
 import com.thelittlegym.mobile.service.impl.CouponService;
 import com.thelittlegym.mobile.user.model.User;
 import com.thelittlegym.mobile.user.service.IUserService;
+import com.thelittlegym.mobile.utils.test.InTesting;
 import net.coobird.thumbnailator.Thumbnails;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
@@ -49,17 +50,28 @@ public class UserCtrl {
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String index(HttpServletRequest request, Model model) throws Exception {
         HttpSession session = request.getSession();
-//        String linkId = request.getParameter("linkId");
-//        if (null != linkId && "1225".equals(linkId)) {
-//            session.setAttribute("hide", System.currentTimeMillis() / 1000);
-//            return "redirect:/";
-//        }
-//        Object hideSession = session.getAttribute("hide");
-//        if (null == hideSession){
-//            return "redirect:/404.html";
-//        }
-
+        InTesting it = new InTesting();
+        boolean ittest = it.isTrue(request);
         Object objSession = session.getAttribute("user");
+        User user;
+
+        if(!ittest) {
+            String linkId = request.getParameter("linkId");
+            if (null != linkId && "1225".equals(linkId)) {
+                session.setAttribute("hide", System.currentTimeMillis() / 1000);
+                return "redirect:/index";
+            }
+            Object hideSession = session.getAttribute("hide");
+            if (null == hideSession) {
+                return "redirect:/noaccess.html";
+            }
+        }
+
+        if (objSession == null) {
+            return "redirect:/login.html";
+        } else {
+            user = (User) objSession;
+        }
         Object listGymSelectedSession = session.getAttribute("listGymSelectedSession");
         List<Gym> listGym = new ArrayList<Gym>();
         List<Child> listChild = new ArrayList<Child>();
@@ -69,13 +81,11 @@ public class UserCtrl {
         //存储两个不同孩子的list的list
         List listGymClassAll = new ArrayList<ArrayList<GymClass>>();
         List<GymSelected> listGymSelected = new ArrayList<GymSelected>();
-        User user;
-        if (objSession == null) {
-            return "redirect:/login.html";
-        } else {
-            user = (User) objSession;
+
+        if(!ittest){
+            weixinMap = weixinService.getSignature(request.getRequestURL().toString());
         }
-        weixinMap = weixinService.getSignature(request.getRequestURL().toString());
+
         Integer idFamily = user.getIdFamily();
 
         //孩子
@@ -231,7 +241,7 @@ public class UserCtrl {
         JSONArray contractArr = oasisService.getResultJson(sqlMyInfo);
         Map<String, Object> couponMap = couponService.getCoupon_http(tel);
         //18751609081
-        pointsService.updatePoints_http(tel);
+        pointsService.updatePoints_http("18751609081");
         //孩子id查询信息
 //        String sqlChild = "select  crm_name name,crmzdy_81497217 age from crm_zdytable_238592_23893_238592_view where id = " + idhz;
 //        JSONObject childObj = oasisService.getObject(sqlChild,0);

@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>share</title>
+    <title>分享</title>
     <link rel="stylesheet" href="/css/sm.min.css">
     <link rel="stylesheet" href="/css/gym.css">
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
@@ -22,7 +22,7 @@
         <div class="content">
             <div class="card" >
                 <div class="card-header no-border gym-card-title">
-                    <a href="/index"><img width="90px" src="/images/member/share_logo.png"> </a>
+                    <a href="/index?linkId=1225"><img width="90px" src="/images/member/share_logo.png"> </a>
                     <label>加入小小运动馆<br/><div class="text-right"><label class="big">${shareMap['tian']}</label>天</div></label>
                 </div>
             </div>

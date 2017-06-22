@@ -18,6 +18,12 @@ public class ExistCtrl {
     @RequestMapping(value = "",method = RequestMethod.GET)
     public String activities(HttpServletRequest request, Model model) throws Exception {
         HttpSession session = request.getSession();
+        Object hideSession = session.getAttribute("hide");
+        //退出判断是否linkId进入
+        if ( null != hideSession){
+            session.invalidate();
+            return "redirect:/?linkId=1225";
+        }
         session.invalidate();
         return "redirect:/login.html";
     }

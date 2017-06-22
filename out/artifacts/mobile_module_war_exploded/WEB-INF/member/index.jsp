@@ -185,8 +185,6 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
     </c:forEach>
@@ -214,7 +212,7 @@
         timestamp: '${weixinMap['timestamp']}', // 必填，生成签名的时间戳
         nonceStr: '${weixinMap['nonceStr']}', // 必填，生成签名的随机串
         signature: '${weixinMap['signature']}',// 必填，签名，见附录1
-        jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','hideMenuItems'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
     });
     wx.ready(function(){
         var outpass = $('#'+PAGE_ID + ' .outpass').text();
@@ -250,6 +248,13 @@
             cancel: function () {
                 // 用户取消分享后执行的回调函数
             }
+        });
+
+        //隐藏右上角菜单
+        wx.hideMenuItems({
+            menuList: ['menuItem:favorite','menuItem:share:facebook','menuItem:share:QZone',
+                'menuItem:editTag','menuItem:delete','menuItem:copyUrl','menuItem:originPage','menuItem:readMode',
+                'menuItem:openWithQQBrowser','menuItem:openWithSafari','menuItem:share:email']
         });
     });
 

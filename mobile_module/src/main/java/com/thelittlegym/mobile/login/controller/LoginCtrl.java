@@ -1,8 +1,6 @@
 package com.thelittlegym.mobile.login.controller;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -50,12 +48,14 @@ public class LoginCtrl {
             Object object = map.get("value");
             if (object != null) {
                 User user = (User) object;
-                HttpSession session = request.getSession();
+                HttpSession session = request.getSession(true);
                 Object objSession = session.getAttribute("user");
+                //重复登录清空之前session所有attr
                 if ( null != objSession ){
-//                    session.removeAttribute("user");
-//                    session.removeAttribute("listGymSelectedSession");
-//                    session.removeAttribute("listGym");
+                    Enumeration<String> em = session.getAttributeNames();
+                    while (em.hasMoreElements()) {
+                        session.removeAttribute(em.nextElement());
+                    }
                 }
                 session.setAttribute("user", user);
             }
