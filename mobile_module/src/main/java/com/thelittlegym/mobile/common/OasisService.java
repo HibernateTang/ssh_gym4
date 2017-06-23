@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
 
@@ -48,20 +49,15 @@ public class OasisService {
         return jsonObject;
     }
 
-    public Boolean addPoints(String idjt,Integer val,String zx) {
-        String url = GET_ADDPOINTS_URL + "?idjt=" + idjt + "&val=" + val + "&zx=" + zx;
-        System.out.println(url);
+    public Boolean addPoints(String idjt, Integer val, String zx) throws Exception {
+        zx = URLEncoder.encode(zx, "gb2312");
 
-        String result = null;
-        try {
-            result = httpService.doGet(url);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-        if( null != result ){
+        String url = GET_ADDPOINTS_URL + "?idjt=" + idjt + "&val=" + val + "&zx=" + zx;
+        String result  = httpService.doGet(url);
+
+        if (null != result) {
             JSONObject jsonObject = JSONObject.parseObject(result);
-            return "1".equals(jsonObject.getString("resultCode"))?true:false;
+            return "1".equals(jsonObject.getString("resultCode")) ? true : false;
         }
         return false;
     }
