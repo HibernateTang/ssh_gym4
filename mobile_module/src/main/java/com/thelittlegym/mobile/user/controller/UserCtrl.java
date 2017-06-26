@@ -241,7 +241,7 @@ public class UserCtrl {
         JSONArray contractArr = oasisService.getResultJson(sqlMyInfo);
         Map<String, Object> couponMap = couponService.getCoupon_http(tel);
         //18751609081
-        pointsService.updatePoints_http("18751609081");
+        pointsService.updatePoints_http(tel);
         //孩子id查询信息
 //        String sqlChild = "select  crm_name name,crmzdy_81497217 age from crm_zdytable_238592_23893_238592_view where id = " + idhz;
 //        JSONObject childObj = oasisService.getObject(sqlChild,0);

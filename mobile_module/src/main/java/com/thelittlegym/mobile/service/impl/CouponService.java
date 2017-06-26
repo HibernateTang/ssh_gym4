@@ -41,7 +41,6 @@ public class CouponService implements ICouponService {
             }
             tel = StringUtils.trim(tel);
             JSONObject couponObject = h5Service.getByType(tel, "coupon").getJSONObject(0);
-            System.out.println(couponObject.toString());
             if (null != couponObject) {
                 //优惠券
                 Coupon coupon = new Coupon();
