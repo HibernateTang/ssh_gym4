@@ -238,6 +238,7 @@ public class AdminCtrl {
                         }
                     }
                 }
+
                 session.setAttribute("user", user);
                 returnMap.put("success",true);
                 returnMap.put("message","登录成功");
