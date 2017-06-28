@@ -58,7 +58,7 @@
                         <i></i>
                         <div class="gym-header">
                             <div class="header-img">
-                                        <img src="${sessionScope.user.head_src}" onerror="this.src='/images/member/head.png'"/>
+                                <img src="${sessionScope.user.head_src}" onerror="this.src='/images/member/head.png'"/>
                             </div>
                             <a class="header-text external"
                                href="/index/myinfo?idhz=${child['idhz']}&name=${child['name']}&age=${child['age']}">
@@ -71,10 +71,10 @@
                                 </div>
                             </a>
                         </div>
-                        <%--<div class="inform">--%>
+                            <%--<div class="inform">--%>
                             <%--<div class="inform-title">活动通知：</div>--%>
                             <%--<div class="activity-info">植树节活动|4月1号全面涨价</div>--%>
-                        <%--</div>--%>
+                            <%--</div>--%>
                         <i></i>
                     </div>
                 </div>
@@ -123,7 +123,11 @@
                 <div class="card">
                     <div class="card-header gym-card-title">
                         <a class="gym-select"
-                           gym-id="${listGymSelectedSession[status.index].gym['gymId']}">${listGymSelectedSession[status.index].gym['gymName']}</a>
+                           gym-id="${listGymSelectedSession[status.index].gym['gymId']}"><span>${listGymSelectedSession[status.index].gym['gymName']}</span>
+                            <c:if test="${listGym.size() > 1}">
+                                <i class="fa fa-angle-down" aria-hidden="true"></i>
+                            </c:if>
+                        </a>
                     </div>
                     <div class="card-content-inner">
                         <div>
@@ -195,6 +199,7 @@
 <script src="/js/swiper-3.4.2.jquery.min.js"></script>
 <script type='text/javascript' src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script>
+
     /*全局孩子标识*/
     var PAGE_ID = $(".page-current").attr("id") ? $(".page-current").attr("id") : 'child1';
     var CHILD_ID = $("#" + PAGE_ID).attr("child-id");
@@ -231,17 +236,17 @@
         });
         wx.onMenuShareAppMessage({
             title: title, // 分享标题
-            desc: '测试描述', // 分享描述
+            desc: '分享', // 分享描述
             link:link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
             imgUrl: 'https://member.thelittlegym.com.cn/images/member/head.jpg', // 分享图标
             type: 'link', // 分享类型,music、video或link，不填默认为link
             dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
         });
         wx.onMenuShareQQ({
-            title: '测试看一下', // 分享标题
-            desc: '', // 分享描述
+            title: title, // 分享标题
+            desc: '分享', // 分享描述
             link: link, // 分享链接
-            imgUrl: '', // 分享图标
+            imgUrl: 'https://member.thelittlegym.com.cn/images/member/head.jpg', // 分享图标
             success: function () {
                 // 用户确认分享后执行的回调函数
             },
@@ -397,7 +402,7 @@
 
 
     function gym_change(gymName, gymId) {
-        $("#" + PAGE_ID + " .gym-select").text(gymName);
+        $("#" + PAGE_ID + " .gym-select span").text(gymName);
         $("#" + PAGE_ID + " .gym-select").attr("gym-id", gymId);
         attend_ajax(gymId, gymName, CHILD_ID, $("#" + PAGE_ID + " .beginDate").val(), $("#" + PAGE_ID + " .endDate").val());
     }

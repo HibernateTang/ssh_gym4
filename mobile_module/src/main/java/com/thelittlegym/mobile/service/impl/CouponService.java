@@ -40,8 +40,9 @@ public class CouponService implements ICouponService {
                 return returnMap;
             }
             tel = StringUtils.trim(tel);
-            JSONObject couponObject = h5Service.getByType(tel, "coupon").getJSONObject(0);
-            if (null != couponObject) {
+            JSONArray couponArr = h5Service.getByType(tel, "coupon");
+//            JSONObject couponObject = couponArr.getJSONObject(0);
+            if (null != couponArr ) {
                 //优惠券
                 Coupon coupon = new Coupon();
                 coupon.setCreate_time(new Date());

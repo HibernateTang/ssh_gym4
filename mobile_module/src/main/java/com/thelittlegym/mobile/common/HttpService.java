@@ -110,6 +110,33 @@ public class HttpService {
         }
     }
 
+    public HttpResult doPostAll(String url, Map<String, String> paramMap) throws IOException {
+        HttpPost httpPost = new HttpPost(url);
+        //设置请求参数
+        httpPost.setConfig(requestConfig);
+        if (paramMap != null) {
+            List<NameValuePair> parameters = new ArrayList<NameValuePair>();
+            for (String s : paramMap.keySet()) {
+                parameters.add(new BasicNameValuePair(s, paramMap.get(s)));
+            }
+            //构建一个form表单式的实体
+            UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(parameters, Charset.forName("UTF-8"));
+            //将请求实体放入到httpPost中
+            httpPost.setEntity(formEntity);
+        }
+        //创建httpClient对象
+        CloseableHttpResponse response = null;
+        try {
+            //执行请求
+            response = httpClient.execute(httpPost);
+            return new HttpResult(response.getStatusLine().getStatusCode(), EntityUtils.toString(response.getEntity()));
+        } finally {
+            if (response != null) {
+                response.close();
+            }
+        }
+    }
+
     /**
      * 执行post请求
      *

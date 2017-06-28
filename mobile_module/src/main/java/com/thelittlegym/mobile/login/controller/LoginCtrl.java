@@ -54,7 +54,9 @@ public class LoginCtrl {
                 if ( null != objSession ){
                     Enumeration<String> em = session.getAttributeNames();
                     while (em.hasMoreElements()) {
-                        session.removeAttribute(em.nextElement());
+                        if (!"admin".equals(em.nextElement())){
+                            session.removeAttribute(em.nextElement());
+                        }
                     }
                 }
                 session.setAttribute("user", user);
@@ -77,7 +79,7 @@ public class LoginCtrl {
         Map valNumMap = new HashMap();
 
 //        Map<String,String> existMap = new HashMap<String,String>();
-        String sqlExist = "select  crm_surname name,id,crmzdy_80620120 tel,crmzdy_81802271 childname,crmzdy_81778300 zx from   crm_sj_238592_view  where charindex('" +username+"',crmzdy_81767199)>0";
+        String sqlExist = "select top 1  crm_surname name,id,crmzdy_80620120 tel,crmzdy_81802271 childname,crmzdy_81778300 zx from   crm_sj_238592_view  where charindex('" +username+"',crmzdy_81767199)>0";
 //        existMap.put("sql1", sqlExist);
 
         HttpSession session = request.getSession();

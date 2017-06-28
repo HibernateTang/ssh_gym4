@@ -14,4 +14,5 @@
         <i class="browser icon"></i>
     </a>
     <a class="item">课程亮点</a>
+    <a href="/admin/simulation" class="item">会员登录</a>
 </div>

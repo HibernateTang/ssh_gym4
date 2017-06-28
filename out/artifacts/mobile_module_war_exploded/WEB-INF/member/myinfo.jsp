@@ -25,7 +25,7 @@
 
 <body>
 <div class="page-group">
-    <div class="page" id="page_myinfo">
+    <div class="page page-current" id="page_myinfo">
         <div class="content">
             <div class="card">
                 <div class="card-header no-padding no-border gym-myinfo">
@@ -47,13 +47,30 @@
                             <p class="avatar-detail">年龄：${childObj['age']}</p>
                         </div>
                     </div>
-                    <a href="/exist" class="button">退出登录</a>
+                    <a href="/exit" class="button">退出登录</a>
                 </div>
 
                 <div class="card-content">
-                    <c:choose>
-                        <c:when test="${not empty listContract}">
-                            <div class="card-content-inner" id="contract" data-value="0">
+                    <div class="card-content-inner" id="contract" data-value="0">
+                        <div class="row">
+                            <div class="col-33 ">
+                                <div class="list-icon"><a class="external" href="/coupon"><img
+                                        src="/images/member/icons/coupon.png"></a></div>
+                                <div class="list-icon-title">我的优惠券</div>
+                            </div>
+                            <div class="col-33 ">
+                                <div class="list-icon"><a id="view" href="javascript:;"><img
+                                        src="/images/member/icons/contract.png"></a></div>
+                                <div class="list-icon-title">我的所有合同</div>
+                            </div>
+                            <div class="col-33 ">
+                                <div class="list-icon"><a class="external activity" > <img
+                                        src="/images/member/icons/activity.png"></a></div>
+                                <div class="list-icon-title">活动中心</div>
+                            </div>
+                        </div>
+                        <c:choose>
+                            <c:when test="${not empty listContract}">
                                 <div class="list-block gym-list">
                                     <ul>
                                         <li class="item-content">
@@ -84,40 +101,40 @@
                                                         id="c_totalLeave">${listContract[0]['累计请假数']}</label>节
                                                 </div>
                                             </div>
-                                            <div class="item-inner">
-                                                <div class="item-title">报名金额：<label
-                                                        id="c_regSum">${listContract[0]['合同金额']}</label></div>
-                                            </div>
-                                        </li>
-                                        <li class="item-content">
+                                            <%--<div class="item-inner">--%>
+                                                <%--<div class="item-title">报名金额：<label--%>
+                                                        <%--id="c_regSum">${listContract[0]['合同金额']}</label></div>--%>
+                                            <%--</div>--%>
                                             <div class="item-inner">
                                                 <div class="item-title">班级：<label
                                                         id="c_class">${listContract[0]['课程']}</label></div>
                                             </div>
+                                        </li>
+                                        <li class="item-content">
+
                                             <div class="item-inner">
                                                 <div class="item-title">赠课：<label
                                                         id="c_give">${listContract[0]['赠课']}</label></div>
                                             </div>
-                                        </li>
-                                        <li class="item-content">
                                             <div class="item-inner">
                                                 <div class="item-title">积分：<label
                                                         id="c_score">${listContract[0]['积分']}</label></div>
                                             </div>
-                                            <div class="item-inner">
-                                                <a id="view" class="item-title">所有合同&nbsp;<i
-                                                        class="fa fa-angle-double-right"
-                                                        aria-hidden="true"></i></a>
-                                            </div>
                                         </li>
-
+                                        <%--<li class="item-content">--%>
+                                            <%--<div class="item-inner">--%>
+                                                <%--<a id="view" class="item-title">所有合同&nbsp;<i--%>
+                                                        <%--class="fa fa-angle-double-right"--%>
+                                                        <%--aria-hidden="true"></i></a>--%>
+                                            <%--</div>--%>
+                                        <%--</li>--%>
                                         <!-- 反馈 -->
                                         <li class="item-content  open-popup" data-popup=".popup-feedback">
                                             <div class="item-media">
                                                 <i class="fa fa-meh-o fa-2x" aria-hidden="true"></i>
                                             </div>
                                             <div class="item-inner">
-                                                <div class="item-title" >数据有问题？点击此处向我们反馈</div>
+                                                <div class="item-title">数据有问题？点击此处向我们反馈</div>
                                                 <div class="item-after"><i
                                                         class="fa fa-angle-double-right fa-2x"
                                                         aria-hidden="true"></i></div>
@@ -125,50 +142,9 @@
                                         </li>
                                     </ul>
                                 </div>
-                            </div>
-                        </c:when>
-                        <c:otherwise>
-                            <div class="card-content-inner">
-                                <p class="color-danger text-center">没有找到有效期内的合同~</p>
-                            </div>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
-            </div>
-
-            <!-- 我的优惠券 -->
-            <div class="card">
-                <div class="card-header  gym-card-title">
-                    我的优惠券
-                </div>
-                <div class="card-content">
-                    <div class="card-content-inner">
-                        <c:choose>
-                            <c:when test="${not empty couponMap}">
-                                <div class="coupon-box">
-                                    <c:choose>
-                                        <c:when test="${couponMap['value']['used']==false}">
-                                            <a href="javascript:;" class="coupon" data-value="1"><img
-                                                    src="/images/member/coupon_unused.png">
-                                            </a>
-                                            <span class="fa fa-question-circle fa-2x coupon-rule  open-popup"
-                                                  data-popup=".popup-coupon-rule"></span>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <a href="javascript:;" class="coupon" data-value="0"><img
-                                                    src="/images/member/coupon_used.png"> <span
-                                                    class="fa fa-question-circle fa-2x coupon-rule open-popup"
-                                                    data-popup=".popup-coupon-rule"></span> </a>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </div>
                             </c:when>
-
                             <c:otherwise>
-                                <div class="no-coupon text-center">
-                                    <img src="/images/member/no_coupon.png"/>
-                                    <p>您目前没有优惠券可用</p>
-                                </div>
+                                <p class="color-danger text-center">没有找到有效期内的合同~</p>
                             </c:otherwise>
                         </c:choose>
                     </div>
@@ -186,6 +162,39 @@
             </div>
         </div>
 
+    </div>
+    <div class="page" id="page_contract">
+        <div class="content">
+
+
+            <div class="list-block media-list">
+                <ul>
+                    <c:choose>
+                        <c:when test="${not empty listContract}">
+                            <c:forEach items="${listContract}" var="contract">
+                                <li>
+                                    <a href="#" class="item-link item-content">
+                                        <div class="item-media"><img
+                                                src="http://gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg"
+                                                style='width: 4rem;'></div>
+                                        <div class="item-inner">
+                                            <div class="item-title-row">
+                                                <div class="item-title">${listContract[0]['报名日期']}</div>
+                                            </div>
+                                            <div class="item-subtitle">标题</div>
+                                            <div class="item-text">此处是文本内容...</div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <p class="color-danger text-center">没有找到有效期内的合同~</p>
+                        </c:otherwise>
+                    </c:choose>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -206,20 +215,7 @@
         </div>
     </form>
 </div>
-<div class="popup popup-coupon-rule">
-    <header class="bar bar-nav">
 
-        <h1 class="title">活动规则</h1>
-    </header>
-    <div class="content">
-        <div class="content-block">
-            <p>1、获得优惠券之日起，有限期为一年，用于会员本人续报课程</p>
-            <p>2、此券不与其他优惠共享</p>
-            <p>3、不支持兑换现金</p>
-            <p><a href="javascript:;" class="close-popup">关闭</a></p>
-        </div>
-    </div>
-</div>
 
 <div class="popup popup-feedback">
     <header class="bar bar-nav">
@@ -290,9 +286,11 @@
         </div>
         <div class="content-block">
             <div class="row">
-                <div class="col-50"><a href="javascript:;" class="button button-big button-fill button-danger close-popup">取消</a>
+                <div class="col-50"><a href="javascript:;"
+                                       class="button button-big button-fill button-danger close-popup">取消</a>
                 </div>
-                <div class="col-50"><a href="javascript:;" id="feedback_sub" class="button button-big button-fill button-success">提交</a>
+                <div class="col-50"><a href="javascript:;" id="feedback_sub"
+                                       class="button button-big button-fill button-success">提交</a>
                 </div>
             </div>
         </div>
@@ -309,11 +307,11 @@
         var feedFs = $('#feedback_fs').val();
         var feedTel = $('#feedback_tel').val();
         var feedDetails = $('#feedback_details').val();
-        var type= $('#feedback_type').val();
-        ajax_feedback(feedFs, feedbackName, feedDetails, feedTel,type);
+        var type = $('#feedback_type').val();
+        ajax_feedback(feedFs, feedbackName, feedDetails, feedTel, type);
     })
 
-    $(document).on('open','.popup-feedback', function () {
+    $(document).on('open', '.popup-feedback', function () {
         $('#feedback_details').val("");
     });
 
@@ -325,19 +323,7 @@
         $.alert("敬请期待...");
         return;
     });
-    $(".coupon").on('click', function () {
-        if ($(this).attr("data-value") == "0") {
-            return;
-        }
-        $.prompt('请输入核销码',function (value) {
-                    if ($.trim(value) == "") {
-                        $.alert("核销码值不能为空");
-                        return;
-                    }
-                    ajax_useCoupon(value);
-                }
-        );
-    })
+
     $("#cancelUpdate").on('click', function () {
         $("#pre_avatar").attr("src", $("#avatar").attr("src"));
         $("#avatarFile").val("");
@@ -465,41 +451,19 @@
         $("#c_score").text(jsonArrayContract[index]['积分']);
     }
 
-    function ajax_useCoupon(code) {
-        this.code = code;
 
-        $.ajax({
-            url: '/index/coupon',
-            type: 'POST',
-            data: {'code': this.code},
-//            async: false,
-            contentType: "application/x-www-form-urlencoded",
-            dataType: "json",
-            beforeSend: function () {
-                $.showIndicator();
-            },
-            success: function (data) {
-                if (data.success == true) {
-                    $.toast("使用成功√");
-                    location.reload();
-                } else if (data.success == false) {
-                    $.alert("使用失败," + data.message);
-                }
-            },
-            complete: function () {
-                $.hideIndicator();
-            },
-            error: function (data) {
-                $.alert("异常错误,稍后再试");
-            }
-        });
-    }
 
-    function ajax_feedback(Franchisee, feedbackName, details, contactTel,type) {
+    function ajax_feedback(Franchisee, feedbackName, details, contactTel, type) {
         $.ajax({
             type: "POST",
             url: "/login/feedback",
-            data: {"Franchisee": Franchisee, "name": feedbackName, "details": details, "contactTel": contactTel,"type":type},
+            data: {
+                "Franchisee": Franchisee,
+                "name": feedbackName,
+                "details": details,
+                "contactTel": contactTel,
+                "type": type
+            },
             contentType: "application/x-www-form-urlencoded",
             dataType: "json",
             success: function (data) {

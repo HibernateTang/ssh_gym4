@@ -7,7 +7,9 @@ import com.thelittlegym.mobile.base.model.Page;
 import com.thelittlegym.mobile.dao.impl.ActivityDaoImpl;
 import com.thelittlegym.mobile.entity.Activity;
 import com.thelittlegym.mobile.entity.Admin;
+import com.thelittlegym.mobile.login.service.ILoginService;
 import com.thelittlegym.mobile.service.IAdminService;
+import com.thelittlegym.mobile.user.model.User;
 import net.coobird.thumbnailator.Thumbnails;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -37,6 +39,8 @@ public class AdminCtrl {
     private ActivityDaoImpl activityDao;
     @Autowired
     private IAdminService adminService;
+    @Autowired
+    private ILoginService loginService;
 
     @RequestMapping(value="/login",method = RequestMethod.GET)
     public String adminToLogin(HttpServletRequest request) throws Exception {
@@ -200,6 +204,63 @@ public class AdminCtrl {
 
         activityDao.update(activity);
         return "redirect:/admin";
+    }
+
+    @RequestMapping(value = "/simulation", method = RequestMethod.GET)
+    public String simulation(HttpServletRequest request) throws Exception {
+        HttpSession session = request.getSession();
+        Object sessionObj = session.getAttribute("admin");
+        if (sessionObj == null) {
+            return "/admin/login";
+        }
+        return "/admin/simulation";
+    }
+
+    @RequestMapping(value = "/member", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> member(HttpServletRequest request, String tel)  {
+        HttpSession session = request.getSession();
+        Map<String,Object> returnMap = new HashMap<String,Object>();
+        Map<String,Object> map = null;
+        try {
+            map = loginService.login(tel);
+            Object object = map.get("value");
+            if (object != null) {
+                User user = (User) object;
+                session = request.getSession(true);
+                Object objSession = session.getAttribute("user");
+                //重复登录清空之前session所有attr
+                if ( null != objSession ){
+                    Enumeration<String> em = session.getAttributeNames();
+                    while (em.hasMoreElements()) {
+                        if (!"admin".equals(em.nextElement())){
+                            session.removeAttribute(em.nextElement());
+                        }
+                    }
+                }
+                session.setAttribute("user", user);
+                returnMap.put("success",true);
+                returnMap.put("message","登录成功");
+            }
+        } catch (Exception e) {
+            returnMap.put("success",false);
+            returnMap.put("message","登录异常，请重试");
+        }
+        //获取user实体
+        Object object = map.get("value");
+        if (object != null) {
+            User user = (User) object;
+            Object objSession = session.getAttribute("user");
+
+            session.setAttribute("user", user);
+            returnMap.put("success",true);
+            returnMap.put("message","登录成功");
+            return returnMap;
+        }else {
+            returnMap.put("success",false);
+            returnMap.put("message","该号码未注册");
+            return map;
+        }
     }
 
     @RequestMapping(value = "/activityView", method = RequestMethod.POST)

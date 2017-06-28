@@ -69,4 +69,28 @@ public class LoginServiceImpl implements ILoginService {
             return returnMap;
         }
     }
+
+    @Override
+    public Map<String, Object> login(String username) throws Exception {
+        Map<String,Object> returnMap = new HashMap<String,Object>();
+
+        String hql = "from User u where u.username='"+username+"'";
+        User user = new User();
+        try {
+            user = userDao.findOne(hql);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if(user != null){
+                returnMap.put("value", user);
+                returnMap.put("message", "登录成功");
+                returnMap.put("success", true);
+        }else{
+            returnMap.put("message", "该用户不存在!");
+            returnMap.put("success", false);
+        }
+        return returnMap;
+    }
+
+
 }

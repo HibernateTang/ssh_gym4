@@ -486,3 +486,20 @@
     right: 1rem;
     color: #666;
 }
+
+.card-content-inner>.content-block, .card-content-inner>.list-block {
+    margin: 0 -.75rem -.75rem -.75rem;
+}
+
+.list-icon {
+    text-align: center;
+
+}
+.list-icon img{
+    height: 1.5rem;
+}
+.list-icon-title {
+    text-align: center;
+    font-size: 14px;
+    color: #003399;
+}
