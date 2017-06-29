@@ -1,5 +1,6 @@
 package com.thelittlegym.mobile.service.impl;
 
+import com.thelittlegym.mobile.base.model.Page;
 import com.thelittlegym.mobile.dao.impl.FeedBackDaoImpl;
 import com.thelittlegym.mobile.entity.Feedback;
 import com.thelittlegym.mobile.service.IFeedbackService;
@@ -20,5 +21,18 @@ public class FeedbackService implements IFeedbackService {
     @Override
     public void save(Feedback feedback) throws Exception {
             feedBackDao.save(feedback);
+    }
+
+    @Override
+    public Page<Feedback> getPageList(Integer pageNow ,Integer pageSize) throws Exception {
+        String queryHql =  "from Feedback order by createTime desc";
+        String countHql = "select count(id) from Feedback ";
+        Page<Feedback> page = feedBackDao.findPage(pageNow,pageSize,queryHql,countHql);
+        return page;
+    }
+
+    @Override
+    public Feedback getOne(Integer id) throws Exception {
+        return feedBackDao.getOne(id);
     }
 }

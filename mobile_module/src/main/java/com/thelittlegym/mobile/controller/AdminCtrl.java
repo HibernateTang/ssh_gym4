@@ -4,11 +4,14 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.thelittlegym.mobile.base.model.Page;
+import com.thelittlegym.mobile.dao.IFeedbackDao;
 import com.thelittlegym.mobile.dao.impl.ActivityDaoImpl;
 import com.thelittlegym.mobile.entity.Activity;
 import com.thelittlegym.mobile.entity.Admin;
+import com.thelittlegym.mobile.entity.Feedback;
 import com.thelittlegym.mobile.login.service.ILoginService;
 import com.thelittlegym.mobile.service.IAdminService;
+import com.thelittlegym.mobile.service.IFeedbackService;
 import com.thelittlegym.mobile.user.model.User;
 import net.coobird.thumbnailator.Thumbnails;
 import org.apache.commons.io.FileUtils;
@@ -41,6 +44,8 @@ public class AdminCtrl {
     private IAdminService adminService;
     @Autowired
     private ILoginService loginService;
+    @Autowired
+    private IFeedbackService feedbackService;
 
     @RequestMapping(value="/login",method = RequestMethod.GET)
     public String adminToLogin(HttpServletRequest request) throws Exception {
@@ -280,6 +285,26 @@ public class AdminCtrl {
 
         return jsonArray;
     }
+
+
+    @RequestMapping(value="/feedback",method = RequestMethod.GET)
+    public String feedback(HttpServletRequest request,Model model) throws Exception {
+        HttpSession session = request.getSession();
+        Object sessionObj = session.getAttribute("admin");
+        if (sessionObj == null){
+            return "/admin";
+        }
+        String pageStr = request.getParameter("page");
+        Integer pageNow = 1;
+        Integer pageSize = 20;
+        if (null!=pageStr && pageStr.matches("[0-9]+")){
+            pageNow = Integer.parseInt(pageStr);
+        }
+        Page<Feedback> feedbackPage = feedbackService.getPageList(pageNow,pageSize);
+        model.addAttribute("page",feedbackPage);
+        return "/admin/feedback";
+    }
+
 
     //删除指定文件
     public boolean delFile(String filePath){
