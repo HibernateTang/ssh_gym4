@@ -212,11 +212,15 @@ public class AdminCtrl {
     }
 
     @RequestMapping(value = "/simulation", method = RequestMethod.GET)
-    public String simulation(HttpServletRequest request) throws Exception {
+    public String simulation(HttpServletRequest request,Model model) throws Exception {
         HttpSession session = request.getSession();
         Object sessionObj = session.getAttribute("admin");
         if (sessionObj == null) {
             return "/admin/login";
+        }
+        String tel = request.getParameter("tel");
+        if (null != tel){
+            model.addAttribute("tel",tel);
         }
         return "/admin/simulation";
     }
@@ -276,7 +280,7 @@ public class AdminCtrl {
         Activity activity  = new Activity();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.hh HH:mm:ss");
         activity = activityDao.findOne("from Activity where isDelete = 0 and id= " + id);
-        System.out.println(sdf.format(activity.getBeginDate()));
+        sdf.format(activity.getBeginDate());
         JSONObject jsonObject = (JSONObject)JSON.toJSON(activity);
         jsonObject.put("beginDate",sdf.format(activity.getBeginDate()));
         jsonObject.put("endDate",sdf.format(activity.getEndDate()));
@@ -292,7 +296,7 @@ public class AdminCtrl {
         HttpSession session = request.getSession();
         Object sessionObj = session.getAttribute("admin");
         if (sessionObj == null){
-            return "/admin";
+            return "/admin/login";
         }
         String pageStr = request.getParameter("page");
         Integer pageNow = 1;
@@ -305,6 +309,21 @@ public class AdminCtrl {
         return "/admin/feedback";
     }
 
+    @RequestMapping(value="/feedbackView",method = RequestMethod.POST)
+    @ResponseBody
+    public JSONObject feedbackView(HttpServletRequest request,String id) throws Exception {
+        Integer fid = -1;
+        if (null != id && id.matches("[0-9]+")){
+            fid = Integer.parseInt(id);
+        }
+        Feedback feedback = feedbackService.getOne(fid);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+        String name = "".equals(feedback.getName()) ? "匿名":feedback.getName();
+        JSONObject jsonObject = (JSONObject) JSONObject.toJSON(feedback);
+        jsonObject.put("createTime",sdf.format(feedback.getCreateTime()));
+        jsonObject.put("name",name);
+        return jsonObject;
+    }
 
     //删除指定文件
     public boolean delFile(String filePath){

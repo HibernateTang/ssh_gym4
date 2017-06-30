@@ -57,12 +57,15 @@
             <div class="ui segment">
                 <c:if test="${not empty page.list}">
                     <div class="ui ordered list">
+                        <div class="ui dimmer">
+                            <div class="ui text loader">加载中</div>
+                        </div>
                         <c:forEach items="${page.list}" var="feedback">
                             <div class="item">
                                 <div class="content">
                                     <a href="javascript:;" data-id="${feedback.id}" class="item feedback-details">
                                         <c:choose>
-                                            <c:when test="${feedback.details==''}">无</c:when>
+                                            <c:when test="${fn:trim(feedback.details) =='' }">无</c:when>
                                             <c:otherwise>
                                                 <c:choose>
                                                     <c:when test="${fn:length(feedback.details) > 40}">
@@ -75,7 +78,7 @@
                                             </c:otherwise>
                                         </c:choose>
                                     </a>
-                                    <div class="ui green horizontal label">${feedback.franchisee}</div>
+                                    <div class="ui orange  right tag label">${feedback.type}</div>
                                 </div>
                             </div>
                         </c:forEach>
@@ -86,28 +89,48 @@
     </div>
 </div>
 <!-- modal -->
-<div class="ui modal">
+<div class="ui small modal">
     <i class="close icon"></i>
     <div class="header">
         反馈详情
     </div>
-    <div class="image content">
-        <div class="description">
-            <div class="ui header"></div>
-            <p></p>
-            <p></p>
+    <div class="content">
+        <div class="ui feed">
+            <div class="event">
+                <div class="label">
+                    <img src="/images/member/head.png">
+                </div>
+                <div class="content">
+                    <div class="date">
+                        <i class="volume control phone icon"></i>
+                        <i id="feedback_tel" date-tel="" class="ui violet tiny header"></i>
+                    </div>
+                    <div class="summary">
+                        <a  href="/admin/simulation?tel=" target="_blank"  class="user" id="feedback_name">
+                        </a>
+                        <div class="date">
+                            <span id="feedback_createTime"></span>
+                            <div class="ui label" id="feedback_franchisee"></div>
+                            <div class="ui  label" id="feedback_type"></div>
+                        </div>
+                    </div>
+                    <div class="extra text" id="feedback_details">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="actions">
         <div class="ui black deny button">
-            Nope
+            关闭
         </div>
         <div class="ui positive right labeled icon button">
-            Yep, that's me
+            标记为已处理
             <i class="checkmark icon"></i>
         </div>
     </div>
 </div>
+
 <script type='text/javascript' src='/js/jquery-1.11.3.min.js' charset='utf-8'></script>
 <script type='text/javascript' src='/ui/semantic/semantic.min.js' charset='utf-8'></script>
 <script>
@@ -115,40 +138,64 @@
         $(".ui.sidebar").sidebar('toggle');
     })
 
-    $(".feedback-details").on('click',function () {
+    $(".feedback-details").on('click', function () {
         var that = $(this);
         var id = that.data('id');
+        inFeedback(id);
         $('.ui.modal').modal('show');
     })
 
-    function inFeedback(id){
+    function inFeedback(id) {
         $.ajax({
-            type:'POST',
-            url:'/admin/feedbackView',
-            data:{
-                'id':id
+            type: 'POST',
+            url: '/admin/feedbackView',
+            data: {
+                'id': id
             },
-            contentType:"application/x-www-form-urlencoded",
+            async: false,
+            contentType: "application/x-www-form-urlencoded",
             dataType: "json",
+            beforeSend:function () {
+            },
             success: function (data) {
-                if (data != null){
-                    var activity = data[0];
-                    $("#modal_name").text(activity.name);
-                    $("#modal_bannerSrc").attr("src",activity.bannerSrc);
-                    $("#modal_detail").text(activity.detail);
-                    var modal_date = activity.beginDate + " ~ " + activity.endDate;
-                    $("#modal_date").text(modal_date);
-                    var modal_more = "";
-                    modal_more += '<div class="item" ><div class="header">活动类别</div>' + activity.type + '</div>' ;
-                    modal_more += '<div class="item" ><div class="header">活动收费类型</div>' + activity.chargeType + '</div>' ;
-                    modal_more += '<div class="item" ><div class="header">活动人群</div>' + activity.crowd + '</div>' ;
-                    modal_more += '<div class="item" ><div class="header">运动强度</div>' + activity.strength + '</div>' ;
-                    $("#modal_more").html(modal_more);
-                    var href = $("#modal_edit").attr("href") + id;
-                    $("#modal_edit").attr("href",href);
-                    $('.ui.modal').modal('show');
+                if (data != null) {
+                    var feedback = data;
+                    $("#feedback_tel").text(feedback.contactTel);
+                    $("#feedback_tel").data('tel',feedback.contactTel);
+                    $("#feedback_name").text(feedback.name);
+                    $("#feedback_name").attr("href",'/admin/simulation?tel=' + feedback.contactTel) ;
+                    $("#feedback_type").text(feedback.type);
+                    $("#feedback_contractTel").text(feedback.contractTel);
+                    $("#feedback_createTime").text(feedback.createTime);
+                    $("#feedback_franchisee").text(feedback.franchisee);
+                    $("#feedback_details").text(feedback.details);
                 }
             },
+            complete:function () {
+            },
+            error:function () {
+            }
+        })
+    }
+
+    function ajax_admin_member(tel) {
+        $.ajax({
+            type: "POST",
+            url: "/admin/member",
+            data: {
+                "tel": tel
+            },
+            contentType: "application/x-www-form-urlencoded",
+            dataType: "json",
+            success: function (data) {
+                if (data.success == true) {
+                    location.href = "/index";
+                } else {
+                    var errmessage = '<ul><li>' + data.message + '</li></ul>'
+                    $(".ui.error.message").html(errmessage);
+                    $(".ui.error.message").fadeIn();
+                }
+            }
         })
     }
 </script>

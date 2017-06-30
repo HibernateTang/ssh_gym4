@@ -29,7 +29,7 @@
             <div class="ui breadcrumb">
                 <a class="section" id="menu">Home</a>
                 <i class="right angle icon divider"></i>
-                <div class="active section">活动</div>
+                <div class="active section">会员登录</div>
             </div>
         </div>
     </div>
@@ -38,7 +38,7 @@
             <div class="ui segment">
                 <div class="ui form">
                     <div class="ui action input">
-                        <input id="tel" name="tel" type="text" placeholder="输入会员手机号">
+                        <input id="tel" name="tel" value="${requestScope.tel}" type="text" placeholder="输入会员手机号">
                         <button id = "enter" class="ui teal right labeled icon button">
                             <i class="hand pointer icon"></i>
                             以该会员身份进入
