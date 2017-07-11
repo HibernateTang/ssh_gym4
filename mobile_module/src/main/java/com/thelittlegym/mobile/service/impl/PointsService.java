@@ -74,7 +74,7 @@ public class PointsService implements IPointsService {
                 pointsDao.update(p);
                 addPoints = Math.abs(http_num - g_points);
                 //TODO 增加积分
-                oasisService.addPoints(idjt.toString(),addPoints,zx);
+                boolean isUpdate = oasisService.addPoints(idjt.toString(),addPoints,zx);
                 returnMap.put("success", true);
                 returnMap.put("value", p);
                 returnMap.put("message", "积分更新");

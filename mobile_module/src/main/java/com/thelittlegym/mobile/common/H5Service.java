@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 /**
  * Created by hibernate on 2017/6/21.
@@ -19,7 +20,7 @@ public class H5Service {
     }
 
     public JSONArray getByType(String tel,String type) throws Exception{
-        String result = getResult(URL + tel);
+        String result = getResult(StringUtils.trimWhitespace(URL + tel));
         JSONArray returnArr = new JSONArray();
         JSONObject jsonObject = JSONObject.parseObject(result);
         if("1".equals(jsonObject.getString("resCode"))){
