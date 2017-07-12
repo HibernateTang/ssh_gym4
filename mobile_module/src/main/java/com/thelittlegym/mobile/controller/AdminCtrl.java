@@ -325,6 +325,12 @@ public class AdminCtrl {
         return jsonObject;
     }
 
+    @RequestMapping(value="/exit",method = RequestMethod.GET)
+    public String exit(HttpServletRequest request,String id) throws Exception {
+        HttpSession session = request.getSession();
+        session.invalidate();
+        return "/login";
+    }
     //删除指定文件
     public boolean delFile(String filePath){
         boolean flag = false;

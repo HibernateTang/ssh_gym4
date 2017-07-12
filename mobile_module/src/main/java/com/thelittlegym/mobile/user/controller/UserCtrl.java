@@ -52,9 +52,10 @@ public class UserCtrl {
         InTesting it = new InTesting();
         boolean ittest = it.isTrue(request);
         Object objSession = session.getAttribute("user");
+        Object adminSession = session.getAttribute("admin");
         User user;
 
-        if(!ittest) {
+        if(!ittest && null != adminSession) {
             String linkId = request.getParameter("linkId");
             if (null != linkId && "1225".equals(linkId)) {
                 session.setAttribute("hide", System.currentTimeMillis() / 1000);

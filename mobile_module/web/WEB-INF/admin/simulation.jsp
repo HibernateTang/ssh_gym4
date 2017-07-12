@@ -53,6 +53,9 @@
 <script type='text/javascript' src='/js/jquery-1.11.3.min.js' charset='utf-8'></script>
 <script type='text/javascript' src='/ui/semantic/semantic.min.js' charset='utf-8'></script>
 <script>
+    $("#menu").on('click', function () {
+        $(".ui.sidebar").sidebar('toggle');
+    })
     $('#enter').on('click', function () {
         var tel = $('#tel').val();
         if (/^1[34578]\d{9}$/.test($.trim(tel))) {

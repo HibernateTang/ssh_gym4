@@ -16,4 +16,6 @@
     <a class="item">课程亮点</a>
     <a href="/admin/simulation" class="item">会员登录</a>
     <a href="/admin/feedback" class="item">会员反馈</a>
+    <a href="/admin/exit" class="item">退出</a>
+
 </div>

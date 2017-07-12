@@ -135,6 +135,7 @@
 <script type='text/javascript' src='/ui/semantic/semantic.min.js' charset='utf-8'></script>
 <script>
     $("#menu").on('click', function () {
+//        $(".ui.sidebar").sidebar('setting', 'transition', 'overlay');
         $(".ui.sidebar").sidebar('toggle');
     })
 
