@@ -21,6 +21,31 @@
     <link rel="stylesheet" href="/css/sm.min.css">
     <link rel="stylesheet" href="/css/gym.css">
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+    <style>
+        /* 阿里巴巴 矢量图引用*/
+        @font-face {
+            font-family: 'iconfont';  /* project id 260152 */
+            src: url('//at.alicdn.com/t/font_onv8iq82tziod2t9.eot');
+            src: url('//at.alicdn.com/t/font_onv8iq82tziod2t9.eot?#iefix') format('embedded-opentype'),
+            url('//at.alicdn.com/t/font_onv8iq82tziod2t9.woff') format('woff'),
+            url('//at.alicdn.com/t/font_onv8iq82tziod2t9.ttf') format('truetype'),
+            url('//at.alicdn.com/t/font_onv8iq82tziod2t9.svg#iconfont') format('svg');
+        }
+        .iconfont{
+            font-family:"iconfont" !important;
+            font-size:1.5rem;font-style:normal;
+            line-height: 1.5rem;
+            -webkit-font-smoothing: antialiased;
+            -webkit-text-stroke-width: 0.2px;
+            -moz-osx-font-smoothing: grayscale;}
+        .iconfont:active{
+            color:#000099;
+            -webkit-transition-duration: 0ms;
+            transition-duration: 0ms;
+            opacity: 0.6;
+            }
+
+    </style>
 </head>
 
 <body>
@@ -54,80 +79,83 @@
                     <div class="card-content-inner" id="contract" data-value="0">
                         <div class="row">
                             <div class="col-33 ">
-                                <div class="list-icon"><a class="external" href="/coupon"><img
-                                        src="/images/member/icons/coupon.png"></a></div>
-                                <div class="list-icon-title">我的优惠券</div>
+                                <div class="list-icon"><a class="external" href="/coupon"><i class="iconfont">&#xe665;</i>
+                                    <div class="list-icon-title">我的优惠券</div>
+                                </a>
+                                </div>
+
                             </div>
                             <div class="col-33 ">
-                                <div class="list-icon"><a id="view" href="javascript:;"><img
-                                        src="/images/member/icons/contract.png"></a></div>
-                                <div class="list-icon-title">我的所有合同</div>
+                                <div class="list-icon"><a id="view" href="javascript:;"><i class="iconfont">&#xe60a;</i>
+                                    <div class="list-icon-title">我的所有合同</div>
+                                </a></div>
+
                             </div>
                             <div class="col-33 ">
-                                <div class="list-icon"><a class="external activity" > <img
-                                        src="/images/member/icons/activity.png"></a></div>
-                                <div class="list-icon-title">活动中心</div>
+                                <div class="list-icon"><a class="external activity" > <i class="iconfont">&#xe6c5;</i>
+                                    <div class="list-icon-title">活动中心</div>
+                                </a></div>
+
                             </div>
                         </div>
                         <c:choose>
                             <c:when test="${not empty listContract}">
+                                <div class="row row-box-9 f">
+                                    <div class="col-33">
+                                        <label  id="c_regDate">${listContract[0]['报名日期']}</label>
+                                        <div>报名日期</div>
+                                    </div>
+                                    <div class="col-33 c">
+                                        <label id="c_regPeriods">${listContract[0]['报名课时数']}节 </label>
+                                        <div >报名课时数</div>
+                                    </div>
+                                    <div class="col-33">
+                                        <label id="c_validity">${listContract[0]['有效期']}</label>
+                                        <div>有效期</div>
+                                    </div>
+                                </div>
+                                <div class="row row-box-9">
+                                    <div class="col-33">
+                                        <label
+                                                id="c_residuePeriods">${listContract[0]['剩余课时数']}节</label>
+                                        <div>剩余课时数</div>
+                                    </div>
+                                    <div class="col-33 c">
+                                        <label id="c_totalLeave">${listContract[0]['累计请假数']}节</label>
+                                        <div >累计请假数</div>
+                                    </div>
+                                    <div class="col-33">
+                                        <label id="c_class">
+                                            <c:choose>
+                                            <c:when test="${listContract[0]['课程'] == ''}">无</c:when>
+                                            <c:otherwise>
+                                                ${listContract[0]['课程']}
+                                            </c:otherwise>
+                                        </c:choose>
+                                        </label>
+                                        <div>班级</div>
+                                    </div>
+                                </div>
+                                <div class="row  row-box-9">
+                                    <div class="col-33">
+                                        <label id="c_give">
+                                            <c:choose>
+                                                <c:when test="${listContract[0]['赠课'] == ''}">无</c:when>
+                                                <c:otherwise>
+                                                    ${listContract[0]['赠课']}
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </label>
+                                        <div>赠课</div>
+                                    </div>
+                                    <div class="col-33 c">
+                                        <label id="c_score">${listContract[0]['积分']}</label>
+                                        <div >积分</div>
+                                    </div>
+
+                                </div>
                                 <div class="list-block gym-list">
                                     <ul>
-                                        <li class="item-content">
-                                            <div class="item-inner">
-                                                <div class="item-title">报名日期：<label
-                                                        id="c_regDate">${listContract[0]['报名日期']}</label></div>
-                                            </div>
-                                            <div class="item-inner">
-                                                <div class="item-title">有效期：<label
-                                                        id="c_validity">${listContract[0]['有效期']}</label></div>
-                                            </div>
-                                        </li>
-                                        <li class="item-content">
-                                            <div class="item-inner">
-                                                <div class="item-title">剩余课时数：<label
-                                                        id="c_residuePeriods">${listContract[0]['剩余课时数']}</label>节
-                                                </div>
-                                            </div>
-                                            <div class="item-inner">
-                                                <div class="item-title">报名课时数：<label
-                                                        id="c_regPeriods">${listContract[0]['报名课时数']}</label>节
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="item-content">
-                                            <div class="item-inner">
-                                                <div class="item-title">累计请假：<label
-                                                        id="c_totalLeave">${listContract[0]['累计请假数']}</label>节
-                                                </div>
-                                            </div>
-                                            <%--<div class="item-inner">--%>
-                                                <%--<div class="item-title">报名金额：<label--%>
-                                                        <%--id="c_regSum">${listContract[0]['合同金额']}</label></div>--%>
-                                            <%--</div>--%>
-                                            <div class="item-inner">
-                                                <div class="item-title">班级：<label
-                                                        id="c_class">${listContract[0]['课程']}</label></div>
-                                            </div>
-                                        </li>
-                                        <li class="item-content">
-
-                                            <div class="item-inner">
-                                                <div class="item-title">赠课：<label
-                                                        id="c_give">${listContract[0]['赠课']}</label></div>
-                                            </div>
-                                            <div class="item-inner">
-                                                <div class="item-title">积分：<label
-                                                        id="c_score">${listContract[0]['积分']}</label></div>
-                                            </div>
-                                        </li>
-                                        <%--<li class="item-content">--%>
-                                            <%--<div class="item-inner">--%>
-                                                <%--<a id="view" class="item-title">所有合同&nbsp;<i--%>
-                                                        <%--class="fa fa-angle-double-right"--%>
-                                                        <%--aria-hidden="true"></i></a>--%>
-                                            <%--</div>--%>
-                                        <%--</li>--%>
                                         <!-- 反馈 -->
                                         <li class="item-content  open-popup" data-popup=".popup-feedback">
                                             <div class="item-media">

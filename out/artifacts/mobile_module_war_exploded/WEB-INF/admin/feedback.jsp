@@ -38,18 +38,18 @@
         <div class="ui segments">
             <div class="ui segment">
                 <div class="ui two column stackable grid">
-                    <div class="column right aligned">
-                        <a href="" class="ui primary button">查询</a>
+                    <div class="column left aligned">
+                        <a href="" class="ui primary button">查询已处理反馈</a>
                     </div>
                 </div>
             </div>
             <div class="ui segment right aligned">
                 <div class="ui buttons">
-                    <a href="/admin?page=${page.current-1}"
+                    <a href="/admin/feedback?page=${page.current-1}"
                        class="ui <c:if test="${page.current<= 1}">disabled</c:if> left labeled icon button"><i
                             class="left arrow icon"></i> 上一页 </a>
                     <a class="ui blue active button"></i> ${page.current}</a>
-                    <a href="/admin?page=${page.current+1}"
+                    <a href="/admin/feedback?page=${page.current+1}"
                        class="ui <c:if test="${page.current+1> page.total}">disabled</c:if> right labeled icon button"><i
                             class="right arrow icon"></i> 下一页 </a>
                 </div>
@@ -124,7 +124,7 @@
         <div class="ui black deny button">
             关闭
         </div>
-        <div class="ui positive right labeled icon button">
+        <div id="sign" data-id="" class="ui positive right labeled icon button">
             标记为已处理
             <i class="checkmark icon"></i>
         </div>
@@ -144,6 +144,12 @@
         var id = that.data('id');
         inFeedback(id);
         $('.ui.modal').modal('show');
+    })
+
+    $("#sign").on('click',function () {
+        var id = $(this).data('id');
+        alert(id);
+        ajax_signed(id)
     })
 
     function inFeedback(id) {
@@ -170,6 +176,7 @@
                     $("#feedback_createTime").text(feedback.createTime);
                     $("#feedback_franchisee").text(feedback.franchisee);
                     $("#feedback_details").text(feedback.details);
+                    $("#sign").data('id',feedback.id +'');
                 }
             },
             complete:function () {
@@ -196,6 +203,28 @@
                     $(".ui.error.message").html(errmessage);
                     $(".ui.error.message").fadeIn();
                 }
+            }
+        })
+    }
+
+    function ajax_signed(id) {
+        $.ajax({
+            type: "POST",
+            url: "/admin/sign",
+            data: {
+                "id": id
+            },
+            contentType: "application/x-www-form-urlencoded",
+            dataType: "json",
+            success: function (data) {
+                if(data.success == true){
+                    location.reload();
+                }else{
+                    alert("标记失败，请重试");
+                }
+            },
+            error:function () {
+                alert("异常错误，请重试");
             }
         })
     }

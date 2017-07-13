@@ -16,4 +16,6 @@ public interface IFeedbackService {
     public Page<Feedback> getPageList(Integer pageNow ,Integer pageSize) throws Exception;
 
     public Feedback getOne(Integer id) throws  Exception;
+
+    public void hand(Integer id)throws Exception;
 }

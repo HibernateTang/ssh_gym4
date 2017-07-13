@@ -8,6 +8,7 @@ import com.thelittlegym.mobile.user.dao.impl.UserDaoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -25,8 +26,8 @@ public class FeedbackService implements IFeedbackService {
 
     @Override
     public Page<Feedback> getPageList(Integer pageNow ,Integer pageSize) throws Exception {
-        String queryHql =  "from Feedback order by createTime desc";
-        String countHql = "select count(id) from Feedback ";
+        String queryHql =  "from Feedback where IFNULL(handled,0) != 1  order by createTime desc";
+        String countHql = "select count(id) from Feedback where IFNULL(handled,0) != 1 ";
         Page<Feedback> page = feedBackDao.findPage(pageNow,pageSize,queryHql,countHql);
         return page;
     }
@@ -34,5 +35,15 @@ public class FeedbackService implements IFeedbackService {
     @Override
     public Feedback getOne(Integer id) throws Exception {
         return feedBackDao.getOne(id);
+    }
+
+    @Override
+    public void hand(Integer id) throws Exception {
+        Feedback feedback = feedBackDao.getOne(id);
+        if (feedback != null){
+            feedback.setHandled(true);
+            feedback.setHandledTime(new Date());
+            feedBackDao.update(feedback);
+        }
     }
 }

@@ -1,10 +1,10 @@
 /** {*/
-    /*-webkit-touch-callout: none;*/
-    /*-webkit-user-select: none;*/
-    /*-khtml-user-select: none;*/
-    /*-moz-user-select: none;*/
-    /*-ms-user-select: none;*/
-    /*user-select: none;*/
+/*-webkit-touch-callout: none;*/
+/*-webkit-user-select: none;*/
+/*-khtml-user-select: none;*/
+/*-moz-user-select: none;*/
+/*-ms-user-select: none;*/
+/*user-select: none;*/
 /*}*/
 
 .card-backinfo {
@@ -14,9 +14,9 @@
 }
 
 /*.card-backinfo:active {*/
-    /*-webkit-transition-duration: 0ms;*/
-    /*transition-duration: 0ms;*/
-    /*opacity: 0.6;*/
+/*-webkit-transition-duration: 0ms;*/
+/*transition-duration: 0ms;*/
+/*opacity: 0.6;*/
 /*}*/
 
 .gym-icon-list p {
@@ -70,11 +70,13 @@
     color: #fff;
     font-weight: 500;
 }
+
 .gym-card-share {
     background: url('/images/member/share_banner.jpg');
     color: #fff;
     font-weight: 500;
 }
+
 .gym-banner-title {
     margin-left: -30px;
     font-family: "幼圆", "Micsoft YaHei";
@@ -84,9 +86,11 @@
     width: 100%;
     text-shadow: 0px 2px 10px rgba(34, 36, 38, 0.2);
 }
+
 .gym-banner-left {
     /*position: absolute;*/
 }
+
 .gym-card-bg {
 
 }
@@ -103,27 +107,32 @@
 .header-text {
     display: table;
     padding-left: 1.75rem;;
-    background-color: rgba(82,97,172,0.4);
+    background-color: rgba(82, 97, 172, 0.4);
     border-radius: 5px;
     padding-left: .35rem;
     padding-right: .35rem;
 }
+
 .header-text:active {
     -webkit-transition-duration: 0ms;
     transition-duration: 0ms;
     opacity: .6;
 }
+
 .header-text .header-p, .header-text .header-row-right {
     display: table-cell;
     vertical-align: middle;
 }
+
 .header-text .header-row-right {
     padding-left: .5rem;
 }
-.header-p{
+
+.header-p {
     padding-left: .35rem;
     padding-right: .35rem;
 }
+
 .header-text p {
     font-size: 13px;
     color: #eeeeee;
@@ -131,11 +140,11 @@
     margin: .25rem;
 }
 
-
 .header-img {
     text-align: center;
 }
-.header-img img{
+
+.header-img img {
     width: 85px;
     height: 85px;
     border-radius: 50%;
@@ -175,7 +184,7 @@
     position: absolute;
     width: 100%;
     overflow: hidden;
-    left:0;
+    left: 0;
     top: 0;
     height: 1rem;
 
@@ -183,7 +192,7 @@
     text-align: left;
     font-size: 12px;
     vertical-align: top;
-    background-color: rgba(82,97,172,.6);
+    background-color: rgba(82, 97, 172, .6);
     padding: .1rem;
 }
 
@@ -233,6 +242,31 @@
     border-right: 1px #f2f2f2 solid;
 }
 
+.row-box-9.row {
+    text-align: center;
+    border-bottom: 1px #eeeeee solid;
+}
+
+.row-box-9.row .col-33 {
+    text-align: center;
+    padding-top: .3rem;
+    padding-bottom: .3rem;
+}
+
+.row-box-9.row label {
+    padding-top: .5rem;
+    color: #6699FF;
+}
+
+.row-box-9.row.f {
+    border-top: 1px #eeeeee solid;
+}
+
+.row-box-9 > .c {
+    border-left: 1px #f2f2f2 solid;
+    border-right: 1px #f2f2f2 solid;
+}
+
 .gym-myinfo a {
     color: #999;
 }
@@ -240,11 +274,13 @@
 .gym-myinfo a:active {
     color: #fff;
 }
+
 .gym-myinfo {
     background: url('/images/member/myinfo-banner.jpg') no-repeat;
     background-size: 100% 100%;
     min-height: 6.5rem;
 }
+
 .gym-myinfo .gym-myinfo-title {
     /*font-family: 'Microsoft Yahei';*/
     font-size: 2.2rem;
@@ -265,29 +301,34 @@
     box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.15) inset, 0px 1px 4px 0px rgba(34, 36, 38, 0.15) inset;
     opacity: .8;
 }
+
 .gym-month-activity-title {
     color: #d2d2d2;
     font-size: 1.3rem;
 }
+
 /*.facebook-card .card-header {*/
-    /*display: flex;*/
-    /*-webkit-justify-content: flex-start;*/
-    /*justify-content: flex-start;*/
+/*display: flex;*/
+/*-webkit-justify-content: flex-start;*/
+/*justify-content: flex-start;*/
 /*}*/
 
 .gym-list {
     font-size: 0.65rem;
 }
-.gym-list li.item-content{
+
+.gym-list li.item-content {
     padding-top: 0;
-    padding-bottom:0 ;
+    padding-bottom: 0;
     min-height: 1.75rem;
 }
-.gym-list li.item-content .item-inner{
+
+.gym-list li.item-content .item-inner {
     padding-top: 0;
-    padding-bottom:0 ;
+    padding-bottom: 0;
     min-height: 1.75rem;
 }
+
 .facebook-avatar img {
     float: left;
     width: 72px;
@@ -300,18 +341,20 @@
 .gym-myinfo-info {
     display: inline-block;
 }
+
 .gym-exist {
 
 }
+
 .avatar-name {
     margin: .6rem 0 .1rem 0;
     font-size: .75rem;
 }
+
 .avatar-detail {
     margin: 0;
     font-size: .5rem;
 }
-
 
 .file input {
     position: absolute;
@@ -384,16 +427,19 @@
 .card-inner-text {
     padding: 7.5rem;
 }
+
 .vjs-poster {
     background-size: 100% 100%;
 }
 
 .share-img img {
-    width:80px;
+    width: 80px;
 }
-.share-avatar{
+
+.share-avatar {
     margin-top: 0;
 }
+
 .share-avatar img {
     float: left;
     width: 54px;
@@ -402,25 +448,30 @@
     border: 2px solid #fff;
     margin-right: 12px;
 }
+
 .gym-share-info {
     display: inline-block;
     overflow: hidden;
 }
+
 .share-name {
     margin: .2rem 0 .1rem 0;
     font-size: .75rem;
 }
+
 .share-detail {
     margin: 0;
     font-size: .5rem;
 }
+
 .share-main {
     /*width:5rem;*/
     /*height: 5rem;*/
     /*border: 3px solid #330099;*/
     /*border-radius: 50%;*/
-    background:url(/images/member/share_circle_purple.png) 100% 100% no-repeat;
+    background: url(/images/member/share_circle_purple.png) 100% 100% no-repeat;
 }
+
 .justify {
     min-height: 2.2rem;
     position: relative;
@@ -435,40 +486,43 @@
     -webkit-align-items: center;
     align-items: center;
 }
+
 .share-circle-big {
     line-height: 32px;
     text-align: center;
     padding: 1.5rem .5rem 1.75rem .5rem;
     font-size: 20px;
     background: url("/images/member/share_circle_purple.png") no-repeat;
-    background-size:7rem;
+    background-size: 7rem;
     width: 7rem;
     height: 7rem;
     /*border:5px solid #3300CC;*/
     /*border-radius: 50%;*/
 }
+
 .share-circle {
     line-height: 22px;
     text-align: center;
     padding: 1.5rem .5rem 1.75rem .5rem;
     font-size: 10px;
     background: url("/images/member/share_circle_blue.png") no-repeat;
-    background-size:5.5rem;
+    background-size: 5.5rem;
     width: 5.5rem;
     height: 5.5rem;
     /*border:4px solid #33CCCC;*/
     /*border-radius: 50%;*/
 }
+
 .text-right {
     text-align: right;
 }
 
-.no-coupon img{
-    width:100px;
+.no-coupon img {
+    width: 100px;
 }
 
-.coupon img{
-    width:100%;
+.coupon img {
+    width: 100%;
 }
 
 .fixed-button {
@@ -487,19 +541,25 @@
     color: #666;
 }
 
-.card-content-inner>.content-block, .card-content-inner>.list-block {
+.card-content-inner > .content-block, .card-content-inner > .list-block {
     margin: 0 -.75rem -.75rem -.75rem;
 }
 
 .list-icon {
     text-align: center;
-
+    margin-bottom: .4rem;
 }
-.list-icon img{
+
+.list-icon img {
     height: 1.5rem;
 }
+
+.list-icon .icon {
+    height: 1.5rem;
+}
+
 .list-icon-title {
     text-align: center;
     font-size: 14px;
-    color: #003399;
+    /*color: #003399;*/
 }

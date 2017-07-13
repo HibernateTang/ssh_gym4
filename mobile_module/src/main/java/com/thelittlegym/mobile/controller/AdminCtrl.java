@@ -242,8 +242,9 @@ public class AdminCtrl {
                 if ( null != objSession ){
                     Enumeration<String> em = session.getAttributeNames();
                     while (em.hasMoreElements()) {
-                        if (!"admin".equals(em.nextElement())){
-                            session.removeAttribute(em.nextElement());
+                        String removeAttr = em.nextElement();
+                        if(!"admin".equals(removeAttr)){
+                            session.removeAttribute(removeAttr);
                         }
                     }
                 }
@@ -325,11 +326,26 @@ public class AdminCtrl {
         return jsonObject;
     }
 
+    @RequestMapping(value="/sign",method = RequestMethod.POST)
+    @ResponseBody
+    public JSONObject sign(HttpServletRequest request,String id) throws Exception {
+        Integer fid = -1;
+        JSONObject jsonObject = new JSONObject();
+        if (null != id && id.matches("[0-9]+")){
+            fid = Integer.parseInt(id);
+            feedbackService.hand(fid);
+            jsonObject.put("success",true);
+        }else{
+            jsonObject.put("success",false);
+        }
+        return jsonObject;
+    }
+
     @RequestMapping(value="/exit",method = RequestMethod.GET)
     public String exit(HttpServletRequest request,String id) throws Exception {
         HttpSession session = request.getSession();
         session.invalidate();
-        return "/login";
+        return "redirect:/admin";
     }
     //删除指定文件
     public boolean delFile(String filePath){

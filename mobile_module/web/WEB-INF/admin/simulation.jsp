@@ -37,9 +37,9 @@
         <div class="ui segments">
             <div class="ui segment">
                 <div class="ui form">
-                    <div class="ui action input">
+                    <div class="ui fluid action input">
                         <input id="tel" name="tel" value="${requestScope.tel}" type="text" placeholder="输入会员手机号">
-                        <button id = "enter" class="ui teal right labeled icon button">
+                        <button id = "enter" class="ui teal small right labeled icon button">
                             <i class="hand pointer icon"></i>
                             以该会员身份进入
                         </button>

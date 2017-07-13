@@ -33,7 +33,7 @@
                 <div class="card-content">
                     <div class="card-content-inner">
                         <c:choose>
-                            <c:when test="${not empty coupon}">
+                            <c:when test="${not empty coupon && coupon.success == true}">
                                 <div class="coupon-box">
                                     <c:choose>
                                         <c:when test="${coupon['value']['used']==false}">
