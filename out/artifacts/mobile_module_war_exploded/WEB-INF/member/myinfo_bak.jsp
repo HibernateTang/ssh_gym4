@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,7 +40,7 @@
                 <div class="card-header">
                     <div class="facebook-avatar">
                         <a class="open-avatar" data-popup="popup popup-avatar">
-                            <img id="avatar" src="${sessionScope.user.head_src}"
+                            <img id="avatar" src="${fn:toLowerCase(sessionScope.user.head_src)}"
                                  onerror="this.src='/images/member/head.png'"/>
                         </a>
                         <div class="gym-myinfo-info">

@@ -1,6 +1,7 @@
 package com.thelittlegym.mobile.common;
 
 import com.sun.xml.internal.bind.v2.runtime.output.SAXOutput;
+import com.thelittlegym.mobile.utils.weixin.entity.JsApiTicket;
 import com.thelittlegym.mobile.utils.weixin.main.Sign;
 import com.thelittlegym.mobile.utils.weixin.utils.WeixinUtil;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ import java.util.Map;
 @Service
 public class WeixinService {
     //缓存签名
-    private static Map<String,String> signatureMap = new HashMap<String, String>();
+    private static Map<String, String> signatureMap = new HashMap<String, String>();
     private static final long Expiresin = 7000L;
 //    public Map<String,String>  getSign() {
 //        Sign sign = new Sign();
@@ -29,24 +30,30 @@ public class WeixinService {
 //        return ret;
 //    }
 
-    public static   Map<String,String> getSignature(String url){
+    public static Map<String, String> getSignature(String url) {
         String signature = signatureMap.get("signature");
-        if( signature != null && !"".equals(signature)){
+        if (signature != null && !"".equals(signature)) {
             //获取签名的时间戳
             String signTimeStamp = signatureMap.get("timestamp");
             Long nowTime = System.currentTimeMillis() / 1000;
 
-            if(nowTime - Long.parseLong(signTimeStamp) <= Expiresin){
+            if (nowTime - Long.parseLong(signTimeStamp) <= Expiresin) {
                 return signatureMap;
-            }else{
+            } else {
                 String jsapi_ticket = WeixinUtil.getJsApiTicket().getTicket();
                 Sign sign = new Sign();
-                signatureMap = sign.sign(jsapi_ticket,url);
+                signatureMap = sign.sign(jsapi_ticket, url);
             }
-        }else{
-            String jsapi_ticket = WeixinUtil.getJsApiTicket().getTicket();
-            Sign sign = new Sign();
-            signatureMap = sign.sign(jsapi_ticket,url);
+        } else {
+            JsApiTicket jsApiTicket = WeixinUtil.getJsApiTicket();
+            if (null != jsApiTicket){
+                String jsapi_ticket = jsApiTicket.getTicket();
+                Sign sign = new Sign();
+                signatureMap = sign.sign(jsapi_ticket, url);
+            }else{
+                return null;
+            }
+
         }
 //        for (Map.Entry entry : signatureMap.entrySet()) {
 //            System.out.println(entry.getKey() + ", " + entry.getValue());

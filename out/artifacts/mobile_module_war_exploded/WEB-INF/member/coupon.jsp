@@ -66,18 +66,19 @@
         </div>
     </div>
 </div>
-<div class="popup popup-coupon-rule">
+<%--<div class="popup popup-coupon-rule">--%>
 
-    <div class="content">
-        <h1 class="title">活动规则</h1>
-        <div class="content-block">
-            <p>1、获得优惠券之日起，有限期为一年，用于会员本人续报课程</p>
-            <p>2、此券不与其他优惠共享</p>
-            <p>3、不支持兑换现金</p>
-            <p><a href="javascript:;" class="close-popup">关闭</a></p>
-        </div>
-    </div>
-</div>
+    <%--<div class="content">--%>
+        <%--<h1 class="title">活动规则</h1>--%>
+        <%--<div class="content-block">--%>
+            <%--<p>1、获得优惠券之日起，有限期为一年，用于会员本人续报课程</p>--%>
+            <%--<p>2、此券不与其他优惠共享</p>--%>
+            <%--<p>3、不支持兑换现金</p>--%>
+            <%--<p><a href="javascript:;" class="close-popup">关闭</a></p>--%>
+        <%--</div>--%>
+    <%--</div>--%>
+<%--</div>--%>
+
 <script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
 <script type='text/javascript' src='/js/sm.min.js' charset='utf-8'></script>
 <script>
@@ -124,6 +125,19 @@
             }
         });
     }
+
+    $(".coupon-rule").on('click', function () {
+        $.modal({
+            title:  '<h1 class="title">活动规则</h1>',
+            text: '<div class="content-block"><p class="coupon-rule-detail">1、获得优惠券之日起，有限期为一年，用于会员本人续报课程</p>'+
+        '<p class="coupon-rule-detail">2、此券不与其他优惠共享</p><p class="coupon-rule-detail">3、不支持兑换现金</p> </div>',
+            buttons: [
+                {
+                    text: '我知道了',
+                }
+            ]
+        })
+    });
     $.init();
 </script>
 </body>

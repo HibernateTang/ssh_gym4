@@ -125,9 +125,12 @@ public class WeixinUtil {
         JsApiTicket jsApiTicket = null;
         //获取token
 
-        AccessToken acess_token= getAccessToken(APPID,APPSECRET);
-        log.info("acess_token：" + acess_token.getToken());
-        String requestUrl = ticket_url.replace("ACCESS_TOKEN", acess_token.getToken());
+        AccessToken access_token= getAccessToken(APPID,APPSECRET);
+      
+        if (null == access_token){
+            return null;
+        }
+        String requestUrl = ticket_url.replace("ACCESS_TOKEN", access_token.getToken());
         JSONObject jsonObject = WeixinUtil.httpRequest(requestUrl, "GET", null);
         // 如果请求成功
         if (null != jsonObject) {
@@ -136,7 +139,7 @@ public class WeixinUtil {
                 jsApiTicket.setTicket(jsonObject.getString("ticket"));
                 jsApiTicket.setExpiresIn(jsonObject.getInt("expires_in"));
             } catch (JSONException e) {
-                acess_token = null;
+                access_token = null;
                 // 获取jsApiTicket失败
                 log.error("获取jsApiTicket失败 errcode:{} errmsg:{}", jsonObject.getInt("errcode"), jsonObject.getString("errmsg"));
             }

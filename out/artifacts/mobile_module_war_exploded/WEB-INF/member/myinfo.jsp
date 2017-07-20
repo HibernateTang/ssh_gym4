@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -64,7 +65,7 @@
                 <div class="card-header">
                     <div class="facebook-avatar">
                         <a class="open-avatar" data-popup="popup popup-avatar">
-                            <img id="avatar" src="${sessionScope.user.head_src}"
+                            <img id="avatar" src="${fn:toLowerCase(sessionScope.user.head_src)}"
                                  onerror="this.src='/images/member/head.png'"/>
                         </a>
                         <div class="gym-myinfo-info">
@@ -106,37 +107,9 @@
                                         <div>报名日期</div>
                                     </div>
                                     <div class="col-33 c">
-                                        <label id="c_regPeriods">${listContract[0]['报名课时数']}节 </label>
-                                        <div >报名课时数</div>
-                                    </div>
-                                    <div class="col-33">
                                         <label id="c_validity">${listContract[0]['有效期']}</label>
                                         <div>有效期</div>
                                     </div>
-                                </div>
-                                <div class="row row-box-9">
-                                    <div class="col-33">
-                                        <label
-                                                id="c_residuePeriods">${listContract[0]['剩余课时数']}节</label>
-                                        <div>剩余课时数</div>
-                                    </div>
-                                    <div class="col-33 c">
-                                        <label id="c_totalLeave">${listContract[0]['累计请假数']}节</label>
-                                        <div >累计请假数</div>
-                                    </div>
-                                    <div class="col-33">
-                                        <label id="c_class">
-                                            <c:choose>
-                                            <c:when test="${listContract[0]['课程'] == ''}">无</c:when>
-                                            <c:otherwise>
-                                                ${listContract[0]['课程']}
-                                            </c:otherwise>
-                                        </c:choose>
-                                        </label>
-                                        <div>班级</div>
-                                    </div>
-                                </div>
-                                <div class="row  row-box-9">
                                     <div class="col-33">
                                         <label id="c_give">
                                             <c:choose>
@@ -148,11 +121,34 @@
                                         </label>
                                         <div>赠课</div>
                                     </div>
+                                </div>
+                                <div class="row row-box-9">
+                                    <div class="col-33">
+                                        <label id="c_regPeriods">${listContract[0]['报名课时数']}节 </label>
+                                        <div >报名课时数</div>
+                                    </div>
                                     <div class="col-33 c">
+                                        <label id="c_residuePeriods">${listContract[0]['剩余课时数']}节</label>
+                                        <div>剩余课时数</div>
+                                    </div>
+                                    <div class="col-33">
                                         <label id="c_score">${listContract[0]['积分']}</label>
                                         <div >积分</div>
                                     </div>
-
+                                </div>
+                                <div class="row row-box-9">
+                                    <div class="col-33">
+                                        <label id="c_actKss">${listContract[0]['活动扣课数']}节 </label>
+                                        <div >活动扣课数</div>
+                                    </div>
+                                    <%--<div class="col-33 c">--%>
+                                        <%--<label id="c_totalLeave">${listContract[0]['累计请假数']}节</label>--%>
+                                        <%--<div>累计请假数</div>--%>
+                                    <%--</div>--%>
+                                    <%--<div class="col-33">--%>
+                                        <%--<label id="c_class">${listContract[0]['课程']}</label>--%>
+                                        <%--<div >课程</div>--%>
+                                    <%--</div>--%>
                                 </div>
                                 <div class="list-block gym-list">
                                     <ul>
@@ -475,6 +471,7 @@
         $("#c_totalLeave").text(jsonArrayContract[index]['累计请假数']);
         $("#c_regSum").text(jsonArrayContract[index]['合同金额']);
         $("#c_class").text(jsonArrayContract[index]['课程']);
+        $("#c_actKss").text(jsonArrayContract[index]['活动扣课数']);
         $("#c_give").text(jsonArrayContract[index]['赠课']);
         $("#c_score").text(jsonArrayContract[index]['积分']);
     }

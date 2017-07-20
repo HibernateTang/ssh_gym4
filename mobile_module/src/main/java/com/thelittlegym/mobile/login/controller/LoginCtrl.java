@@ -54,8 +54,9 @@ public class LoginCtrl {
                 if ( null != objSession ){
                     Enumeration<String> em = session.getAttributeNames();
                     while (em.hasMoreElements()) {
-                        if (!"admin".equals(em.nextElement())){
-                            session.removeAttribute(em.nextElement());
+                        String sessionStr = em.nextElement();
+                        if (!"admin".equals(sessionStr)){
+                            session.removeAttribute(sessionStr);
                         }
                     }
                 }

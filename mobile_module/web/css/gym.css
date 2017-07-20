@@ -540,6 +540,12 @@
     right: 1rem;
     color: #666;
 }
+.coupon-rule-detail{
+    text-align: left;
+    font-size: 14px;
+    margin-top: .4rem;
+    margin-bottom: .4rem;
+}
 
 .card-content-inner > .content-block, .card-content-inner > .list-block {
     margin: 0 -.75rem -.75rem -.75rem;
@@ -562,4 +568,13 @@
     text-align: center;
     font-size: 14px;
     /*color: #003399;*/
+}
+
+.badge.badge-tip {
+    line-height: .8rem;
+    color: #003300;
+    vertical-align: top;
+    background: #FAEBD7;
+    border-radius: .5rem;
+    margin-left: .1rem;
 }
