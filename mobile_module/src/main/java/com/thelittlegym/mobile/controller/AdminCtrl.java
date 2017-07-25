@@ -13,6 +13,7 @@ import com.thelittlegym.mobile.login.service.ILoginService;
 import com.thelittlegym.mobile.service.IAdminService;
 import com.thelittlegym.mobile.service.IFeedbackService;
 import com.thelittlegym.mobile.user.model.User;
+import com.thelittlegym.mobile.user.service.IUserService;
 import net.coobird.thumbnailator.Thumbnails;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -46,6 +47,8 @@ public class AdminCtrl {
     private ILoginService loginService;
     @Autowired
     private IFeedbackService feedbackService;
+    @Autowired
+    private IUserService userService;
 
     @RequestMapping(value="/login",method = RequestMethod.GET)
     public String adminToLogin(HttpServletRequest request) throws Exception {
@@ -219,8 +222,13 @@ public class AdminCtrl {
             return "/admin/login";
         }
         String tel = request.getParameter("tel");
+        Long totalMember = userService.getTotal();
+
         if (null != tel){
             model.addAttribute("tel",tel);
+        }
+        if(null != totalMember){
+            model.addAttribute("totalMember",totalMember);
         }
         return "/admin/simulation";
     }
@@ -305,8 +313,23 @@ public class AdminCtrl {
         if (null!=pageStr && pageStr.matches("[0-9]+")){
             pageNow = Integer.parseInt(pageStr);
         }
-        Page<Feedback> feedbackPage = feedbackService.getPageList(pageNow,pageSize);
+        //TODO 切换反馈类型等操作
+//        Object typeObj = session.getAttribute("selectedFeedback");
+        String type = "0";
+//        type = request.getParameter("type");
+//        if (null == type || "".equals(type)){
+//            if(null == typeObj || "".equals(typeObj)){
+//                type = "0";
+//            }else{
+//                type = typeObj.toString();
+//            }
+//        }
+//        session.setAttribute("selectedFeedback",type);
+//        session.setAttribute("selectedFeedback",type);
+        Page<Feedback> feedbackPage = feedbackService.getPageList(pageNow,pageSize,type);
+        Long handledCount = feedbackService.handledCount();
         model.addAttribute("page",feedbackPage);
+        model.addAttribute("handledCount",handledCount);
         return "/admin/feedback";
     }
 

@@ -139,7 +139,7 @@ public class Sender implements ISender {
 			HttpEntity httpEntity = response.getEntity();
 			if (httpEntity != null) {
 				String jsonStr = EntityUtils.toString(httpEntity, "UTF-8");
-				System.out.println(jsonStr);
+//				System.out.println(jsonStr);
 				return jsonStr.contains("success");
 			}
 			closeableHttpClient.close();

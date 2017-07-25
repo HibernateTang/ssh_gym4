@@ -36,23 +36,26 @@
     </div>
     <div class="ui container">
         <div class="ui segments">
+
             <div class="ui segment">
-                <div class="ui two column stackable grid">
-                    <div class="column left aligned">
-                        <a href="" class="ui primary button">查询已处理反馈</a>
+                <%--<div class="ui selection dropdown">--%>
+                    <%--<input name="gender" type="hidden" value="default">--%>
+                    <%--<i class="dropdown icon"></i>--%>
+                    <%--<div class="text" >待处理</div>--%>
+                    <%--<div class="menu">--%>
+                        <%--<div class="item" data-value="0">待处理</div>--%>
+                        <%--<div class="item" data-value="1">已处理</div>--%>
+                        <%--<div class="item" data-value="-1">全部</div>--%>
+                    <%--</div>--%>
+                <%--</div>--%>
+                    <div class="ui blue statistic">
+                        <div class="value">
+                            ${handledCount}
+                        </div>
+                        <div class="label">
+                            已处理反馈
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="ui segment right aligned">
-                <div class="ui buttons">
-                    <a href="/admin/feedback?page=${page.current-1}"
-                       class="ui <c:if test="${page.current<= 1}">disabled</c:if> left labeled icon button"><i
-                            class="left arrow icon"></i> 上一页 </a>
-                    <a class="ui blue active button"></i> ${page.current}</a>
-                    <a href="/admin/feedback?page=${page.current+1}"
-                       class="ui <c:if test="${page.current+1> page.total}">disabled</c:if> right labeled icon button"><i
-                            class="right arrow icon"></i> 下一页 </a>
-                </div>
             </div>
             <div class="ui segment">
                 <c:if test="${not empty page.list}">
@@ -85,6 +88,17 @@
                     </div>
                 </c:if>
             </div>
+            <div class="ui segment right aligned ">
+                <div class="ui buttons">
+                    <a href="/admin/feedback?page=${page.current-1}"
+                       class="ui <c:if test="${page.current<= 1}">disabled</c:if> left labeled icon button"><i
+                            class="left arrow icon"></i> 上一页 </a>
+                    <a class="ui blue active button"></i> ${page.current}</a>
+                    <a href="/admin/feedback?page=${page.current+1}"
+                       class="ui <c:if test="${page.current+1> page.total}">disabled</c:if> right labeled icon button"><i
+                            class="right arrow icon"></i> 下一页 </a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -106,7 +120,7 @@
                         <i id="feedback_tel" date-tel="" class="ui violet tiny header"></i>
                     </div>
                     <div class="summary">
-                        <a  href="/admin/simulation?tel=" target="_blank"  class="user" id="feedback_name">
+                        <a href="/admin/simulation?tel=" target="_blank" class="user" id="feedback_name">
                         </a>
                         <div class="date">
                             <span id="feedback_createTime"></span>
@@ -138,6 +152,18 @@
 //        $(".ui.sidebar").sidebar('setting', 'transition', 'overlay');
         $(".ui.sidebar").sidebar('toggle');
     })
+    <%--$('.dropdown')--%>
+            <%--.dropdown('set value',${selectedFeedback} + '');--%>
+    <%--;--%>
+    <%--$('.dropdown')--%>
+            <%--.dropdown({--%>
+                <%--// you can use any ui transition--%>
+                <%--transition: 'drop',--%>
+                <%--onChange: function (value, text, $selectedItem) {--%>
+                    <%--location.href="/admin/feedback" + "?type=" + value;--%>
+                <%--},--%>
+            <%--});--%>
+    <%--;--%>
 
     $(".feedback-details").on('click', function () {
         var that = $(this);
@@ -146,7 +172,7 @@
         $('.ui.modal').modal('show');
     })
 
-    $("#sign").on('click',function () {
+    $("#sign").on('click', function () {
         var id = $(this).data('id');
         ajax_signed(id)
     })
@@ -161,26 +187,26 @@
             async: false,
             contentType: "application/x-www-form-urlencoded",
             dataType: "json",
-            beforeSend:function () {
+            beforeSend: function () {
             },
             success: function (data) {
                 if (data != null) {
                     var feedback = data;
                     $("#feedback_tel").text(feedback.contactTel);
-                    $("#feedback_tel").data('tel',feedback.contactTel);
+                    $("#feedback_tel").data('tel', feedback.contactTel);
                     $("#feedback_name").text(feedback.name);
-                    $("#feedback_name").attr("href",'/admin/simulation?tel=' + feedback.contactTel) ;
+                    $("#feedback_name").attr("href", '/admin/simulation?tel=' + feedback.contactTel);
                     $("#feedback_type").text(feedback.type);
                     $("#feedback_contractTel").text(feedback.contractTel);
                     $("#feedback_createTime").text(feedback.createTime);
                     $("#feedback_franchisee").text(feedback.franchisee);
                     $("#feedback_details").text(feedback.details);
-                    $("#sign").data('id',feedback.id +'');
+                    $("#sign").data('id', feedback.id + '');
                 }
             },
-            complete:function () {
+            complete: function () {
             },
-            error:function () {
+            error: function () {
             }
         })
     }
@@ -216,13 +242,13 @@
             contentType: "application/x-www-form-urlencoded",
             dataType: "json",
             success: function (data) {
-                if(data.success == true){
+                if (data.success == true) {
                     location.reload();
-                }else{
+                } else {
                     alert("标记失败，请重试");
                 }
             },
-            error:function () {
+            error: function () {
                 alert("异常错误，请重试");
             }
         })

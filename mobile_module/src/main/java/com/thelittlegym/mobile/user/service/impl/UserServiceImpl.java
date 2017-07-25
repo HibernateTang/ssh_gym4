@@ -74,5 +74,12 @@ public class UserServiceImpl implements IUserService {
         userDao.update(user);
     }
 
+    @Override
+    public Long getTotal() throws Exception {
+        String sql = "select count(*) from User u where u.username != '15949190026' and u.username != '18917353367' ";
+        Long l = userDao.findCount(sql);
+        return l;
+    }
+
 
 }

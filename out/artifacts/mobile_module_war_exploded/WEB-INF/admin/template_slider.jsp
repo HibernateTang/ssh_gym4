@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="ui  thin sidebar left inverted vertical menu">
     <div class="header item">
-        <img class="logo" src="/images/member/head.jpg">
+        <img class="logo" src="/images/admin/logo.jpg">
     </div>
     <a href="/admin" class="item">活动
         <i class="browser icon"></i>

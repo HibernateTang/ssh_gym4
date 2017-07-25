@@ -36,6 +36,16 @@
     <div class="ui container">
         <div class="ui segments">
             <div class="ui segment">
+                <div class="ui blue statistic">
+                    <div class="value">
+                        ${totalMember}
+                    </div>
+                    <div class="label">
+                        已注册会员数量
+                    </div>
+                </div>
+            </div>
+            <div class="ui segment">
                 <div class="ui form">
                     <div class="ui fluid action input">
                         <input id="tel" name="tel" value="${requestScope.tel}" type="text" placeholder="输入会员手机号">

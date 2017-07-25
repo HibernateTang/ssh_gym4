@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.SocketTimeoutException;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,9 +39,9 @@ public class OasisService {
                 }
             }
 
-        } catch (IOException e) {
+        }  catch (IOException e) {
             e.printStackTrace();
-        }
+        } 
         return jsonArray;
     }
 

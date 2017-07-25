@@ -288,8 +288,7 @@
                                 <select id="feedback_type">
                                     <option value="剩余课时数">剩余课时数</option>
                                     <option value="报名课时数">报名课时数</option>
-                                    <option value="累计请假">累计请假</option>
-                                    <option value="报名金额">报名金额</option>
+                                    <option value="活动扣课数">活动扣课数</option>
                                 </select>
                             </div>
                         </div>

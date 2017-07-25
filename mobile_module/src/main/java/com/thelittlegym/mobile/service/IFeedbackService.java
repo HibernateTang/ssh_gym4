@@ -13,9 +13,11 @@ import java.util.Map;
 public interface IFeedbackService {
     public void save(Feedback feedback) throws Exception;
 
-    public Page<Feedback> getPageList(Integer pageNow ,Integer pageSize) throws Exception;
+    public Page<Feedback> getPageList(Integer pageNow ,Integer pageSize,String type) throws Exception;
 
     public Feedback getOne(Integer id) throws  Exception;
 
     public void hand(Integer id)throws Exception;
+
+    public long handledCount() throws Exception;
 }
