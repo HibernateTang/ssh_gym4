@@ -81,5 +81,14 @@ public class UserServiceImpl implements IUserService {
         return l;
     }
 
+    @Override
+    public Boolean isReged(String tel) throws Exception {
+        User u = userDao.findOne("from User where telephone = '" + tel + "'");
+        if (null == u){
+            return false;
+        }
+        return true;
+    }
+
 
 }

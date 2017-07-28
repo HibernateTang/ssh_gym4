@@ -24,4 +24,6 @@ public interface IUserService {
 
     public Long getTotal() throws Exception;
 
+    public Boolean isReged(String tel) throws Exception;
+
 }

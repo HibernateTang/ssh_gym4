@@ -168,7 +168,6 @@ public class LoginCtrl {
         submail.setProject("IkkGR1");
         submail.addVar("time", "30分钟");
         submail.addVar("code", valnum);
-        System.out.println(valnum);
         submail.xsend();
 
 
@@ -230,6 +229,17 @@ public class LoginCtrl {
     @ResponseBody
     public Map<String, Object> exist(String telephone) {
         Map<String, Object> returnMap = new HashMap<String, Object>();
+        try {
+            if (userService.isReged(telephone) ){
+                returnMap.put("success",false);
+                returnMap.put("message","该号码已注册，请直接登录");
+                return returnMap;
+            }
+        } catch (Exception e) {
+            returnMap.put("success",false);
+            returnMap.put("message","异常错误");
+            return returnMap;
+        }
         String sqlExist = "select top 1 crm_surname name,id,crmzdy_80620120 tel,crmzdy_81802271 childname,crmzdy_81778300 zx from   crm_sj_238592_view  where charindex('" +telephone+"',crmzdy_81767199)>0";
         if (oasisService.getResultJson(sqlExist) != null){
             returnMap.put("success",true);

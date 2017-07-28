@@ -136,11 +136,11 @@
                                         <div >积分</div>
                                     </div>
                                 </div>
-                                <div class="row row-box-9">
-                                    <div class="col-33">
-                                        <label id="c_actKss">${listContract[0]['活动扣课数']}节 </label>
-                                        <div >活动扣课数</div>
-                                    </div>
+                                <%--<div class="row row-box-9">--%>
+                                    <%--<div class="col-33">--%>
+                                        <%--<label id="c_actKss">${listContract[0]['活动扣课数']}节 </label>--%>
+                                        <%--<div >活动扣课数</div>--%>
+                                    <%--</div>--%>
                                     <%--<div class="col-33 c">--%>
                                         <%--<label id="c_totalLeave">${listContract[0]['累计请假数']}节</label>--%>
                                         <%--<div>累计请假数</div>--%>
@@ -149,7 +149,7 @@
                                         <%--<label id="c_class">${listContract[0]['课程']}</label>--%>
                                         <%--<div >课程</div>--%>
                                     <%--</div>--%>
-                                </div>
+                                <%--</div>--%>
                                 <div class="list-block gym-list">
                                     <ul>
                                         <!-- 反馈 -->
@@ -189,8 +189,6 @@
     </div>
     <div class="page" id="page_contract">
         <div class="content">
-
-
             <div class="list-block media-list">
                 <ul>
                     <c:choose>
@@ -288,7 +286,7 @@
                                 <select id="feedback_type">
                                     <option value="剩余课时数">剩余课时数</option>
                                     <option value="报名课时数">报名课时数</option>
-                                    <option value="活动扣课数">活动扣课数</option>
+                                    <%--<option value="活动扣课数">活动扣课数</option>--%>
                                 </select>
                             </div>
                         </div>
