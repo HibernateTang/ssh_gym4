@@ -54,8 +54,17 @@ $("#signUp").click(function () {
     }
 
 })
-
+var sendingFlag = false;
 $("#btn-valnum").click(function () {
+    if (sendingFlag ==true){
+        layer.open({
+            content: '发送中，请勿重复点击'
+            , skin: 'msg'
+            , time: 2 //2秒后自动关闭
+        });
+        return false;
+    }
+    sendingFlag = true;
     var tel = $("#reg_tel").val();
     var isRegNum = checkInput(/^1[34578]\d{9}$/, $("#reg_tel"), "手机", "手机号格式不正确");
     if (isRegNum) {
@@ -66,9 +75,6 @@ $("#btn-valnum").click(function () {
             data: {"tel": tel},
             contentType: "application/x-www-form-urlencoded",
             dataType: "json",
-            beforeSend: function () {
-
-            },
             success: function (data) {
                 if (data.success == true) {
                     time($("#btn-valnum"));
@@ -79,9 +85,17 @@ $("#btn-valnum").click(function () {
                         , time: 2 //2秒后自动关闭
                     });
                 }
+            },
+            error:function () {
+                layer.open({
+                    content: '发送异常，请稍后再试'
+                    , skin: 'msg'
+                    , time: 2 //2秒后自动关闭
+                });
             }
         });
     }
+    sendingFlag = false;
 });
 
 var waitTime = 60;
@@ -113,12 +127,23 @@ $("#reg_tel").on('input', function () {
 
 })
 
+var feedbackFlag = false;
 function toFeedback() {
+    if (feedbackFlag == true){
+        layer.open({
+            content: '反馈提交中，请勿重复提交'
+            , skin: 'msg'
+            , time: 2 //2秒后自动关闭
+        });
+        return false;
+    }
+    feedbackFlag = true;
     var Franchisee = $("#franchisee").val();
     var details = $("#details").val();
     var contactTel = $("#contactTel").val();
     var feedbackName = $("#feedback_name").val();
     feedback_ajax(Franchisee, feedbackName,details, contactTel);
+    feedbackFlag = false;
 }
 
 /*
@@ -204,19 +229,28 @@ function exist_ajax(telephone) {
         success: function (data) {
             console.log(data);
             if (data.success == false) {
-                layer.open({
-                    content: '系统中没有显示此手机号码,点击是与我们联系'
-                    , btn: ['是', '否']
-                    , yes: function (index) {
-                        layer.open({
-                            type: 1
-                            , content: $("#feedback").val()
-                            , anim: 'up'
-                        });
-                        $("#contactTel").val($("#reg_tel").val());
-                        layer.close(index);
-                    }
-                });
+                if (data.message == "该号码非会员"){
+                    layer.open({
+                        content: '系统中没有显示此手机号码,点击是与我们联系'
+                        , btn: ['是', '否']
+                        , yes: function (index) {
+                            layer.open({
+                                type: 1
+                                , content: $("#feedback").val()
+                                , anim: 'up'
+                            });
+                            $("#contactTel").val($("#reg_tel").val());
+                            layer.close(index);
+                        }
+                    });
+                }else{
+                    layer.open({
+                        content: data.message
+                        , skin: 'msg'
+                        , time: 2 //2秒后自动关闭
+                    });
+                }
+
             }else{
                 layer.open({
                     content: '该号码是会员帐号,可以注册√'

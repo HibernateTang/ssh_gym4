@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,11 +22,36 @@
     <link rel="stylesheet" href="/css/sm.min.css">
     <link rel="stylesheet" href="/css/gym.css">
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+    <style>
+        /* 阿里巴巴 矢量图引用*/
+        @font-face {
+            font-family: 'iconfont';  /* project id 260152 */
+            src: url('//at.alicdn.com/t/font_onv8iq82tziod2t9.eot');
+            src: url('//at.alicdn.com/t/font_onv8iq82tziod2t9.eot?#iefix') format('embedded-opentype'),
+            url('//at.alicdn.com/t/font_onv8iq82tziod2t9.woff') format('woff'),
+            url('//at.alicdn.com/t/font_onv8iq82tziod2t9.ttf') format('truetype'),
+            url('//at.alicdn.com/t/font_onv8iq82tziod2t9.svg#iconfont') format('svg');
+        }
+        .iconfont{
+            font-family:"iconfont" !important;
+            font-size:1.5rem;font-style:normal;
+            line-height: 1.5rem;
+            -webkit-font-smoothing: antialiased;
+            -webkit-text-stroke-width: 0.2px;
+            -moz-osx-font-smoothing: grayscale;}
+        .iconfont:active{
+            color:#000099;
+            -webkit-transition-duration: 0ms;
+            transition-duration: 0ms;
+            opacity: 0.6;
+            }
+
+    </style>
 </head>
 
 <body>
 <div class="page-group">
-    <div class="page" id="page_myinfo">
+    <div class="page page-current" id="page_myinfo">
         <div class="content">
             <div class="card">
                 <div class="card-header no-padding no-border gym-myinfo">
@@ -39,7 +65,7 @@
                 <div class="card-header">
                     <div class="facebook-avatar">
                         <a class="open-avatar" data-popup="popup popup-avatar">
-                            <img id="avatar" src="${sessionScope.user.head_src}"
+                            <img id="avatar" src="${fn:toLowerCase(sessionScope.user.head_src)}"
                                  onerror="this.src='/images/member/head.png'"/>
                         </a>
                         <div class="gym-myinfo-info">
@@ -47,77 +73,92 @@
                             <p class="avatar-detail">年龄：${childObj['age']}</p>
                         </div>
                     </div>
-                    <a href="/exist" class="button">退出登录</a>
+                    <a href="/exit" class="button">退出登录</a>
                 </div>
 
                 <div class="card-content">
-                    <c:choose>
-                        <c:when test="${not empty listContract}">
-                            <div class="card-content-inner" id="contract" data-value="0">
+                    <div class="card-content-inner" id="contract" data-value="0">
+                        <div class="row">
+                            <div class="col-33 ">
+                                <div class="list-icon"><a class="external" href="/coupon"><i class="iconfont">&#xe665;</i>
+                                    <div class="list-icon-title">我的优惠券</div>
+                                </a>
+                                </div>
+
+                            </div>
+                            <div class="col-33 ">
+                                <div class="list-icon"><a id="view" href="javascript:;"><i class="iconfont">&#xe60a;</i>
+                                    <div class="list-icon-title">我的所有合同</div>
+                                </a></div>
+
+                            </div>
+                            <div class="col-33 ">
+                                <div class="list-icon"><a class="external activity" > <i class="iconfont">&#xe6c5;</i>
+                                    <div class="list-icon-title">活动中心</div>
+                                </a></div>
+
+                            </div>
+                        </div>
+                        <c:choose>
+                            <c:when test="${not empty listContract}">
+                                <div class="row row-box-9 f">
+                                    <div class="col-33">
+                                        <label  id="c_regDate">${listContract[0]['报名日期']}</label>
+                                        <div>报名日期</div>
+                                    </div>
+                                    <div class="col-33 c">
+                                        <label id="c_validity">${listContract[0]['有效期']}</label>
+                                        <div>有效期</div>
+                                    </div>
+                                    <div class="col-33">
+                                        <label id="c_give">
+                                            <c:choose>
+                                                <c:when test="${listContract[0]['赠课'] == ''}">无</c:when>
+                                                <c:otherwise>
+                                                    ${listContract[0]['赠课']}
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </label>
+                                        <div>赠课</div>
+                                    </div>
+                                </div>
+                                <div class="row row-box-9">
+                                    <div class="col-33">
+                                        <label id="c_regPeriods">${listContract[0]['报名课时数']}节 </label>
+                                        <div >报名课时数</div>
+                                    </div>
+                                    <div class="col-33 c">
+                                        <label id="c_residuePeriods">${listContract[0]['剩余课时数']}节</label>
+                                        <div>剩余课时数</div>
+                                    </div>
+                                    <div class="col-33">
+                                        <label id="c_score">${listContract[0]['积分']}</label>
+                                        <div >积分</div>
+                                    </div>
+                                </div>
+                                <%--<div class="row row-box-9">--%>
+                                    <%--<div class="col-33">--%>
+                                        <%--<label id="c_actKss">${listContract[0]['活动扣课数']}节 </label>--%>
+                                        <%--<div >活动扣课数</div>--%>
+                                    <%--</div>--%>
+                                    <%--<div class="col-33 c">--%>
+                                        <%--<label id="c_totalLeave">${listContract[0]['累计请假数']}节</label>--%>
+                                        <%--<div>累计请假数</div>--%>
+                                    <%--</div>--%>
+                                    <%--<div class="col-33">--%>
+                                        <%--<label id="c_class">${listContract[0]['课程']}</label>--%>
+                                        <%--<div >课程</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
                                 <div class="list-block gym-list">
                                     <ul>
-                                        <li class="item-content">
-                                            <div class="item-inner">
-                                                <div class="item-title">报名日期：<label
-                                                        id="c_regDate">${listContract[0]['报名日期']}</label></div>
-                                            </div>
-                                            <div class="item-inner">
-                                                <div class="item-title">有效期：<label
-                                                        id="c_validity">${listContract[0]['有效期']}</label></div>
-                                            </div>
-                                        </li>
-                                        <li class="item-content">
-                                            <div class="item-inner">
-                                                <div class="item-title">剩余课时数：<label
-                                                        id="c_residuePeriods">${listContract[0]['剩余课时数']}</label>节
-                                                </div>
-                                            </div>
-                                            <div class="item-inner">
-                                                <div class="item-title">报名课时数：<label
-                                                        id="c_regPeriods">${listContract[0]['报名课时数']}</label>节
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="item-content">
-                                            <div class="item-inner">
-                                                <div class="item-title">累计请假：<label
-                                                        id="c_totalLeave">${listContract[0]['累计请假数']}</label>节
-                                                </div>
-                                            </div>
-                                            <div class="item-inner">
-                                                <div class="item-title">报名金额：<label
-                                                        id="c_regSum">${listContract[0]['合同金额']}</label></div>
-                                            </div>
-                                        </li>
-                                        <li class="item-content">
-                                            <div class="item-inner">
-                                                <div class="item-title">班级：<label
-                                                        id="c_class">${listContract[0]['课程']}</label></div>
-                                            </div>
-                                            <div class="item-inner">
-                                                <div class="item-title">赠课：<label
-                                                        id="c_give">${listContract[0]['赠课']}</label></div>
-                                            </div>
-                                        </li>
-                                        <li class="item-content">
-                                            <div class="item-inner">
-                                                <div class="item-title">积分：<label
-                                                        id="c_score">${listContract[0]['积分']}</label></div>
-                                            </div>
-                                            <div class="item-inner">
-                                                <a id="view" class="item-title">所有合同&nbsp;<i
-                                                        class="fa fa-angle-double-right"
-                                                        aria-hidden="true"></i></a>
-                                            </div>
-                                        </li>
-
                                         <!-- 反馈 -->
                                         <li class="item-content  open-popup" data-popup=".popup-feedback">
                                             <div class="item-media">
                                                 <i class="fa fa-meh-o fa-2x" aria-hidden="true"></i>
                                             </div>
                                             <div class="item-inner">
-                                                <div class="item-title" >数据有问题？点击此处向我们反馈</div>
+                                                <div class="item-title">数据有问题？点击此处向我们反馈</div>
                                                 <div class="item-after"><i
                                                         class="fa fa-angle-double-right fa-2x"
                                                         aria-hidden="true"></i></div>
@@ -125,50 +166,9 @@
                                         </li>
                                     </ul>
                                 </div>
-                            </div>
-                        </c:when>
-                        <c:otherwise>
-                            <div class="card-content-inner">
-                                <p class="color-danger text-center">没有找到有效期内的合同~</p>
-                            </div>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
-            </div>
-
-            <!-- 我的优惠券 -->
-            <div class="card">
-                <div class="card-header  gym-card-title">
-                    我的优惠券
-                </div>
-                <div class="card-content">
-                    <div class="card-content-inner">
-                        <c:choose>
-                            <c:when test="${not empty couponMap}">
-                                <div class="coupon-box">
-                                    <c:choose>
-                                        <c:when test="${couponMap['value']['used']==false}">
-                                            <a href="javascript:;" class="coupon" data-value="1"><img
-                                                    src="/images/member/coupon_unused.png">
-                                            </a>
-                                            <span class="fa fa-question-circle fa-2x coupon-rule  open-popup"
-                                                  data-popup=".popup-coupon-rule"></span>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <a href="javascript:;" class="coupon" data-value="0"><img
-                                                    src="/images/member/coupon_used.png"> <span
-                                                    class="fa fa-question-circle fa-2x coupon-rule open-popup"
-                                                    data-popup=".popup-coupon-rule"></span> </a>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </div>
                             </c:when>
-
                             <c:otherwise>
-                                <div class="no-coupon text-center">
-                                    <img src="/images/member/no_coupon.png"/>
-                                    <p>您目前没有优惠券可用</p>
-                                </div>
+                                <p class="color-danger text-center">没有找到有效期内的合同~</p>
                             </c:otherwise>
                         </c:choose>
                     </div>
@@ -186,6 +186,37 @@
             </div>
         </div>
 
+    </div>
+    <div class="page" id="page_contract">
+        <div class="content">
+            <div class="list-block media-list">
+                <ul>
+                    <c:choose>
+                        <c:when test="${not empty listContract}">
+                            <c:forEach items="${listContract}" var="contract">
+                                <li>
+                                    <a href="#" class="item-link item-content">
+                                        <div class="item-media"><img
+                                                src="http://gqianniu.alicdn.com/bao/uploaded/i4//tfscom/i3/TB10LfcHFXXXXXKXpXXXXXXXXXX_!!0-item_pic.jpg_250x250q60.jpg"
+                                                style='width: 4rem;'></div>
+                                        <div class="item-inner">
+                                            <div class="item-title-row">
+                                                <div class="item-title">${listContract[0]['报名日期']}</div>
+                                            </div>
+                                            <div class="item-subtitle">标题</div>
+                                            <div class="item-text">此处是文本内容...</div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <p class="color-danger text-center">没有找到有效期内的合同~</p>
+                        </c:otherwise>
+                    </c:choose>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -206,20 +237,7 @@
         </div>
     </form>
 </div>
-<div class="popup popup-coupon-rule">
-    <header class="bar bar-nav">
 
-        <h1 class="title">活动规则</h1>
-    </header>
-    <div class="content">
-        <div class="content-block">
-            <p>1、获得优惠券之日起，有限期为一年，用于会员本人续报课程</p>
-            <p>2、此券不与其他优惠共享</p>
-            <p>3、不支持兑换现金</p>
-            <p><a href="javascript:;" class="close-popup">关闭</a></p>
-        </div>
-    </div>
-</div>
 
 <div class="popup popup-feedback">
     <header class="bar bar-nav">
@@ -268,8 +286,7 @@
                                 <select id="feedback_type">
                                     <option value="剩余课时数">剩余课时数</option>
                                     <option value="报名课时数">报名课时数</option>
-                                    <option value="累计请假">累计请假</option>
-                                    <option value="报名金额">报名金额</option>
+                                    <%--<option value="活动扣课数">活动扣课数</option>--%>
                                 </select>
                             </div>
                         </div>
@@ -290,9 +307,11 @@
         </div>
         <div class="content-block">
             <div class="row">
-                <div class="col-50"><a href="javascript:;" class="button button-big button-fill button-danger close-popup">取消</a>
+                <div class="col-50"><a href="javascript:;"
+                                       class="button button-big button-fill button-danger close-popup">取消</a>
                 </div>
-                <div class="col-50"><a href="javascript:;" id="feedback_sub" class="button button-big button-fill button-success">提交</a>
+                <div class="col-50"><a href="javascript:;" id="feedback_sub"
+                                       class="button button-big button-fill button-success">提交</a>
                 </div>
             </div>
         </div>
@@ -309,11 +328,11 @@
         var feedFs = $('#feedback_fs').val();
         var feedTel = $('#feedback_tel').val();
         var feedDetails = $('#feedback_details').val();
-        var type= $('#feedback_type').val();
-        ajax_feedback(feedFs, feedbackName, feedDetails, feedTel,type);
+        var type = $('#feedback_type').val();
+        ajax_feedback(feedFs, feedbackName, feedDetails, feedTel, type);
     })
 
-    $(document).on('open','.popup-feedback', function () {
+    $(document).on('open', '.popup-feedback', function () {
         $('#feedback_details').val("");
     });
 
@@ -325,19 +344,7 @@
         $.alert("敬请期待...");
         return;
     });
-    $(".coupon").on('click', function () {
-        if ($(this).attr("data-value") == "0") {
-            return;
-        }
-        $.prompt('请输入核销码',function (value) {
-                    if ($.trim(value) == "") {
-                        $.alert("核销码值不能为空");
-                        return;
-                    }
-                    ajax_useCoupon(value);
-                }
-        );
-    })
+
     $("#cancelUpdate").on('click', function () {
         $("#pre_avatar").attr("src", $("#avatar").attr("src"));
         $("#avatarFile").val("");
@@ -461,45 +468,24 @@
         $("#c_totalLeave").text(jsonArrayContract[index]['累计请假数']);
         $("#c_regSum").text(jsonArrayContract[index]['合同金额']);
         $("#c_class").text(jsonArrayContract[index]['课程']);
+        $("#c_actKss").text(jsonArrayContract[index]['活动扣课数']);
         $("#c_give").text(jsonArrayContract[index]['赠课']);
         $("#c_score").text(jsonArrayContract[index]['积分']);
     }
 
-    function ajax_useCoupon(code) {
-        this.code = code;
 
-        $.ajax({
-            url: '/index/coupon',
-            type: 'POST',
-            data: {'code': this.code},
-//            async: false,
-            contentType: "application/x-www-form-urlencoded",
-            dataType: "json",
-            beforeSend: function () {
-                $.showIndicator();
-            },
-            success: function (data) {
-                if (data.success == true) {
-                    $.toast("使用成功√");
-                    location.reload();
-                } else if (data.success == false) {
-                    $.alert("使用失败," + data.message);
-                }
-            },
-            complete: function () {
-                $.hideIndicator();
-            },
-            error: function (data) {
-                $.alert("异常错误,稍后再试");
-            }
-        });
-    }
 
-    function ajax_feedback(Franchisee, feedbackName, details, contactTel,type) {
+    function ajax_feedback(Franchisee, feedbackName, details, contactTel, type) {
         $.ajax({
             type: "POST",
             url: "/login/feedback",
-            data: {"Franchisee": Franchisee, "name": feedbackName, "details": details, "contactTel": contactTel,"type":type},
+            data: {
+                "Franchisee": Franchisee,
+                "name": feedbackName,
+                "details": details,
+                "contactTel": contactTel,
+                "type": type
+            },
             contentType: "application/x-www-form-urlencoded",
             dataType: "json",
             success: function (data) {

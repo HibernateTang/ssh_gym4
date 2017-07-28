@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,17 +19,17 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <%--<title>会员主页</title>--%>
-    <link rel="stylesheet" href="css/sm.min.css">
-    <link rel="stylesheet" href="css/gym.css">
-    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="/css/sm.min.css">
+    <link rel="stylesheet" href="/css/gym.css">
+    <link rel="stylesheet" href="/css/animate.css">
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
 
 </head>
 <body>
 <div class="page-group">
     <c:forEach items="${listChild}" var="child" varStatus="status">
-        <div class="page <c:if test="${status.index==0}">page-current</c:if>" child-index="${status.index}"
-             child-name=${child['name']}  child-id="${child['idhz']}"
+        <div class="page <c:if test="${status.index==0}">page-current</c:if>" data-index="${status.index}"
+             data-name =${child['name']}  data-id="${child['idhz']}"
              id="child${status.index}">
             <div class="content">
                 <div class="card">
@@ -58,23 +58,24 @@
                         <i></i>
                         <div class="gym-header">
                             <div class="header-img">
-                                        <img src="${sessionScope.user.head_src}" onerror="this.src='/images/member/head.png'"/>
+                                <img src="${fn:toLowerCase(sessionScope.user.head_src)}" onerror="this.src='/images/member/head.png'"/>
                             </div>
                             <a class="header-text external"
                                href="/index/myinfo?idhz=${child['idhz']}&name=${child['name']}&age=${child['age']}">
                                 <div class="header-p">
                                     <p>年龄：${child['age']}</p>
                                     <p>剩余课时：${child['rest']}节课</p>
+                                    <p>最后有效期：${child['dtend']}</p>
                                 </div>
                                 <div class="header-row-right">
                                     <i class="fa fa-angle-right fa-3x "></i>
                                 </div>
                             </a>
                         </div>
-                        <%--<div class="inform">--%>
+                            <%--<div class="inform">--%>
                             <%--<div class="inform-title">活动通知：</div>--%>
                             <%--<div class="activity-info">植树节活动|4月1号全面涨价</div>--%>
-                        <%--</div>--%>
+                            <%--</div>--%>
                         <i></i>
                     </div>
                 </div>
@@ -123,7 +124,12 @@
                 <div class="card">
                     <div class="card-header gym-card-title">
                         <a class="gym-select"
-                           gym-id="${listGymSelectedSession[status.index].gym['gymId']}">${listGymSelectedSession[status.index].gym['gymName']}</a>
+                           data-id="${listGymSelectedSession[status.index].gym['gymId']}"><span class="gym-name">${listGymSelectedSession[status.index].gym['gymName']}</span>
+                            <c:if test="${listGym.size() > 1}">
+                                <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                <span class="badge badge-tip">切换中心</span>
+                            </c:if>
+                        </a>
                     </div>
                     <div class="card-content-inner">
                         <div>
@@ -131,7 +137,7 @@
                                 <i class="fa fa-angle-double-left beginDate-i"></i>
                                 <input type="text" readonly class="beginDate"
                                        value="${listGymSelectedSession[status.index]['beginDate']}"
-                                       data-toggle="date"/> -
+                                       /> -
                                 <input type="text" readonly class="endDate"
                                        value="${listGymSelectedSession[status.index]['endDate']}"
                                        data-toggle="date"/>
@@ -195,15 +201,16 @@
 <script src="/js/swiper-3.4.2.jquery.min.js"></script>
 <script type='text/javascript' src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 <script>
+
     /*全局孩子标识*/
     var PAGE_ID = $(".page-current").attr("id") ? $(".page-current").attr("id") : 'child1';
-    var CHILD_ID = $("#" + PAGE_ID).attr("child-id");
-    var CHILD_INDEX = $("#" + PAGE_ID).attr("child-index");
+    var CHILD_ID = $("#" + PAGE_ID).data("id");
+    var CHILD_INDEX = $("#" + PAGE_ID).data("index");
     $(document).on("pageInit", function (e, pageId, $page) {
-        CHILD_ID = $page.attr("child-id");
+        CHILD_ID = $page.data("id");
         PAGE_ID = pageId;
-        CHILD_INDEX = $page.attr("child-index");
-        document.title = $page.attr("child-name") + "的主页";
+        CHILD_INDEX = $page.data("index");
+        document.title = $page.data("name") + "的主页";
     });
 
     wx.config({
@@ -231,17 +238,17 @@
         });
         wx.onMenuShareAppMessage({
             title: title, // 分享标题
-            desc: '测试描述', // 分享描述
+            desc: '分享', // 分享描述
             link:link, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
             imgUrl: 'https://member.thelittlegym.com.cn/images/member/head.jpg', // 分享图标
             type: 'link', // 分享类型,music、video或link，不填默认为link
             dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
         });
         wx.onMenuShareQQ({
-            title: '测试看一下', // 分享标题
-            desc: '', // 分享描述
+            title: title, // 分享标题
+            desc: '分享', // 分享描述
             link: link, // 分享链接
-            imgUrl: '', // 分享图标
+            imgUrl: 'https://member.thelittlegym.com.cn/images/member/head.jpg', // 分享图标
             success: function () {
                 // 用户确认分享后执行的回调函数
             },
@@ -258,19 +265,32 @@
         });
     });
 
-
+    //最小日期为半年
+    $(".beginDate").calendar({
+        minDate:lastHalfYearDate()
+    })
 
     //手动处理
     $(".endDate-i").on('click', function () {
         var next_week = getNewDay($("#" + PAGE_ID + " .endDate").val(), 7);
         $("#" + PAGE_ID + " .endDate").val(next_week);
-        updateCalendar(next_week);
+
         $("#" + PAGE_ID + " .endDate").trigger('change');
+        updateCalendar(next_week);
     })
     $(".beginDate-i").on('click', function () {
-        var pre_week = getNewDay($("#" + PAGE_ID + " .beginDate").val(), -7);
+        var beginDate = $("#" + PAGE_ID + " .beginDate").val();
+
+        var pre_week = getNewDay(beginDate, -7);
+        if(comhalfYear(pre_week)){
+            $.alert("手机查询最多可查最近半年数据，如要查询更多，请与中心联系！");
+            return;
+        }
+
         $("#" + PAGE_ID + " .beginDate").val(pre_week);
+
         $("#" + PAGE_ID + " .beginDate").trigger('change');
+        updateCalendar(pre_week);
     })
     function updateCalendar(date){
         var dateValue = date.replace(/-0/g,"-");//格式化
@@ -294,6 +314,27 @@
         }
         return (year + "-" + month + "-" + date);
     }
+    function comhalfYear(day){
+        var date = new Date();
+        var nDate = new Date(Date.parse(day.replace(/-/g, "/")));
+        return date - nDate > 24 * 60 * 60 * 1000 * 180;
+
+    }
+    function lastHalfYearDate(){
+        var nowDate = new Date();
+        var halfDateMills = nowDate - 24 * 60 * 60 * 1000 * 180;
+        var halfDate = new Date(halfDateMills);
+        var year = halfDate.getFullYear();
+        var month = halfDate.getMonth() + 1;
+        if (month < 10) {
+            month = "0" + month;
+        }
+        var date = halfDate.getDate();
+        if (date < 10) {
+            date = "0" + date;
+        }
+        return (year + "-" + month + "-" + date);
+    }
     if ($('.swiper-container-dlist').size()) {
         $('.swiper-container-dlist').find('.swiper-slide').height('auto');
         var swiper_dList = new Swiper('.swiper-container-dlist', {
@@ -306,8 +347,8 @@
     }
 
     $(".beginDate,.endDate").on('change', function () {
-        var gymId = $("#" + PAGE_ID + " .gym-select").attr('gym-id');
-        var gymName = $("#" + PAGE_ID + " .gym-select").text();
+        var gymId = $("#" + PAGE_ID + " .gym-select").data('id');
+        var gymName = $("#" + PAGE_ID + " .gym-select .gym-name").text();
         var beginDate = $("#" + PAGE_ID + " .beginDate").val();
         var endDate = $("#" + PAGE_ID + " .endDate").val();
         attend_ajax(gymId, gymName, CHILD_ID, beginDate, endDate);
@@ -358,7 +399,7 @@
 
     //    gyms绑定到actions上
     $('.gym-select').on('click', function () {
-        var selectedGymId = $("#" + PAGE_ID + " .gym-select").attr("gym-id");
+        var selectedGymId = $("#" + PAGE_ID + " .gym-select").data("id");
         var buttons1 = [
             {
                 text: '请选择中心',
@@ -397,8 +438,8 @@
 
 
     function gym_change(gymName, gymId) {
-        $("#" + PAGE_ID + " .gym-select").text(gymName);
-        $("#" + PAGE_ID + " .gym-select").attr("gym-id", gymId);
+        $("#" + PAGE_ID + " .gym-select .gym-name").text($.trim(gymName));
+        $("#" + PAGE_ID + " .gym-select").data("id", gymId);
         attend_ajax(gymId, gymName, CHILD_ID, $("#" + PAGE_ID + " .beginDate").val(), $("#" + PAGE_ID + " .endDate").val());
     }
 
@@ -413,7 +454,7 @@
         var outpass = $('#'+PAGE_ID + ' .outpass').text();
         var tian = $('#'+PAGE_ID + ' .tian').text();
         var ranking = $('#'+PAGE_ID + ' .ranking').text();
-        var name = encodeURI($('#'+PAGE_ID).attr("child-name"));
+        var name = encodeURI($('#'+PAGE_ID).data("name"));
         var avatar = $('#'+PAGE_ID + ' .header-img img').attr("src");
         var times_per_weenk = $('#'+PAGE_ID + ' .times_per_week').text();
         var params = link + '?mins=' + mins + '&outpass=' + outpass + '&times_per_week=' + times_per_weenk + '&tian=' + tian + '&ranking=' + ranking + '&name=' + name + '&avatar=' + avatar;

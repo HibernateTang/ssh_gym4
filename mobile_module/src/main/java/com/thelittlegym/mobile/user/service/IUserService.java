@@ -22,4 +22,8 @@ public interface IUserService {
 
     public void updateUser(User user) throws Exception;
 
+    public Long getTotal() throws Exception;
+
+    public Boolean isReged(String tel) throws Exception;
+
 }

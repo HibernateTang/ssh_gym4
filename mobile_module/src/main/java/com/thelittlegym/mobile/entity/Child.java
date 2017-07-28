@@ -10,7 +10,7 @@ public class Child {
     private String rest;
     private String gender;
     private String ranking;
-
+    private String dtend;
 
     public String getRanking() {
         return ranking;
@@ -58,5 +58,13 @@ public class Child {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public String getDtend() {
+        return dtend;
+    }
+
+    public void setDtend(String dtend) {
+        this.dtend = dtend;
     }
 }

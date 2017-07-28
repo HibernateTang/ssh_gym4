@@ -4,10 +4,16 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.thelittlegym.mobile.base.model.Page;
+import com.thelittlegym.mobile.dao.IFeedbackDao;
 import com.thelittlegym.mobile.dao.impl.ActivityDaoImpl;
 import com.thelittlegym.mobile.entity.Activity;
 import com.thelittlegym.mobile.entity.Admin;
+import com.thelittlegym.mobile.entity.Feedback;
+import com.thelittlegym.mobile.login.service.ILoginService;
 import com.thelittlegym.mobile.service.IAdminService;
+import com.thelittlegym.mobile.service.IFeedbackService;
+import com.thelittlegym.mobile.user.model.User;
+import com.thelittlegym.mobile.user.service.IUserService;
 import net.coobird.thumbnailator.Thumbnails;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -37,6 +43,12 @@ public class AdminCtrl {
     private ActivityDaoImpl activityDao;
     @Autowired
     private IAdminService adminService;
+    @Autowired
+    private ILoginService loginService;
+    @Autowired
+    private IFeedbackService feedbackService;
+    @Autowired
+    private IUserService userService;
 
     @RequestMapping(value="/login",method = RequestMethod.GET)
     public String adminToLogin(HttpServletRequest request) throws Exception {
@@ -202,6 +214,74 @@ public class AdminCtrl {
         return "redirect:/admin";
     }
 
+    @RequestMapping(value = "/simulation", method = RequestMethod.GET)
+    public String simulation(HttpServletRequest request,Model model) throws Exception {
+        HttpSession session = request.getSession();
+        Object sessionObj = session.getAttribute("admin");
+        if (sessionObj == null) {
+            return "/admin/login";
+        }
+        String tel = request.getParameter("tel");
+        Long totalMember = userService.getTotal();
+
+        if (null != tel){
+            model.addAttribute("tel",tel);
+        }
+        if(null != totalMember){
+            model.addAttribute("totalMember",totalMember);
+        }
+        return "/admin/simulation";
+    }
+
+    @RequestMapping(value = "/member", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> member(HttpServletRequest request, String tel)  {
+        HttpSession session = request.getSession();
+        Map<String,Object> returnMap = new HashMap<String,Object>();
+        Map<String,Object> map = null;
+        try {
+            map = loginService.login(tel);
+            Object object = map.get("value");
+            if (object != null) {
+                User user = (User) object;
+                session = request.getSession(true);
+                Object objSession = session.getAttribute("user");
+                //重复登录清空之前session所有attr
+                if ( null != objSession ){
+                    Enumeration<String> em = session.getAttributeNames();
+                    while (em.hasMoreElements()) {
+                        String removeAttr = em.nextElement();
+                        if(!"admin".equals(removeAttr)){
+                            session.removeAttribute(removeAttr);
+                        }
+                    }
+                }
+
+                session.setAttribute("user", user);
+                returnMap.put("success",true);
+                returnMap.put("message","登录成功");
+            }
+        } catch (Exception e) {
+            returnMap.put("success",false);
+            returnMap.put("message","登录异常，请重试");
+        }
+        //获取user实体
+        Object object = map.get("value");
+        if (object != null) {
+            User user = (User) object;
+            Object objSession = session.getAttribute("user");
+
+            session.setAttribute("user", user);
+            returnMap.put("success",true);
+            returnMap.put("message","登录成功");
+            return returnMap;
+        }else {
+            returnMap.put("success",false);
+            returnMap.put("message","该号码未注册");
+            return map;
+        }
+    }
+
     @RequestMapping(value = "/activityView", method = RequestMethod.POST)
     @ResponseBody
     //TODO   很多判断，懒得写了
@@ -209,7 +289,7 @@ public class AdminCtrl {
         Activity activity  = new Activity();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.hh HH:mm:ss");
         activity = activityDao.findOne("from Activity where isDelete = 0 and id= " + id);
-        System.out.println(sdf.format(activity.getBeginDate()));
+        sdf.format(activity.getBeginDate());
         JSONObject jsonObject = (JSONObject)JSON.toJSON(activity);
         jsonObject.put("beginDate",sdf.format(activity.getBeginDate()));
         jsonObject.put("endDate",sdf.format(activity.getEndDate()));
@@ -219,6 +299,77 @@ public class AdminCtrl {
         return jsonArray;
     }
 
+
+    @RequestMapping(value="/feedback",method = RequestMethod.GET)
+    public String feedback(HttpServletRequest request,Model model) throws Exception {
+        HttpSession session = request.getSession();
+        Object sessionObj = session.getAttribute("admin");
+        if (sessionObj == null){
+            return "/admin/login";
+        }
+        String pageStr = request.getParameter("page");
+        Integer pageNow = 1;
+        Integer pageSize = 20;
+        if (null!=pageStr && pageStr.matches("[0-9]+")){
+            pageNow = Integer.parseInt(pageStr);
+        }
+        //TODO 切换反馈类型等操作
+//        Object typeObj = session.getAttribute("selectedFeedback");
+        String type = "0";
+//        type = request.getParameter("type");
+//        if (null == type || "".equals(type)){
+//            if(null == typeObj || "".equals(typeObj)){
+//                type = "0";
+//            }else{
+//                type = typeObj.toString();
+//            }
+//        }
+//        session.setAttribute("selectedFeedback",type);
+//        session.setAttribute("selectedFeedback",type);
+        Page<Feedback> feedbackPage = feedbackService.getPageList(pageNow,pageSize,type);
+        Long handledCount = feedbackService.handledCount();
+        model.addAttribute("page",feedbackPage);
+        model.addAttribute("handledCount",handledCount);
+        return "/admin/feedback";
+    }
+
+    @RequestMapping(value="/feedbackView",method = RequestMethod.POST)
+    @ResponseBody
+    public JSONObject feedbackView(HttpServletRequest request,String id) throws Exception {
+        Integer fid = -1;
+        if (null != id && id.matches("[0-9]+")){
+            fid = Integer.parseInt(id);
+        }
+        Feedback feedback = feedbackService.getOne(fid);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss");
+        String name = "".equals(feedback.getName()) ? "匿名":feedback.getName();
+        JSONObject jsonObject = (JSONObject) JSONObject.toJSON(feedback);
+        jsonObject.put("createTime",sdf.format(feedback.getCreateTime()));
+        jsonObject.put("name",name);
+        return jsonObject;
+    }
+
+    @RequestMapping(value="/sign",method = RequestMethod.POST)
+    @ResponseBody
+    public JSONObject sign(HttpServletRequest request,String id) throws Exception {
+        Integer fid = -1;
+        JSONObject jsonObject = new JSONObject();
+        if (null != id && id.matches("[0-9]+")){
+            fid = Integer.parseInt(id);
+            feedbackService.hand(fid);
+            jsonObject.put("success",true);
+        }else{
+            jsonObject.put("success",false);
+        }
+        return jsonObject;
+    }
+
+    @RequestMapping(value="/exit",method = RequestMethod.GET)
+    public String exit(HttpServletRequest request,String id) throws Exception {
+        HttpSession session = request.getSession();
+        session.invalidate();
+        return "redirect:/admin";
+    }
     //删除指定文件
     public boolean delFile(String filePath){
         boolean flag = false;

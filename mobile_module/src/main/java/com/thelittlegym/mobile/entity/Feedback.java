@@ -21,6 +21,24 @@ public class Feedback {
     private String details;
     private Date createTime;
     private String type;
+    private Boolean handled;
+    private Date handledTime;
+
+    public Boolean getHandled() {
+        return handled;
+    }
+
+    public void setHandled(Boolean handled) {
+        this.handled = handled;
+    }
+
+    public Date getHandledTime() {
+        return handledTime;
+    }
+
+    public void setHandledTime(Date handledTime) {
+        this.handledTime = handledTime;
+    }
 
     public String getType() {
         return type;

@@ -54,7 +54,10 @@ public class LoginCtrl {
                 if ( null != objSession ){
                     Enumeration<String> em = session.getAttributeNames();
                     while (em.hasMoreElements()) {
-                        session.removeAttribute(em.nextElement());
+                        String sessionStr = em.nextElement();
+                        if (!"admin".equals(sessionStr)){
+                            session.removeAttribute(sessionStr);
+                        }
                     }
                 }
                 session.setAttribute("user", user);
@@ -77,7 +80,7 @@ public class LoginCtrl {
         Map valNumMap = new HashMap();
 
 //        Map<String,String> existMap = new HashMap<String,String>();
-        String sqlExist = "select  crm_surname name,id,crmzdy_80620120 tel,crmzdy_81802271 childname,crmzdy_81778300 zx from   crm_sj_238592_view  where charindex('" +username+"',crmzdy_81767199)>0";
+        String sqlExist = "select top 1  crm_surname name,id,crmzdy_80620120 tel,crmzdy_81802271 childname,crmzdy_81778300 zx from   crm_sj_238592_view  where charindex('" +username+"',crmzdy_81767199)>0";
 //        existMap.put("sql1", sqlExist);
 
         HttpSession session = request.getSession();
@@ -165,7 +168,6 @@ public class LoginCtrl {
         submail.setProject("IkkGR1");
         submail.addVar("time", "30分钟");
         submail.addVar("code", valnum);
-        System.out.println(valnum);
         submail.xsend();
 
 
@@ -227,7 +229,18 @@ public class LoginCtrl {
     @ResponseBody
     public Map<String, Object> exist(String telephone) {
         Map<String, Object> returnMap = new HashMap<String, Object>();
-        String sqlExist = "select  crm_surname name,id,crmzdy_80620120 tel,crmzdy_81802271 childname,crmzdy_81778300 zx from   crm_sj_238592_view  where charindex('" +telephone+"',crmzdy_81767199)>0";
+        try {
+            if (userService.isReged(telephone) ){
+                returnMap.put("success",false);
+                returnMap.put("message","该号码已注册，请直接登录");
+                return returnMap;
+            }
+        } catch (Exception e) {
+            returnMap.put("success",false);
+            returnMap.put("message","异常错误");
+            return returnMap;
+        }
+        String sqlExist = "select top 1 crm_surname name,id,crmzdy_80620120 tel,crmzdy_81802271 childname,crmzdy_81778300 zx from   crm_sj_238592_view  where charindex('" +telephone+"',crmzdy_81767199)>0";
         if (oasisService.getResultJson(sqlExist) != null){
             returnMap.put("success",true);
             returnMap.put("message","该号码是会员");

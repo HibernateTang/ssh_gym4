@@ -1,6 +1,8 @@
 package com.thelittlegym.mobile.service;
 
 import com.thelittlegym.mobile.base.dao.IBaseDao;
+import com.thelittlegym.mobile.base.model.Page;
+import com.thelittlegym.mobile.dao.impl.FeedBackDaoImpl;
 import com.thelittlegym.mobile.entity.Feedback;
 
 import java.util.Map;
@@ -10,4 +12,12 @@ import java.util.Map;
  */
 public interface IFeedbackService {
     public void save(Feedback feedback) throws Exception;
+
+    public Page<Feedback> getPageList(Integer pageNow ,Integer pageSize,String type) throws Exception;
+
+    public Feedback getOne(Integer id) throws  Exception;
+
+    public void hand(Integer id)throws Exception;
+
+    public long handledCount() throws Exception;
 }
