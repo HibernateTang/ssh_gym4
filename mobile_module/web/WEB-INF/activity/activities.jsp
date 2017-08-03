@@ -822,7 +822,7 @@
                 up_name = name.val() +'、';
             }
             //TODO
-            var actId = ;
+            var actId = 1;
             ajax_update_par(id,actId,up_name);
         }
         ajax_update_par();
