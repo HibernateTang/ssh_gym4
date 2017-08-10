@@ -1,5 +1,6 @@
 package com.thelittlegym.mobile.base.dao.impl;
 
+import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
@@ -225,6 +226,27 @@ public class BaseDaoImpl<T> implements IBaseDao<T> {
         Long returnLong = (Long) query.setMaxResults(1).uniqueResult();
         session.getTransaction().commit();
 
+        return returnLong;
+    }
+
+    @Override
+    public List<T> findMaxRes(String hql,Integer num) {
+        Session session = this.getSession();
+        session.beginTransaction();
+        Query query = session.createQuery(hql);
+        query.setMaxResults(num);
+        List<T> returnList = query.list();
+        session.getTransaction().commit();
+        return returnList;
+    }
+
+    @Override
+    public BigInteger findCountBySql(String sql) {
+        Session session = this.getSession();
+        session.beginTransaction();
+        Query query = session.createSQLQuery(sql);
+        BigInteger returnLong = (BigInteger) query.setMaxResults(1).uniqueResult();
+        session.getTransaction().commit();
         return returnLong;
     }
 

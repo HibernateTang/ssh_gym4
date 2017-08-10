@@ -22,6 +22,7 @@ import java.util.Map;
 @Service
 public class CouponService implements ICouponService {
     private static final String useCode = "Sw6cWT88";
+    private static final String useCode_2 = "Jag2xG6D";
     @Autowired
     private H5Service h5Service;
     @Autowired
@@ -32,7 +33,7 @@ public class CouponService implements ICouponService {
         Map<String, Object> returnMap = new HashMap<String, Object>();
         try {
             //是否已存，已存则不去调接口
-            Coupon c = couponDao.findOne("from Coupon where tel = '" + tel + "'");
+            Coupon c = couponDao.findOne("from Coupon where tel = '" + tel + "' and type = 1");
             if (null != c) {
                 returnMap.put("value", c);
                 returnMap.put("success", true);
@@ -56,7 +57,6 @@ public class CouponService implements ICouponService {
                 returnMap.put("success", true);
                 returnMap.put("message", "第一次存入");
                 return returnMap;
-
             } else {
                 returnMap.put("success", false);
                 returnMap.put("message", "返回结果为空");
@@ -71,25 +71,50 @@ public class CouponService implements ICouponService {
     }
 
     @Override
-    public Map<String, Object> useCoupon(String tel, String code) throws Exception {
+    public Map<String, Object> useCoupon(String tel, String code,String type) throws Exception {
         Map<String, Object> returnMap = new HashMap<String, Object>();
-        if (useCode.equals(code)) {
-            Coupon coupon = couponDao.findOne("from Coupon where tel ='" + tel + "' and used = false");
-
-            if (null != coupon) {
-                coupon.setUsed(true);
-                couponDao.update(coupon);
-                returnMap.put("success", true);
-                returnMap.put("message", "使用成功");
+        Coupon coupon = couponDao.findOne("from Coupon where type = " + type + " and tel ='" + tel + "' and used = 0");
+        //种类
+        String nowCode = coupon.getType().equals("1")?useCode:useCode_2;
+        if (nowCode.equals(code)) {
+                if (null != coupon) {
+                    coupon.setUsed(true);
+                    couponDao.update(coupon);
+                    returnMap.put("success", true);
+                    returnMap.put("message", "使用成功");
+                } else {
+                    returnMap.put("success", false);
+                    returnMap.put("message", "该用户没有优惠券");
+                }
             } else {
                 returnMap.put("success", false);
-                returnMap.put("message", "该用户没有优惠券");
-            }
-
-        } else {
-            returnMap.put("success", false);
-            returnMap.put("message", "核销码错误");
+                returnMap.put("message", "核销码错误");
         }
+        return returnMap;
+    }
+
+    @Override
+    public Map<String, Object> addCoupon3000(String tel) throws Exception {
+        Map<String, Object> returnMap = new HashMap<String, Object>();
+        Coupon c = couponDao.findOne("from Coupon where type = 2 and tel = '" + tel + "' ");
+        if (null != c ){
+            returnMap.put("value",c);
+            returnMap.put("success",false);
+            returnMap.put("message","已领取");
+            return returnMap;
+        }
+        Coupon coupon = new Coupon();
+        coupon.setCreate_time(new Date());
+        coupon.setMoney(0.0f);
+        coupon.setName("3000新用户注册");
+        //2表示内部活动
+        coupon.setType("2");
+        coupon.setUsed(false);
+        coupon.setTel(tel);
+        couponDao.save(coupon);
+        returnMap.put("value",coupon);
+        returnMap.put("success",true);
+        returnMap.put("message","领取成功");
         return returnMap;
     }
 }

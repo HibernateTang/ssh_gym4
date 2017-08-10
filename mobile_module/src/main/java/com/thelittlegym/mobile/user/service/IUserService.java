@@ -3,6 +3,7 @@ package com.thelittlegym.mobile.user.service;
 import com.thelittlegym.mobile.base.model.Page;
 import com.thelittlegym.mobile.user.model.User;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,5 +26,7 @@ public interface IUserService {
     public Long getTotal() throws Exception;
 
     public Boolean isReged(String tel) throws Exception;
+    //前多少名是否存在此号码
+    public Boolean isNum(String tel,Integer num) throws Exception;
 
 }

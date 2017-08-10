@@ -81,7 +81,7 @@
                         <div class="row">
                             <div class="col-33 ">
                                 <div class="list-icon"><a class="external" href="/coupon"><i class="iconfont">&#xe665;</i>
-                                    <div class="list-icon-title">我的优惠券</div>
+                                    <div class="list-icon-title">我的优惠</div>
                                 </a>
                                 </div>
 

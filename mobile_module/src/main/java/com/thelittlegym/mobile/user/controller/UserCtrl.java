@@ -2,6 +2,7 @@ package com.thelittlegym.mobile.user.controller;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.thelittlegym.mobile.common.OasisService;
 import com.thelittlegym.mobile.common.WeixinService;
 import com.thelittlegym.mobile.entity.*;
@@ -180,12 +181,14 @@ public class UserCtrl {
         } catch (SocketException e) {
             return "redirect:/timeout.html";
         }
+        Boolean in3000 = userService.isNum(user.getTel(),3000);
 
         session.setAttribute("listGymSelectedSession", listGymSelected);
         model.addAttribute("listRank", listRank);
         model.addAttribute("listChild", listChild);
         model.addAttribute("listGymClassAll", listGymClassAll);
         model.addAttribute("weixinMap", weixinMap);
+        model.addAttribute("in3000", in3000);
         return "/member/index";
     }
 

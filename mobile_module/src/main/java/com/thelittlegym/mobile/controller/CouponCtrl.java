@@ -35,14 +35,16 @@ public class CouponCtrl {
         }
         String tel = user.getTel();
         Map<String, Object> couponMap = couponService.getCoupon_http(tel);
+        //注册优惠券
+        Map<String, Object> coupon2Map = couponService.addCoupon3000(tel);
         model.addAttribute("coupon",couponMap);
-
+        model.addAttribute("coupon2",coupon2Map);
         return "/member/coupon";
     }
 
     @RequestMapping(value = "/use", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> useCoupon(HttpServletRequest request, String code) throws Exception {
+    public Map<String, Object> useCoupon(HttpServletRequest request, String code,String type) throws Exception {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         Map<String, Object> returnMap = null;
@@ -54,7 +56,7 @@ public class CouponCtrl {
             tel = user.getTel();
         }
 //        tel = "15505152635";
-        returnMap = couponService.useCoupon(tel, code);
+        returnMap = couponService.useCoupon(tel, code,type);
         return returnMap;
     }
 }

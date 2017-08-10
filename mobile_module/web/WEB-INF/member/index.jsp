@@ -192,10 +192,11 @@
                     </div>
                 </div>
             </div>
+
         </div>
     </c:forEach>
 </div>
-
+<input type="hidden" value = "<c:if test="${in3000==true}">1</c:if>" id="in3000">
 <script type='text/javascript' src='/js/zepto.min.js' charset='utf-8'></script>
 <script type='text/javascript' src='/js/sm.min.js' charset='utf-8'></script>
 <script src="/js/swiper-3.4.2.jquery.min.js"></script>
@@ -460,7 +461,29 @@
         var params = link + '?mins=' + mins + '&outpass=' + outpass + '&times_per_week=' + times_per_weenk + '&tian=' + tian + '&ranking=' + ranking + '&name=' + name + '&avatar=' + avatar;
         return params;
     }
+
+        if ($("#in3000").val() == 1 ){
+            $.modal({
+                text: '<a class="external" href="/coupon"><img src="/images/member/act3000.jpg" style="display:block" width="100%"/></a>',
+                buttons: [
+                    {
+                        text: '关闭',
+                        onClick:function(){
+                            $.toast('您可以在我的优惠-兑换券中查看')
+                        }
+                    }
+                ]
+            })
+            var modal = $(".modal.modal-in");
+            modal.css("margin-top","-10rem");
+            //只刷新时弹出一次
+            $("#in3000").val("");
+        }
+
+
+
     $.init();
+
 </script>
 </body>
 

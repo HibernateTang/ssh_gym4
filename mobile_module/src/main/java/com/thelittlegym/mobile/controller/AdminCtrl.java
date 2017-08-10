@@ -370,6 +370,28 @@ public class AdminCtrl {
         session.invalidate();
         return "redirect:/admin";
     }
+
+    @RequestMapping(value="/actUser",method = RequestMethod.GET)
+    public String actUser(HttpServletRequest request,Model model) throws Exception {
+        HttpSession session = request.getSession();
+        Object sessionObj = session.getAttribute("admin");
+        if (sessionObj == null){
+            return "/admin/login";
+        }
+        String pageStr = request.getParameter("page");
+        Integer pageNow = 1;
+        Integer pageSize = 20;
+        if (null!=pageStr && pageStr.matches("[0-9]+")){
+            pageNow = Integer.parseInt(pageStr);
+        }
+
+        Page<User> userPage = userService.getUserPageList(pageNow,pageSize);
+        model.addAttribute("page",userPage);
+        return "/admin/actUser";
+    }
+    /*
+        工具类
+     */
     //删除指定文件
     public boolean delFile(String filePath){
         boolean flag = false;
@@ -380,6 +402,8 @@ public class AdminCtrl {
         }
         return flag;
     }
+
+
 
     public String uploadFile(HttpServletRequest request, MultipartFile file, String headPath) throws IOException {
         // 获取图片原始文件名

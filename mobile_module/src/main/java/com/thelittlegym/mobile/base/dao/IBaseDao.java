@@ -4,6 +4,7 @@ import com.thelittlegym.mobile.base.model.Page;
 import com.thelittlegym.mobile.base.vo.Parameter;
 import org.hibernate.HibernateException;
 
+import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
@@ -40,4 +41,9 @@ public interface IBaseDao<T> {
     //查询满足条件的记录数
     public long findCount(final String hql);
     public long findCount(final String hql, final Object[] values);
+
+    //查询固定条数的记录数
+    public List<T> findMaxRes(final String hql,final Integer num);
+
+    public BigInteger findCountBySql(final String sql);
 }
