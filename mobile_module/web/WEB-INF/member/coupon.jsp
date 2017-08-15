@@ -69,12 +69,14 @@
                                     </c:otherwise>
                                 </c:choose>
                             </div>
+                            <c:if test="${not empty coupon && coupon.success == true}">
                             <div class="card-footer">
                                 <i></i>
                                 <div> <span
                                         class="fa fa-question-circle coupon-rule open-popup" data-value="1"
                                         data-popup=".popup-coupon-rule">&nbsp;优惠券说明</span></div>
                             </div>
+                            </c:if>
                         </div>
                     </div>
                     <div id="coupon_2" class="tab  active">
@@ -108,12 +110,14 @@
                                     </c:otherwise>
                                 </c:choose>
                             </div>
-                            <div class="card-footer">
-                                <i></i>
-                                <div> <span
-                                        class="fa fa-question-circle coupon-rule open-popup" data-value="2"
-                                        data-popup=".popup-coupon2-rule">&nbsp;兑换券说明</span></div>
-                            </div>
+                            <c:if test="${not empty coupon2 }">
+                                <div class="card-footer">
+                                    <i></i>
+                                    <div> <span
+                                            class="fa fa-question-circle coupon-rule open-popup" data-value="2"
+                                            data-popup=".popup-coupon2-rule">&nbsp;兑换券说明</span></div>
+                                </div>
+                            </c:if>
                         </div>
                     </div>
                 </div>
@@ -142,6 +146,10 @@
             return;
         }
         var type = $(this).data("type");
+        if (type == "2" && !timeLimit("2017-09-23","2017-10-17")){
+            $.alert("不在兑换日期内，详情参考兑换券说明");
+            return;
+        }
         $.prompt('请输入核销码', function (value) {
                     if ($.trim(value) == "") {
                         $.alert("核销码值不能为空");
@@ -155,6 +163,7 @@
     function ajax_useCoupon(code, type) {
         this.code = code;
         this.type = type;
+
         $.ajax({
             url: '/coupon/use',
             type: 'POST',
@@ -192,8 +201,8 @@
             alertText = '<div class="content-block"><p class="coupon-rule-detail">1、获得优惠券之日起，有限期为一年，用于会员本人续报课程</p>' +
                     '<p class="coupon-rule-detail">2、此券不与其他优惠共享</p><p class="coupon-rule-detail">3、不支持兑换现金</p> </div>';
         } else {
-            alertText = '<div class="content-block"><p class="coupon-rule-detail">1、请向中心工作人员领取“核销码”</p>' +
-                    '<p class="coupon-rule-detail">2、此券领取截止时间：2017.9.10</p><p class="coupon-rule-detail">3、此券兑换时间：2017.9.23-10.17</p><p class="coupon-rule-detail">4、此券不与其他优惠共享</p><p class="coupon-rule-detail">5、不支持兑换现金</p></div>';
+            alertText = '<div class="content-block"><p class="coupon-rule-detail">1、此券使用时间：2017.9.23-10.17</p>' +
+                    '<p class="coupon-rule-detail">2、请向中心工作人员领取“核销码”</p><p class="coupon-rule-detail">3、此券不与其他优惠共享</p><p class="coupon-rule-detail">4、不支持兑换现金</p><p class="coupon-rule-detail">5、此券领取截止时间：2017.9.10</p></div>';
         }
         $.modal({
             title: '<h1 class="title">活动规则</h1>',
@@ -205,6 +214,17 @@
             ]
         })
     });
+
+    //兑换券活动领取时间
+    function timeLimit(begin,end){
+        var today = new Date();
+        var beginDate = new Date(begin.replace(/-/g,"\/"));
+        var endDate = new Date(end.replace(/-/g,"\/"));
+        if (today < beginDate || today > endDate){
+            return false;
+        }
+        return true;
+    }
     $.init();
 </script>
 </body>

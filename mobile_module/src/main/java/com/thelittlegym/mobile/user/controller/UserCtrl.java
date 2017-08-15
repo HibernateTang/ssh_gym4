@@ -181,8 +181,8 @@ public class UserCtrl {
         } catch (SocketException e) {
             return "redirect:/timeout.html";
         }
-        Boolean in3000 = userService.isNum(user.getTel(),3000);
 
+        Boolean in3000 = userService.isNum(user.getTel(),3000);
         session.setAttribute("listGymSelectedSession", listGymSelected);
         model.addAttribute("listRank", listRank);
         model.addAttribute("listChild", listChild);

@@ -50,11 +50,16 @@
                     </div>
                     <button id="signIn">登 录</button>
                 </div>
-
-                <a href="javascript:void(0);" id="goSignIn">
-                    <button type="button" class="register-tis">还没有账号？</button>
-                </a>
-
+                <div class="">
+                    <a href="javascript:void(0);" id="goSignIn">
+                        <button type="button" class="register-tis">还没有账号？</button>
+                    </a>
+                </div>
+                <div class="">
+                    <a href="javascript:void(0)"  class="tips-link" id="forgetPass">
+                        忘记密码？
+                    </a>
+                </div>
             </div>
         </div>
         <div class="swiper-slide">
@@ -78,13 +83,13 @@
                     </div>
                     <div>
                         <input type="password" class="reg-pass input-control" id="reg_pass" placeholder="输入密码"
-                               value="zed123" oncontextmenu="return false" onpaste="return false"
+                                oncontextmenu="return false" onpaste="return false"
                         />
                     </div>
                     <div>
                         <input type="password" id="reg_repass" class="reg-repass input-control"
                                placeholder="再次输入密码" oncontextmenu="return false"
-                               value="zed123" onpaste="return false"/>
+                                onpaste="return false"/>
                     </div>
                     <div>
                         <input type="email" class="reg_email input-control" id="reg_email" placeholder="输入邮箱地址"
@@ -96,6 +101,36 @@
                     <a href="/" id="goSignUp">
                         <button type="button" class="register-tis">已经有账号？</button>
                     </a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-slide">
+            <div class="login-container">
+                <h1>The Little Gym</h1>
+                <div class="connect" id="changConnect">
+                    <p >给孩子一生的自信和成功</p>
+                </div>
+
+                <div class="loginForm" id="changeForm">
+                    <div>
+                        <input type="text" name="telephone" class="telephone input-control" id="change_tel"
+                               placeholder="手机"
+                               autocomplete="off"/>
+                    </div>
+                    <div class="reg-group">
+                        <input type="text" class="reg-valnum input-control" id="change_valnum" placeholder="输入验证码"
+                               autocomplete="off"/>
+                        <button class="btn-valnum" id="btn_change" type="button">发送验证码</button>
+                    </div>
+                    <div>
+                        <input type="password" name="password" id="change_pass" class="password input-control"
+                               placeholder="新密码"
+                               oncontextmenu="return false" onpaste="return false"
+                        />
+                    </div>
+                </div>
+                <div class="">
+                        <button type="button" class="register-confirm" id="updateMyPass">确认修改</button>
                 </div>
             </div>
         </div>

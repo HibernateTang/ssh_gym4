@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -95,6 +96,17 @@ public class CouponService implements ICouponService {
 
     @Override
     public Map<String, Object> addCoupon3000(String tel) throws Exception {
+        //临时添加  活动开始时间为8-17 8点
+        Date now = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String beginDateStr = "2017-08-17 08:00:00";
+        String endDateStr = "2017-09-10 23:59:59";
+        Date beginDate = sdf.parse(beginDateStr);
+        Date endDate = sdf.parse(endDateStr);
+        if ( now.getTime() < beginDate.getTime() || now.getTime() > endDate.getTime()){
+            return null;
+        }
+
         Map<String, Object> returnMap = new HashMap<String, Object>();
         Coupon c = couponDao.findOne("from Coupon where type = 2 and tel = '" + tel + "' ");
         if (null != c ){

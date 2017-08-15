@@ -1,5 +1,7 @@
 package com.thelittlegym.mobile.login.controller;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -137,6 +139,49 @@ public class LoginCtrl {
     }
 
 
+    @RequestMapping(value = "/updatePass", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> updatePass(HttpServletRequest request,String tel, String newPass, String valNum) {
+        Map<String, Object> returnMap = new HashMap<String, Object>();
+        HttpSession session = request.getSession();
+        Map<String,Object> valNumMap = new HashMap<String,Object>();
+        //验证码校验
+        if (session.getAttribute("valNumMap") != null) {
+            valNumMap = (HashMap) session.getAttribute("valNumMap");
+            if (valNumMap.get("valNum").equals(valNum) == false) {
+                returnMap.put("message", "验证码错误！");
+                returnMap.put("success", false);
+                return returnMap;
+            }
+            long minsPass = getDateDiffMins((Date) valNumMap.get("valTimeStamp"), new Date());
+            if (minsPass > 30) {
+                returnMap.put("message", "验证码已过期！");
+                returnMap.put("success", false);
+                return returnMap;
+            }
+            try {
+                //修改密码
+                User u = userService.getByTel(tel);
+//                newPass = getHash(newPass,"MD5");
+                u.setPassword(newPass);
+                userService.updateUser(u);
+                returnMap.put("message", "修改成功！");
+                returnMap.put("success", true);
+                session.setAttribute("valNumMap",null);
+                return returnMap;
+            } catch (Exception e) {
+                returnMap.put("message", "异常错误！");
+                returnMap.put("success", false);
+                return returnMap;
+            }
+
+        } else {
+            returnMap.put("message", "验证码错误!");
+            returnMap.put("success", false);
+            return returnMap;
+        }
+    }
+
     @RequestMapping(value = "/getUserPageListForSearch", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> getUserPageListForSearch(HttpServletRequest request, int currentPage, int pageSize, String blurUserName) {
@@ -251,6 +296,27 @@ public class LoginCtrl {
         return returnMap;
     }
 
+    @RequestMapping(value = "/exist_reged", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String, Object> exist_reged(String telephone) {
+        Map<String, Object> returnMap = new HashMap<String, Object>();
+        try {
+            User u = userService.getByTel(telephone);
+            if ( null != u){
+                returnMap.put("value",u);
+                returnMap.put("message","已注册");
+                returnMap.put("success",true);
+            }else{
+                returnMap.put("message","未注册用户");
+                returnMap.put("success",false);
+            }
+        } catch (Exception e) {
+            returnMap.put("message","异常错误");
+            returnMap.put("success",false);
+        }
+        return returnMap;
+    }
+
     @RequestMapping(value = "/feedback", method = RequestMethod.POST)
     @ResponseBody
     public Map<String, Object> feedback(String Franchisee,String name,String details,String contactTel,String type) {
@@ -297,4 +363,28 @@ public class LoginCtrl {
     }
 
 
+    /*
+    md5加密
+     */
+    public static String getHash(String source, String hashType) {
+        // 用来将字节转换成 16 进制表示的字符
+        char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+
+        try {
+            MessageDigest md = MessageDigest.getInstance(hashType);
+            md.update(source.getBytes()); // 通过使用 update 方法处理数据,使指定的 byte数组更新摘要
+            byte[] encryptStr = md.digest(); // 获得密文完成哈希计算,产生128 位的长整数
+            char str[] = new char[16 * 2]; // 每个字节用 16 进制表示的话，使用两个字符
+            int k = 0; // 表示转换结果中对应的字符位置
+            for (int i = 0; i < 16; i++) { // 从第一个字节开始，对每一个字节,转换成 16 进制字符的转换
+                byte byte0 = encryptStr[i]; // 取第 i 个字节
+                str[k++] = hexDigits[byte0 >>> 4 & 0xf]; // 取字节中高 4 位的数字转换, >>> 为逻辑右移，将符号位一起右移
+                str[k++] = hexDigits[byte0 & 0xf]; // 取字节中低 4 位的数字转换
+            }
+            return new String(str); // 换后的结果转换为字符串
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

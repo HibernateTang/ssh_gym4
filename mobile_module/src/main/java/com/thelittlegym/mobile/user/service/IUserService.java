@@ -29,4 +29,6 @@ public interface IUserService {
     //前多少名是否存在此号码
     public Boolean isNum(String tel,Integer num) throws Exception;
 
+    public User getByTel(String tel) throws Exception;
+
 }

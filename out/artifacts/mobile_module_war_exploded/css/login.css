@@ -6,6 +6,9 @@ a,abbr,acronym,address,applet,article,aside,audio,big,blockquote,body,canvas,cap
 	font:inherit;
 	vertical-align:baseline
 }
+a {
+	text-decoration: none;
+}
 article,aside,details,figcaption,figure,footer,header,menu,nav,section {
 	display:block
 }
@@ -305,6 +308,24 @@ img {
 	border: 1px solid rgba(255, 255, 255, 0.38);
 	background: rgba(45, 45, 45, 0.33);
 	border-radius: 6px;
+}
+
+.register-confirm {
+	line-height: 42px;
+	margin: 15px auto 0px;
+	padding: 0 15px;
+	border: 1px solid #007aff;
+	background:rgba(64, 130, 254, 0.64);
+	border-radius: 6px;
+}
+
+.tips-link {
+	color:#1E9FFF;
+	font-family: "Microsoft YaHei",Helvetica,Arial,sans-serif;
+	font-size: 14px;
+	line-height: 42px;
+	margin: 15px auto 0px;
+	padding: 0 15px;
 }
 /*label.error {
 	display: block;

@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,6 +100,16 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public Boolean isNum(String tel,Integer num) throws Exception {
+        //临时添加  活动开始时间为8-17 8点
+        Date now = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String beginDateStr = "2017-08-17 08:00:00";
+        String endDateStr = "2017-09-10 23:59:59";
+        Date beginDate = sdf.parse(beginDateStr);
+        Date endDate = sdf.parse(endDateStr);
+        if ( now.getTime() < beginDate.getTime() || now.getTime() > endDate.getTime()){
+            return false;
+        }
         //1.是否已领取
         String hql = "from Coupon where type = 2 and tel = " + tel;
         Coupon coupon = couponDao.findOne(hql);
@@ -105,7 +117,7 @@ public class UserServiceImpl implements IUserService {
             return false;
         }
         //2.是否前num名会员
-        String sql = "SELECT count(id) total FROM (SELECT @ROW \\:= @ROW + 1 AS ROW,u.* FROM (SELECT * FROM USER u WHERE create_time <= '2017-10-17 23:59:59' AND telephone != '18917353367' AND telephone != '15949190026'  ORDER BY create_time ) u, (SELECT @ROW \\:= 0) r WHERE @ROW < " + num.toString() + " ) res WHERE res.telephone = '" + tel + "'";
+        String sql = "SELECT count(id) total FROM (SELECT @ROW \\:= @ROW + 1 AS ROW,u.* FROM (SELECT * FROM USER u WHERE create_time <= '2017-09-10 23:59:59' AND telephone != '18917353367' AND telephone != '15949190026'  ORDER BY create_time ) u, (SELECT @ROW \\:= 0) r WHERE @ROW < " + num.toString() + " ) res WHERE res.telephone = '" + tel + "'";
         BigInteger count = userDao.findCountBySql(sql);
         BigInteger c0 = new BigInteger("0");
         if (count.compareTo(c0) == 1){
@@ -114,6 +126,11 @@ public class UserServiceImpl implements IUserService {
         return false;
     }
 
+    @Override
+    public User getByTel(String tel) throws Exception {
+        User u = userDao.findOne("from User where tel = '" + tel + "'");
+        return u;
+    }
 
 
 }
