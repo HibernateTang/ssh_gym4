@@ -59,6 +59,7 @@ $("#signUp").click(function () {
 })
 var sendingFlag = false;
 $("#btn-valnum").click(function () {
+
     if (sendingFlag ==true){
         layer.open({
             content: '发送中，请勿重复点击'
@@ -70,6 +71,7 @@ $("#btn-valnum").click(function () {
     sendingFlag = true;
     var tel = $("#reg_tel").val();
     var isRegNum = checkInput(/^1[34578]\d{9}$/, $("#reg_tel"), "手机", "手机号格式不正确");
+    return false;
     if (isRegNum) {
         var that = this;
         $.ajax({
@@ -169,7 +171,7 @@ function time(o) {
 
 $("#reg_tel").on('input', function () {
     var reg_tel = $("#reg_tel").val();
-    if (/^1[34578]\d{9}$/.test($.trim(reg_tel))) {
+    if (/^1[34578]\d{9}$/.test(reg_tel)) {
         this.focus();
         this.blur();
         exist_ajax(reg_tel);
@@ -179,7 +181,7 @@ $("#reg_tel").on('input', function () {
 //修改密码
 $("#change_tel").on('input',function () {
     var change_tel = $("#change_tel").val();
-    if (/^1[34578]\d{9}$/.test($.trim(change_tel))) {
+    if (/^1[34578]\d{9}$/.test(change_tel)) {
         this.focus();
         this.blur();
         exist_ajax_changePass(change_tel);
@@ -289,6 +291,7 @@ function regsister_ajax(username, valnum, password, email) {
 
 
 function exist_ajax(telephone) {
+    telephone = $.trim(telephone);
     $.ajax({
         type: "POST",
         url: "/login/exist",
@@ -431,7 +434,7 @@ function checkReg() {
 }
 
 function checkInput(regx, ele, ph, phErr) {
-    if (!regx.test($.trim(ele.val()))) {
+    if (!regx.test(ele.val())) {
         ele.val("");
         ele.addClass("input-error");
         ele.attr("placeholder", phErr);
